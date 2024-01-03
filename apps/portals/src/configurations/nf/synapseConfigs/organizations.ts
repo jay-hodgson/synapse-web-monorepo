@@ -46,7 +46,8 @@ export const organizationDetailsPageConfig: DetailsPageProps = {
           name: 'CardContainerLogic',
           props: {
             sql: publicationsSql,
-            limit: 3,
+            initialCardCount: 3,
+            limit: 100,
             ...publicationsCardConfiguration,
             sqlOperator: ColumnSingleValueFilterOperator.LIKE,
           },

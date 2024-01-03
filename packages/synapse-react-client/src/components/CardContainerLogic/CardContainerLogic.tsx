@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { SynapseConstants } from '../../utils'
 import {
   getAdditionalFilters,
@@ -23,6 +23,8 @@ import QuerySortSelector from '../QuerySortSelector'
 import { NoContentPlaceholderType } from '../SynapseTable/NoContentPlaceholderType'
 import { IconOptions } from '../Icon/Icon'
 import { DEFAULT_PAGE_SIZE } from '../../utils/SynapseConstants'
+import WideButton from '../styled/WideButton'
+import { Box } from '@mui/material'
 
 /**
  *  Used when a column value should link to an external URL defined by a value in another column.
@@ -138,6 +140,7 @@ export type CardConfiguration = {
 } & CommonCardProps
 
 export type CardContainerLogicProps = {
+  initialCardCount?: number // Small number of cards to show before expanding to show the full result set (paginated by the much larger number specified by 'limit')
   limit?: number
   title?: string
   sqlOperator?: SQLOperator
@@ -160,13 +163,26 @@ export type CardContainerLogicProps = {
  * Class wraps around CardContainer and serves as a standalone logic container for rendering cards.
  */
 export const CardContainerLogic = (props: CardContainerLogicProps) => {
-  const entityId = parseEntityIdFromSqlStatement(props.sql)
+  const [isInitialViewMoreClicked, setIsInitialViewMoreClicked] =
+    useState<boolean>(false)
+  const {
+    sql,
+    limit,
+    initialCardCount,
+    additionalFiltersLocalStorageKey,
+    searchParams,
+    sqlOperator,
+    sortConfig,
+    columnAliases,
+    rgbIndex,
+    unitDescription,
+  } = props
+  const entityId = parseEntityIdFromSqlStatement(sql)
   const queryFilters = getAdditionalFilters(
-    props.additionalFiltersLocalStorageKey ?? entityId,
-    props.searchParams,
-    props.sqlOperator,
+    additionalFiltersLocalStorageKey ?? entityId,
+    searchParams,
+    sqlOperator,
   )
-  const { sortConfig, columnAliases } = props
   const defaultSortItems = sortConfig
     ? [
         {
@@ -175,38 +191,64 @@ export const CardContainerLogic = (props: CardContainerLogicProps) => {
         },
       ]
     : undefined
-  const initQueryRequest: QueryBundleRequest = {
-    concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',
-    entityId: entityId,
-    query: {
-      sql: props.sql,
-      limit: props.limit ?? DEFAULT_PAGE_SIZE,
-      sort: defaultSortItems,
-      additionalFilters: queryFilters,
-    },
-    partMask:
-      SynapseConstants.BUNDLE_MASK_QUERY_RESULTS |
-      SynapseConstants.BUNDLE_MASK_QUERY_COUNT |
-      SynapseConstants.BUNDLE_MASK_QUERY_SELECT_COLUMNS |
-      SynapseConstants.BUNDLE_MASK_QUERY_MAX_ROWS_PER_PAGE |
-      SynapseConstants.BUNDLE_MASK_QUERY_COLUMN_MODELS |
-      SynapseConstants.BUNDLE_MASK_QUERY_FACETS |
-      SynapseConstants.BUNDLE_MASK_SUM_FILES_SIZE_BYTES |
-      SynapseConstants.BUNDLE_MASK_LAST_UPDATED_ON,
+  const isShowingInitialPreviewCards =
+    initialCardCount !== undefined &&
+    initialCardCount > 0 &&
+    !isInitialViewMoreClicked
+  let currentLimit = DEFAULT_PAGE_SIZE
+  if (isShowingInitialPreviewCards) {
+    currentLimit = initialCardCount
+  } else if (limit && limit > 0) {
+    currentLimit = limit
   }
+  const initQueryRequest: QueryBundleRequest = useMemo(() => {
+    return {
+      concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',
+      entityId: entityId,
+      query: {
+        sql: sql,
+        limit: currentLimit,
+        sort: defaultSortItems,
+        additionalFilters: queryFilters,
+      },
+      partMask:
+        SynapseConstants.BUNDLE_MASK_QUERY_RESULTS |
+        SynapseConstants.BUNDLE_MASK_QUERY_COUNT |
+        SynapseConstants.BUNDLE_MASK_QUERY_SELECT_COLUMNS |
+        SynapseConstants.BUNDLE_MASK_QUERY_MAX_ROWS_PER_PAGE |
+        SynapseConstants.BUNDLE_MASK_QUERY_COLUMN_MODELS |
+        SynapseConstants.BUNDLE_MASK_QUERY_FACETS |
+        SynapseConstants.BUNDLE_MASK_SUM_FILES_SIZE_BYTES |
+        SynapseConstants.BUNDLE_MASK_LAST_UPDATED_ON,
+    }
+  }, [currentLimit])
 
   return (
     <QueryWrapper {...props} initQueryRequest={initQueryRequest} isInfinite>
       <QueryVisualizationWrapper
-        rgbIndex={props.rgbIndex}
-        unitDescription={props.unitDescription}
+        rgbIndex={rgbIndex}
+        unitDescription={unitDescription}
         columnAliases={columnAliases}
         noContentPlaceholderType={
           props.noContentPlaceholderType ?? NoContentPlaceholderType.STATIC
         }
       >
         {sortConfig && <QuerySortSelector sortConfig={sortConfig} />}
-        <CardContainer {...props} />
+        <CardContainer {...props} hideViewMore={isShowingInitialPreviewCards} />
+        {isShowingInitialPreviewCards && (
+          <Box display="flex" justifyContent="flex-end">
+            <WideButton
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={() => {
+                setIsInitialViewMoreClicked(true)
+              }}
+            >
+              View More
+            </WideButton>
+          </Box>
+        )}
         <QueryContextConsumer>
           {queryContext => <ErrorBanner error={queryContext?.error} />}
         </QueryContextConsumer>

@@ -35,6 +35,7 @@ export type CardContainerProps = {
   title?: string
   isLoading?: boolean
   unitDescription?: string
+  hideViewMore?: boolean
 } & CardConfiguration
 
 function Card(props: { propsToPass: any; type: string }) {
@@ -61,6 +62,7 @@ export function CardContainer(props: CardContainerProps) {
     isLoading,
     secondaryLabelLimit = 3,
     title,
+    hideViewMore = false,
     ...rest
   } = props
   const infiniteQueryContext = useInfiniteQueryContext()
@@ -92,7 +94,7 @@ export function CardContainer(props: CardContainerProps) {
   data.queryResult!.queryResults.headers.forEach((element, index) => {
     schema[element.name] = index
   })
-  const showViewMoreButton = hasNextPage && (
+  const showViewMoreButton = hasNextPage && !hideViewMore && (
     <Box display="flex" justifyContent="flex-end">
       <WideButton
         variant="contained"

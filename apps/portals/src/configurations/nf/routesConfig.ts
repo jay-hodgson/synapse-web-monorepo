@@ -367,7 +367,7 @@ const routes: GenericRoute[] = [
       },
       {
         displayName: 'NCI DHART SPORE',
-        path: 'DetailsPage?fundingAgency=NIH-NCI',
+        path: 'DetailsPage?fundingAgency=DHART-SPORE',
       },
       {
         displayName: 'CDMRP NFRP',

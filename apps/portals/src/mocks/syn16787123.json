@@ -581,7 +581,7 @@
       "facetType": "enumeration",
       "facetValues": [
         { "count": 10, "isSelected": false, "value": "CTF" },
-        { "count": 4, "isSelected": false, "value": "NIH-NCI" },
+        { "count": 4, "isSelected": false, "value": "DHART-SPORE" },
         { "count": 45, "isSelected": false, "value": "NTAP" }
       ],
       "concreteType": "org.sagebionetworks.repo.model.table.FacetColumnResultValues",

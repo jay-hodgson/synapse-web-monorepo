@@ -43,7 +43,11 @@ import {
   tableQueryDataAtom,
   tableQueryEntityAtom,
 } from '../QueryWrapper/QueryWrapper'
-import { isRowSelectionVisibleAtom } from '../QueryWrapper/TableRowSelectionState'
+import {
+  isRowSelectionVisibleAtom,
+  rowPrimaryKeyColumnIdAtom,
+  rowVersionColumnIdAtom,
+} from '../QueryWrapper/TableRowSelectionState'
 
 export type SynapseTableProps = {
   /** If true and entity is a view or dataset, renders a column that represents if the caller has permission to download the entity represented by the row */
@@ -58,10 +62,6 @@ export type SynapseTableProps = {
   hideAddToDownloadListColumn?: boolean
   /** Configuration to override cell renderers with e.g. a link to a portals detail page */
   columnLinks?: LabelLinkConfig
-  /** If provided, will use the value in this column instead of the rowID for the access column, download column, etc */
-  rowEntityIDColumnName?: string
-  /** If provided, will use the value in this column instead of the row version number for the access column, download column, etc */
-  rowEntityVersionColumnName?: string
 }
 
 const columnHelper = createColumnHelper<Row>()
@@ -73,8 +73,6 @@ export function SynapseTable(props: SynapseTableProps) {
     showDirectDownloadColumn = showDownloadColumn,
     hideAddToDownloadListColumn = hideDownload,
     columnLinks,
-    rowEntityIDColumnName,
-    rowEntityVersionColumnName,
   } = props
   const { getCurrentQueryRequest } = useQueryContext()
   const queryRequest = useMemo(
@@ -97,19 +95,17 @@ export function SynapseTable(props: SynapseTableProps) {
 
   const { sort, setSort } = useTableSort()
   const isRowSelectionVisible = useAtomValue(isRowSelectionVisibleAtom)
-
+  const rowPrimaryKey = useAtomValue(rowPrimaryKeyColumnIdAtom)
   const isShowingAccessColumn: boolean = Boolean(
     showAccessColumn &&
       entity &&
-      ((isEntityViewOrDataset(entity) && allRowsHaveId(data)) ||
-        rowEntityIDColumnName),
+      ((isEntityViewOrDataset(entity) && allRowsHaveId(data)) || rowPrimaryKey),
   )
 
   const rowsAreDownloadable =
     entity &&
     isLoggedIn &&
-    ((isFileViewOrDataset(entity) && allRowsHaveId(data)) ||
-      rowEntityIDColumnName)
+    ((isFileViewOrDataset(entity) && allRowsHaveId(data)) || rowPrimaryKey)
 
   const isShowingDirectDownloadColumn = Boolean(
     rowsAreDownloadable && showDirectDownloadColumn,
@@ -120,14 +116,15 @@ export function SynapseTable(props: SynapseTableProps) {
       !hideAddToDownloadListColumn &&
       !isRowSelectionVisible,
   )
-  const rowEntityIDColumnIndex = rowEntityIDColumnName
+  const rowEntityIDColumnIndex = rowPrimaryKey
     ? data?.queryResult?.queryResults.headers.findIndex(
-        col => col.name == rowEntityIDColumnName,
+        col => col.name == rowPrimaryKey,
       )
     : undefined
-  const rowEntityVersionColumnIndex = rowEntityVersionColumnName
+  const rowVersionKey = useAtomValue(rowVersionColumnIdAtom)
+  const rowEntityVersionColumnIndex = rowVersionKey
     ? data?.queryResult?.queryResults.headers.findIndex(
-        col => col.name == rowEntityVersionColumnName,
+        col => col.name == rowVersionKey,
       )
     : undefined
 

@@ -113,9 +113,10 @@ export type QueryVisualizationWrapperProps = {
   noContentPlaceholderType?: NoContentPlaceholderType
   isRowSelectionVisible?: boolean
   /** The set of columns that defines a uniqueness constraint on the table for the purposes of filtering based on row selection.
-   * Note that Synapse tables have no internal concept of a primary key.
    */
-  rowSelectionPrimaryKey?: string[]
+  rowPrimaryKey?: string
+
+  rowVersionKey?: string
   /* Look for additional filters using the given key.  If not provided, the entity ID will be used. */
   additionalFiltersSessionStorageKey?: string
   /** Configuration to add a help popover to each corresponding column header */

@@ -60,7 +60,7 @@ function renderComponent() {
     <QueryWrapper
       initQueryRequest={mockQueryBundleRequest}
       isRowSelectionVisible={true}
-      rowSelectionPrimaryKey={['id']}
+      rowPrimaryKey={'id'}
     >
       <QueryVisualizationWrapper unitDescription={'result'}>
         <ContextReceiver>

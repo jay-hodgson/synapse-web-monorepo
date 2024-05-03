@@ -14,13 +14,11 @@ const files: SynapseConfig = {
     visibleColumnCount,
     showExportToCavatica: true,
     isRowSelectionVisible: true,
-    rowSelectionPrimaryKey: ['id'],
+    rowPrimaryKey: 'id',
+    rowVersionKey: 'currentVersion',
     tableConfiguration: {
       showAccessColumn: true,
       showDownloadColumn: true,
-      // set the entity ID column and version column to use (instead of the Row ID and Version)
-      rowEntityIDColumnName: 'id',
-      rowEntityVersionColumnName: 'currentVersion',
     },
     shouldDeepLink: true,
     columnAliases,

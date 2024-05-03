@@ -77,7 +77,8 @@ type QueryWrapperPlotNavOwnProps = {
   Pick<
     QueryWrapperProps,
     | 'isRowSelectionVisible'
-    | 'rowSelectionPrimaryKey'
+    | 'rowPrimaryKey'
+    | 'rowVersionKey'
     | 'isRowSelectionUIFloating'
   > &
   Pick<

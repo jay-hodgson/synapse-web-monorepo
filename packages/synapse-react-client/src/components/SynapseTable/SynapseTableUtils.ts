@@ -120,14 +120,26 @@ export function isSortableColumn(column: ColumnType) {
 export function getDefaultPrimaryKey(
   entity?: Table,
   columnModels?: ColumnModel[],
-): string[] | undefined {
-  if (
-    isFileViewOrDataset(entity) &&
-    columnModels?.find(cm => cm.name === 'id')
-  ) {
+): ColumnModel | undefined {
+  const idColumnModel = columnModels?.find(cm => cm.name === 'id')
+  if (isFileViewOrDataset(entity) && idColumnModel) {
     // If the primary key isn't specified via props, and this is a file view/dataset, we can safely use the 'id' column as primary key, if it is present
     // Note: Synapse tables don't have an internal concept of a primary key
-    return ['id']
+    return idColumnModel
+  }
+  return undefined
+}
+
+export function getDefaultVersionKey(
+  entity?: Table,
+  columnModels?: ColumnModel[],
+): ColumnModel | undefined {
+  const currentVersionColumnModel = columnModels?.find(
+    cm => cm.name === 'currentVersion',
+  )
+  if (entity && !isEntityViewOrDataset(entity) && currentVersionColumnModel) {
+    // For entity views and datasets, the Row version should be used.  Otherwise, try to find a column 'currentVersion'
+    return currentVersionColumnModel
   }
   return undefined
 }

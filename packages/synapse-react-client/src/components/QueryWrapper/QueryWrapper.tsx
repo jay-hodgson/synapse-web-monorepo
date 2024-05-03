@@ -27,12 +27,16 @@ import {
   hasSelectedRowsAtom,
   isRowSelectionUIFloatingAtom,
   isRowSelectionVisibleAtom,
-  rowSelectionPrimaryKeyAtom,
+  rowPrimaryKeyColumnIdAtom,
+  rowVersionColumnIdAtom,
   selectedRowsAtom,
 } from './TableRowSelectionState'
 import useQueryWrapperData from './useQueryWrapperData'
 import { useQueryWrapperPaginationControls } from './useQueryWrapperPaginationControls'
-import { getDefaultPrimaryKey } from '../SynapseTable/SynapseTableUtils'
+import {
+  getDefaultPrimaryKey,
+  getDefaultVersionKey,
+} from '../SynapseTable/SynapseTableUtils'
 import { atom, Provider, useAtomValue, useSetAtom } from 'jotai'
 
 export type QueryWrapperProps = React.PropsWithChildren<{
@@ -44,10 +48,12 @@ export type QueryWrapperProps = React.PropsWithChildren<{
   lockedColumn?: LockedColumn
   onViewSharingSettingsClicked?: (benefactorId: string) => void
   isRowSelectionVisible?: boolean
-  /** The set of columns that defines a uniqueness constraint on the table for the purposes of filtering based on row selection.
-   * Note that Synapse tables have no internal concept of a primary key.
+  /** Column that defines a uniqueness constraint on the table for the purposes of filtering based on row selection and entity assumption.
    */
-  rowSelectionPrimaryKey?: string[]
+  rowPrimaryKey?: string
+  /** Column that defines a row version on the table for the purposes of entity version association.
+   */
+  rowVersionKey?: string
   /** By default, the row selection UI will float at the bottom of the viewport.  Set to false to make it inline */
   isRowSelectionUIFloating?: boolean
   isInfinite?: boolean
@@ -84,7 +90,8 @@ function _QueryWrapper(props: QueryWrapperProps) {
     onViewSharingSettingsClicked,
     isRowSelectionVisible: isRowSelectionVisibleFromProps = false,
     isRowSelectionUIFloating: isRowSelectionUIFloatingFromProps = true,
-    rowSelectionPrimaryKey: rowSelectionPrimaryKeyFromProps,
+    rowPrimaryKey: rowPrimaryKeyFromProps,
+    rowVersionKey: rowVersionKeyFromProps,
     isInfinite = false,
     combineRangeFacetConfig,
   } = props
@@ -197,18 +204,31 @@ function _QueryWrapper(props: QueryWrapperProps) {
     setIsRowSelectionUIFloating(isRowSelectionUIFloatingFromProps)
   }, [isRowSelectionUIFloatingFromProps, setIsRowSelectionUIFloating])
 
-  const rowSelectionPrimaryKey = useMemo(() => {
-    if (rowSelectionPrimaryKeyFromProps) {
-      return rowSelectionPrimaryKeyFromProps
+  const rowPrimaryKeyColumnId = useMemo(() => {
+    if (rowPrimaryKeyFromProps) {
+      return getColumnModel(rowPrimaryKeyFromProps)?.id
     } else {
-      return getDefaultPrimaryKey(entity, data?.columnModels)
+      return getDefaultPrimaryKey(entity, data?.columnModels)?.id
     }
-  }, [data?.columnModels, entity, rowSelectionPrimaryKeyFromProps])
+  }, [data?.columnModels, entity, rowPrimaryKeyFromProps, getColumnModel])
 
-  const setRowSelectionPrimaryKey = useSetAtom(rowSelectionPrimaryKeyAtom)
+  const setRowPrimaryKeyColumnIdAtom = useSetAtom(rowPrimaryKeyColumnIdAtom)
   useEffect(() => {
-    setRowSelectionPrimaryKey(rowSelectionPrimaryKey)
-  }, [rowSelectionPrimaryKey, setRowSelectionPrimaryKey])
+    setRowPrimaryKeyColumnIdAtom(rowPrimaryKeyColumnId)
+  }, [rowPrimaryKeyColumnId, setRowPrimaryKeyColumnIdAtom])
+
+  const rowVersionColumnId = useMemo(() => {
+    if (rowVersionKeyFromProps) {
+      return getColumnModel(rowVersionKeyFromProps)?.id
+    } else {
+      return getDefaultVersionKey(entity, data?.columnModels)?.id
+    }
+  }, [data?.columnModels, entity, rowVersionKeyFromProps, getColumnModel])
+
+  const setRowVersionColumnId = useSetAtom(rowVersionColumnIdAtom)
+  useEffect(() => {
+    setRowVersionColumnId(rowVersionColumnId)
+  }, [rowVersionColumnId, setRowVersionColumnId])
 
   const setSelectedRows = useSetAtom(selectedRowsAtom)
 

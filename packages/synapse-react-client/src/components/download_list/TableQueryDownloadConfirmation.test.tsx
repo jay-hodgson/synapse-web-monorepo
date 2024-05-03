@@ -64,17 +64,15 @@ const addFilesToDownloadListResponse: AddToDownloadListResponse = {
 
 let receivedQueryVisualizationContext: QueryVisualizationContextType | undefined
 
-async function setUp(rowSelectionPrimaryKeyColumn?: string) {
+async function setUp(rowPrimaryKeyColumn?: string) {
   const user = userEvent.setup()
   let component
-  const rowSelectionPrimaryKey = rowSelectionPrimaryKeyColumn
-    ? [rowSelectionPrimaryKeyColumn]
-    : undefined
+  const rowPrimaryKey = rowPrimaryKeyColumn ? [rowPrimaryKeyColumn] : undefined
   act(() => {
     component = render(
       <QueryWrapper
         initQueryRequest={mockQueryBundleRequest}
-        rowSelectionPrimaryKey={rowSelectionPrimaryKey}
+        rowPrimaryKey={rowPrimaryKey}
       >
         <QueryVisualizationWrapper>
           <QueryVisualizationContextConsumer>

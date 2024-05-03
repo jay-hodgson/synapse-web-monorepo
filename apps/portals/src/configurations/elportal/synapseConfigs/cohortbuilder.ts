@@ -71,7 +71,7 @@ export const individualsView: SynapseConfig = {
     visibleColumnCount: 10,
     facetsToPlot: ['Sex', 'dataTypes', 'Assays', 'Diagnosis', 'fileFormat'],
     isRowSelectionVisible: true,
-    rowSelectionPrimaryKey: ['individualID'],
+    rowPrimaryKey: 'individualID',
     helpConfiguration: [
       {
         columnName: 'individualID',
@@ -126,7 +126,8 @@ export const filesView: SynapseConfig = {
     cavaticaConnectAccountURL: cavaticaConnectAccountURL,
     visibleColumnCount: 10,
     isRowSelectionVisible: true,
-    rowSelectionPrimaryKey: ['id'],
+    rowPrimaryKey: 'id',
+    rowVersionKey: 'fileVersion',
     additionalFiltersSessionStorageKey: 'cohort-builder-files-perspective',
     combineRangeFacetConfig: {
       label: 'Age',
@@ -136,8 +137,6 @@ export const filesView: SynapseConfig = {
     tableConfiguration: {
       showAccessColumn: true,
       showDownloadColumn: true,
-      rowEntityIDColumnName: 'id',
-      rowEntityVersionColumnName: 'fileVersion',
       columnLinks: [
         {
           matchColumnName: 'Study',

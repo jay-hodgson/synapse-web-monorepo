@@ -11,13 +11,11 @@ const genieBPCData: SynapseConfig = {
     name: 'Files',
     showExportToCavatica: true,
     isRowSelectionVisible: true,
-    rowSelectionPrimaryKey: ['id'],
+    rowPrimaryKey: 'id',
+    rowVersionKey: 'currentVersion',
     visibleColumnCount: 6,
     tableConfiguration: {
       showAccessColumn: true,
-      // set the entity ID column and version column to use (instead of the Row ID and Version)
-      rowEntityIDColumnName: 'id',
-      rowEntityVersionColumnName: 'currentVersion',
     },
     defaultShowPlots: false,
   },

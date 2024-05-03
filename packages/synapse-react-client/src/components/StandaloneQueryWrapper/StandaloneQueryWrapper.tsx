@@ -6,7 +6,7 @@ import {
 import SynapseTable, { SynapseTableProps } from '../SynapseTable/SynapseTable'
 import { QueryBundleRequest } from '@sage-bionetworks/synapse-types'
 import { SynapseConstants } from '../../utils'
-import { QueryWrapper } from '../QueryWrapper/QueryWrapper'
+import { QueryWrapper, QueryWrapperProps } from '../QueryWrapper/QueryWrapper'
 import { QueryContextConsumer } from '../QueryContext/QueryContext'
 import TopLevelControls, {
   TopLevelControlsProps,
@@ -38,7 +38,8 @@ type StandaloneQueryWrapperOwnProps = {
     SearchV2Props,
     'queryContext' | 'queryVisualizationContext'
   >
-} & TopLevelControlsProps &
+} & Pick<QueryWrapperProps, 'rowPrimaryKey' | 'rowVersionKey'> &
+  TopLevelControlsProps &
   Pick<
     QueryVisualizationWrapperProps,
     | 'rgbIndex'

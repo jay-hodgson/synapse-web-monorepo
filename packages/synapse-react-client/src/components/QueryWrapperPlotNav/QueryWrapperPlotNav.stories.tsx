@@ -412,13 +412,13 @@ export const MaterializedViewOfFiles: Story = {
     tableConfiguration: {
       showAccessColumn: true,
       showDirectDownloadColumn: true,
-      rowEntityIDColumnName: 'id',
-      rowEntityVersionColumnName: 'currentVersion',
     },
     name: 'MV with File Commands Demo',
     sqlOperator: ColumnSingleValueFilterOperator.EQUAL,
     hideSqlEditorControl: false,
     shouldDeepLink: false,
     showExportToCavatica: true,
+    rowPrimaryKey: 'id',
+    rowVersionKey: 'currentVersion',
   },
 }

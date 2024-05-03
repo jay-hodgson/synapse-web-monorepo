@@ -6,7 +6,7 @@ import {
   hasSelectedRowsAtom,
   isRowSelectedAtom,
   isRowSelectionVisibleAtom,
-  rowSelectionPrimaryKeyAtom,
+  rowPrimaryKeyColumnIdAtom,
   selectedRowsAtom,
 } from './TableRowSelectionState'
 import { Provider, useAtomValue, useSetAtom } from 'jotai'
@@ -15,8 +15,8 @@ import { tableQueryDataAtom } from './QueryWrapper'
 function useTableRowSelectionState() {
   const isRowSelectionVisible = useAtomValue(isRowSelectionVisibleAtom)
   const setIsRowSelectionVisible = useSetAtom(isRowSelectionVisibleAtom)
-  const rowSelectionPrimaryKey = useAtomValue(rowSelectionPrimaryKeyAtom)
-  const setRowSelectionPrimaryKey = useSetAtom(rowSelectionPrimaryKeyAtom)
+  const rowPrimaryKey = useAtomValue(rowPrimaryKeyColumnIdAtom)
+  const setRowSelectionPrimaryKey = useSetAtom(rowPrimaryKeyColumnIdAtom)
   const selectedRows = useAtomValue(selectedRowsAtom)
   const setSelectedRows = useSetAtom(selectedRowsAtom)
   const isRowSelected = useAtomValue(isRowSelectedAtom)
@@ -28,7 +28,7 @@ function useTableRowSelectionState() {
     setTableData,
     isRowSelectionVisible,
     setIsRowSelectionVisible,
-    rowSelectionPrimaryKey,
+    rowPrimaryKey,
     setRowSelectionPrimaryKey,
     selectedRows,
     setSelectedRows,

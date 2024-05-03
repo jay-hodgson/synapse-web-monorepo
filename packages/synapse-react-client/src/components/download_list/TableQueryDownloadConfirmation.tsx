@@ -10,12 +10,12 @@ import { useQueryContext } from '../QueryContext'
 import { useQueryVisualizationContext } from '../QueryVisualizationWrapper'
 import { displayFilesWereAddedToDownloadListSuccess } from './DownloadConfirmationUtils'
 import { getPrimaryKeyINFilter } from '../../utils/functions/QueryFilterUtils'
-import { getFileColumnModelId } from '../SynapseTable/SynapseTableUtils'
 import { useAtomValue } from 'jotai'
 import { tableQueryDataAtom } from '../QueryWrapper/QueryWrapper'
 import {
   hasSelectedRowsAtom,
-  rowSelectionPrimaryKeyAtom,
+  rowPrimaryKeyColumnIdAtom,
+  rowVersionColumnIdAtom,
   selectedRowsAtom,
 } from '../QueryWrapper/TableRowSelectionState'
 
@@ -24,20 +24,23 @@ export function TableQueryDownloadConfirmation() {
   const data = useAtomValue(tableQueryDataAtom)
   const hasSelectedRows = useAtomValue(hasSelectedRowsAtom)
   const selectedRows = useAtomValue(selectedRowsAtom)
-  const rowSelectionPrimaryKey = useAtomValue(rowSelectionPrimaryKeyAtom)
+  const rowPrimaryKeyColumnId = useAtomValue(rowPrimaryKeyColumnIdAtom)
+  const rowVersionColumnId = useAtomValue(rowVersionColumnIdAtom)
   const { setShowDownloadConfirmation } = useQueryVisualizationContext()
   const queryBundleRequest = useMemo(() => {
     const requestCopy = getCurrentQueryRequest()
     requestCopy.partMask =
       SynapseConstants.BUNDLE_MASK_QUERY_COUNT |
       SynapseConstants.BUNDLE_MASK_SUM_FILES_SIZE_BYTES
-    const fileColumnId = getFileColumnModelId(data?.columnModels)
-    if (fileColumnId) {
-      requestCopy.query.selectFileColumn = Number(fileColumnId)
+    if (rowPrimaryKeyColumnId) {
+      requestCopy.query.selectFileColumn = Number(rowPrimaryKeyColumnId)
     }
-    if (hasSelectedRows && rowSelectionPrimaryKey && data?.selectColumns) {
+    if (rowVersionColumnId) {
+      requestCopy.query.selectFileVersionColumn = Number(rowVersionColumnId)
+    }
+    if (hasSelectedRows && rowPrimaryKeyColumnId && data?.selectColumns) {
       const primaryKeyINFilter = getPrimaryKeyINFilter(
-        rowSelectionPrimaryKey,
+        rowPrimaryKeyColumnId,
         selectedRows,
         data.selectColumns,
       )
@@ -51,7 +54,7 @@ export function TableQueryDownloadConfirmation() {
     data?.columnModels,
     getCurrentQueryRequest,
     hasSelectedRows,
-    rowSelectionPrimaryKey,
+    rowPrimaryKeyColumnId,
     selectedRows,
   ])
   const { downloadCartPageUrl } = useSynapseContext()
@@ -81,9 +84,8 @@ export function TableQueryDownloadConfirmation() {
     ? undefined
     : queryResultResponse?.responseBody?.sumFileSizes?.sumFileSizesBytes
 
-  // PORTALS-2954: We can only rely on the row version number if the rowID is meaningful.
-  // If rowSelectionPrimaryKey is undefined, then try to use the row version number
-  const useVersionNumber = rowSelectionPrimaryKey == undefined
+  // PORTALS-3071: if the version
+  const useVersionNumber = rowPrimaryKeyColumnId == undefined
   return (
     <DownloadConfirmationUI
       onAddToDownloadCart={() =>

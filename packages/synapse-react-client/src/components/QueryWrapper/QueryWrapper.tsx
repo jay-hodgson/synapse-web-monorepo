@@ -27,8 +27,8 @@ import {
   hasSelectedRowsAtom,
   isRowSelectionUIFloatingAtom,
   isRowSelectionVisibleAtom,
-  rowPrimaryKeyColumnIdAtom,
-  rowVersionColumnIdAtom,
+  rowPrimaryKeyColumnAtom,
+  rowVersionColumnAtom,
   selectedRowsAtom,
 } from './TableRowSelectionState'
 import useQueryWrapperData from './useQueryWrapperData'
@@ -204,31 +204,30 @@ function _QueryWrapper(props: QueryWrapperProps) {
     setIsRowSelectionUIFloating(isRowSelectionUIFloatingFromProps)
   }, [isRowSelectionUIFloatingFromProps, setIsRowSelectionUIFloating])
 
-  const rowPrimaryKeyColumnId = useMemo(() => {
+  const rowPrimaryKeyColumn = useMemo(() => {
     if (rowPrimaryKeyFromProps) {
-      return getColumnModel(rowPrimaryKeyFromProps)?.id
+      return getColumnModel(rowPrimaryKeyFromProps)
     } else {
-      return getDefaultPrimaryKey(entity, data?.columnModels)?.id
+      return getDefaultPrimaryKey(entity, data?.columnModels)
     }
   }, [data?.columnModels, entity, rowPrimaryKeyFromProps, getColumnModel])
-
-  const setRowPrimaryKeyColumnIdAtom = useSetAtom(rowPrimaryKeyColumnIdAtom)
+  const setRowPrimaryKeyColumnAtom = useSetAtom(rowPrimaryKeyColumnAtom)
   useEffect(() => {
-    setRowPrimaryKeyColumnIdAtom(rowPrimaryKeyColumnId)
-  }, [rowPrimaryKeyColumnId, setRowPrimaryKeyColumnIdAtom])
+    setRowPrimaryKeyColumnAtom(rowPrimaryKeyColumn ?? undefined)
+  }, [rowPrimaryKeyColumn, setRowPrimaryKeyColumnAtom])
 
-  const rowVersionColumnId = useMemo(() => {
+  const rowVersionColumn = useMemo(() => {
     if (rowVersionKeyFromProps) {
-      return getColumnModel(rowVersionKeyFromProps)?.id
+      return getColumnModel(rowVersionKeyFromProps)
     } else {
-      return getDefaultVersionKey(entity, data?.columnModels)?.id
+      return getDefaultVersionKey(entity, data?.columnModels)
     }
   }, [data?.columnModels, entity, rowVersionKeyFromProps, getColumnModel])
 
-  const setRowVersionColumnId = useSetAtom(rowVersionColumnIdAtom)
+  const setRowVersionColumn = useSetAtom(rowVersionColumnAtom)
   useEffect(() => {
-    setRowVersionColumnId(rowVersionColumnId)
-  }, [rowVersionColumnId, setRowVersionColumnId])
+    setRowVersionColumn(rowVersionColumn ?? undefined)
+  }, [rowVersionColumn, setRowVersionColumn])
 
   const setSelectedRows = useSetAtom(selectedRowsAtom)
 

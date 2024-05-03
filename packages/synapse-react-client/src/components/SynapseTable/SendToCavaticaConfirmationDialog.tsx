@@ -16,7 +16,6 @@ import { tableQueryDataAtom } from '../QueryWrapper/QueryWrapper'
 import { useAtomValue } from 'jotai'
 import {
   hasSelectedRowsAtom,
-  rowPrimaryKeyColumnIdAtom,
   selectedRowsAtom,
 } from '../QueryWrapper/TableRowSelectionState'
 
@@ -52,7 +51,6 @@ export default function SendToCavaticaConfirmationDialog(
   } = useQueryContext()
   const data = useAtomValue(tableQueryDataAtom)
   const selectedRows = useAtomValue(selectedRowsAtom)
-  const rowPrimaryKeyColumnId = useAtomValue(rowPrimaryKeyColumnIdAtom)
   const hasSelectedRows = useAtomValue(hasSelectedRowsAtom)
 
   const {
@@ -73,21 +71,23 @@ export default function SendToCavaticaConfirmationDialog(
 
   const cavaticaQueryRequest = useMemo(() => {
     const request = getCurrentQueryRequest()
-    if (hasSelectedRows && rowPrimaryKeyColumnId && data?.selectColumns) {
+    if (hasSelectedRows && fileIdColumnName && data?.selectColumns) {
+      const filter = getPrimaryKeyINFilter(
+        fileIdColumnName,
+        selectedRows,
+        data.selectColumns,
+      )
+
       request.query.additionalFilters = [
         ...(request.query.additionalFilters || []),
-        getPrimaryKeyINFilter(
-          rowPrimaryKeyColumnId,
-          selectedRows,
-          data.selectColumns,
-        ),
+        filter,
       ]
     }
     return request
   }, [
     getCurrentQueryRequest,
     hasSelectedRows,
-    rowPrimaryKeyColumnId,
+    fileIdColumnName,
     data?.selectColumns,
     selectedRows,
   ])

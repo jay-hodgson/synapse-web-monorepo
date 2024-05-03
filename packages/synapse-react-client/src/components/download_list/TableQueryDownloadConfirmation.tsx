@@ -14,8 +14,8 @@ import { useAtomValue } from 'jotai'
 import { tableQueryDataAtom } from '../QueryWrapper/QueryWrapper'
 import {
   hasSelectedRowsAtom,
-  rowPrimaryKeyColumnIdAtom,
-  rowVersionColumnIdAtom,
+  rowPrimaryKeyColumnAtom,
+  rowVersionColumnAtom,
   selectedRowsAtom,
 } from '../QueryWrapper/TableRowSelectionState'
 
@@ -24,23 +24,23 @@ export function TableQueryDownloadConfirmation() {
   const data = useAtomValue(tableQueryDataAtom)
   const hasSelectedRows = useAtomValue(hasSelectedRowsAtom)
   const selectedRows = useAtomValue(selectedRowsAtom)
-  const rowPrimaryKeyColumnId = useAtomValue(rowPrimaryKeyColumnIdAtom)
-  const rowVersionColumnId = useAtomValue(rowVersionColumnIdAtom)
+  const rowPrimaryKeyColumn = useAtomValue(rowPrimaryKeyColumnAtom)
+  const rowVersionColumn = useAtomValue(rowVersionColumnAtom)
   const { setShowDownloadConfirmation } = useQueryVisualizationContext()
   const queryBundleRequest = useMemo(() => {
     const requestCopy = getCurrentQueryRequest()
     requestCopy.partMask =
       SynapseConstants.BUNDLE_MASK_QUERY_COUNT |
       SynapseConstants.BUNDLE_MASK_SUM_FILES_SIZE_BYTES
-    if (rowPrimaryKeyColumnId) {
-      requestCopy.query.selectFileColumn = Number(rowPrimaryKeyColumnId)
+    if (rowPrimaryKeyColumn) {
+      requestCopy.query.selectFileColumn = Number(rowPrimaryKeyColumn.id)
     }
-    if (rowVersionColumnId) {
-      requestCopy.query.selectFileVersionColumn = Number(rowVersionColumnId)
+    if (rowVersionColumn) {
+      requestCopy.query.selectFileVersionColumn = Number(rowVersionColumn.id)
     }
-    if (hasSelectedRows && rowPrimaryKeyColumnId && data?.selectColumns) {
+    if (hasSelectedRows && rowPrimaryKeyColumn && data?.selectColumns) {
       const primaryKeyINFilter = getPrimaryKeyINFilter(
-        rowPrimaryKeyColumnId,
+        rowPrimaryKeyColumn.name,
         selectedRows,
         data.selectColumns,
       )
@@ -51,10 +51,11 @@ export function TableQueryDownloadConfirmation() {
     }
     return requestCopy
   }, [
-    data?.columnModels,
+    data?.selectColumns,
     getCurrentQueryRequest,
     hasSelectedRows,
-    rowPrimaryKeyColumnId,
+    rowPrimaryKeyColumn,
+    rowVersionColumn,
     selectedRows,
   ])
   const { downloadCartPageUrl } = useSynapseContext()
@@ -85,7 +86,7 @@ export function TableQueryDownloadConfirmation() {
     : queryResultResponse?.responseBody?.sumFileSizes?.sumFileSizesBytes
 
   // PORTALS-3071: if the version
-  const useVersionNumber = rowPrimaryKeyColumnId == undefined
+  const useVersionNumber = rowPrimaryKeyColumn == undefined
   return (
     <DownloadConfirmationUI
       onAddToDownloadCart={() =>

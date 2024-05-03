@@ -49,12 +49,12 @@ export const isRowSelectionUIFloatingAtom = atom<boolean>(true)
 /**
  * The column ID that contains a row unique key (used to identify the row). If two selected rows have the same key values, then they are considered equal and would both be selected/deselected together.
  */
-export const rowPrimaryKeyColumnIdAtom = atom<string | undefined>(undefined)
+export const rowPrimaryKeyColumnAtom = atom<ColumnModel | undefined>(undefined)
 
 /**
  * Column ID of containing the row version.
  */
-export const rowVersionColumnIdAtom = atom<string | undefined>(undefined)
+export const rowVersionColumnAtom = atom<ColumnModel | undefined>(undefined)
 
 /**
  * The set of selected rows

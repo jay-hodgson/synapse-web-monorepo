@@ -13,6 +13,19 @@ import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
 import { Search } from '../../assets/themed_icons'
 import { useOneSageURL } from '../../utils/hooks'
+import { ReactComponent as Image1 } from '../../assets/homepage/image1.svg'
+import { ReactComponent as NihHeart } from '../../assets/homepage/nih-heart.svg'
+import { ReactComponent as NihMental } from '../../assets/homepage/nih-mental.svg'
+import { ReactComponent as Sloan } from '../../assets/homepage/sloan.svg'
+import { ReactComponent as NihAging } from '../../assets/homepage/nih-aging.svg'
+import { ReactComponent as Ctf } from '../../assets/homepage/ctf.svg'
+import { ReactComponent as Ntap } from '../../assets/homepage/ntap.svg'
+import { ReactComponent as Gff } from '../../assets/homepage/gff.svg'
+import { ReactComponent as Nci } from '../../assets/homepage/nci.svg'
+import { ReactComponent as NihCommonFund } from '../../assets/homepage/nih-common-fund.svg'
+import { ReactComponent as Cri } from '../../assets/homepage/cri.svg'
+import { ReactComponent as MlCommons } from '../../assets/homepage/ml-commons.svg'
+import { ReactComponent as Gray } from '../../assets/homepage/gray.svg'
 
 export type SynapseHomepageV2Props = {}
 
@@ -42,12 +55,17 @@ export const SynapseHomepageV2: React.FunctionComponent<
     lineHeight: '24px',
     fontWeight: 400,
   }
+  const defaultHomepageText: SxProps = {
+    color: '#172430',
+    fontWeight: 600,
+  }
   const titleSx: SxProps = {
+    ...defaultHomepageText,
     fontWeight: 700,
     fontSize: '72px',
     lineHeight: '72px',
-    color: '#172430',
   }
+
   return (
     <Box>
       {/* Top nav bar */}
@@ -70,7 +88,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             gap: '20px',
           }}
         >
-          <Button sx={navButtonSx}>Explore Portals</Button>
+          <Button sx={navButtonSx}>Portals</Button>
           <Button sx={navButtonSx}>Pricing</Button>
           <Button sx={{ ...navButtonSx, marginRight: '15px' }}>
             Sage Bionetworks
@@ -184,16 +202,56 @@ export const SynapseHomepageV2: React.FunctionComponent<
           <Typography
             variant="headline2"
             sx={{
+              ...defaultHomepageText,
               textAlign: 'center',
               fontSize: '32px',
               lineHeight: '40px',
-              color: '#172430',
-              fontWeight: 600,
             }}
           >
             Synapse is your ecosystem for responsible data sharing, innovative
             data reuse, and collaboration.
           </Typography>
+        </Box>
+        <Box sx={{ maxWidth: '900px', margin: 'auto', marginTop: '60px' }}>
+          <Image1 />
+        </Box>
+        <Typography
+          variant="headline1"
+          sx={{
+            ...defaultHomepageText,
+            textAlign: 'center',
+            marginTop: '100px',
+            fontSize: '56px',
+            lineHeight: '56px',
+            letterSpacing: '-0.56px',
+          }}
+        >
+          Our Partners
+        </Typography>
+        <Box sx={{ margin: 'auto', maxWidth: '1200px' }}>
+          <Box
+            sx={{
+              marginTop: '60px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              gap: '20px',
+            }}
+          >
+            <NihHeart />
+            <NihMental />
+            <Sloan />
+            <NihAging />
+            <Ctf />
+            <Ntap />
+            <Gff />
+            <Nci />
+            <NihCommonFund />
+            <Cri />
+            <MlCommons />
+            <Gray />
+          </Box>
         </Box>
       </Box>
     </Box>

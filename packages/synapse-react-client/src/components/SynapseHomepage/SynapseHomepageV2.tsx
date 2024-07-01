@@ -153,7 +153,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
                   position="start"
                   sx={{ marginLeft: '20px', marginRight: '18px' }}
                 >
-                  <Search size={24} />
+                  <Search size={32} fill="#172430" />
                 </InputAdornment>
               }
               placeholder="Search Synapse"

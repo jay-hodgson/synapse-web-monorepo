@@ -26,6 +26,10 @@ import { ReactComponent as NihCommonFund } from '../../assets/homepage/nih-commo
 import { ReactComponent as Cri } from '../../assets/homepage/cri.svg'
 import { ReactComponent as MlCommons } from '../../assets/homepage/ml-commons.svg'
 import { ReactComponent as Gray } from '../../assets/homepage/gray.svg'
+import { ReactComponent as TotalDataPlot } from '../../assets/homepage/total-data-static-plot.svg'
+import { ReactComponent as TotalDownloadsPlot } from '../../assets/homepage/total-downloads-static-plot.svg'
+import { ReactComponent as ActiveUsersPlot } from '../../assets/homepage/active-users-static-plot.svg'
+import { SynapseByTheNumbersItem } from './SynapseByTheNumbersItem'
 
 export type SynapseHomepageV2Props = {}
 
@@ -110,40 +114,28 @@ export const SynapseHomepageV2: React.FunctionComponent<
           <Typography variant="headline1" sx={titleSx}>
             Explore the data
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '15px',
-              width: '900px',
-              margin: 'auto',
-            }}
-          >
-            <Typography variant="headline1" sx={titleSx}>
-              behind
-            </Typography>
-            <Typography
-              variant="headline1"
-              sx={{ ...titleSx, color: '#38756A' }}
-            >
-              <TypeAnimation
-                sequence={[
-                  // Same substring at the start will only be typed out once, initially
-                  'the next cure',
-                  2500, // wait 1s before replacing
-                  'the golden goose',
-                  2500,
-                  'AI magic',
-                  2500,
-                  'the best pickles',
-                  2500,
-                ]}
-                wrapper="span"
-                speed={20}
-                repeat={Infinity}
-              />
-            </Typography>
-          </Box>
+          <Typography variant="headline1" sx={titleSx}>
+            behind&nbsp;
+            <TypeAnimation
+              sequence={[
+                // Same substring at the start will only be typed out once, initially
+                ' the next cure',
+                2500, // wait 1s before replacing
+                ' the golden goose',
+                2500,
+                ' AI magic',
+                2500,
+                ' the best pickles',
+                2500,
+              ]}
+              wrapper="span"
+              speed={20}
+              repeat={Infinity}
+              style={{
+                color: '#38756A',
+              }}
+            />
+          </Typography>
         </Box>
 
         {/* Search */}
@@ -224,6 +216,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             fontSize: '56px',
             lineHeight: '56px',
             letterSpacing: '-0.56px',
+            marginBottom: '60px',
           }}
         >
           Our Partners
@@ -231,7 +224,6 @@ export const SynapseHomepageV2: React.FunctionComponent<
         <Box sx={{ margin: 'auto', maxWidth: '1200px' }}>
           <Box
             sx={{
-              marginTop: '60px',
               display: 'flex',
               flexWrap: 'wrap',
               justifyContent: 'space-evenly',
@@ -251,6 +243,47 @@ export const SynapseHomepageV2: React.FunctionComponent<
             <Cri />
             <MlCommons />
             <Gray />
+          </Box>
+        </Box>
+
+        <Typography
+          variant="headline1"
+          sx={{
+            ...defaultHomepageText,
+            textAlign: 'center',
+            marginTop: '150px',
+            fontSize: '56px',
+            lineHeight: '56px',
+            letterSpacing: '-0.56px',
+            marginBottom: '60px',
+          }}
+        >
+          Synapse by the numbers
+        </Typography>
+        <Box sx={{ margin: 'auto', width: 'fit-content' }}>
+          <Box
+            sx={{
+              backgroundColor: 'white',
+              borderRadius: '12px',
+              display: 'flex',
+            }}
+          >
+            {/* TODO: query for these numbers */}
+            <SynapseByTheNumbersItem
+              title={'2.71 Petabytes'}
+              description={'Total data'}
+              plot={<TotalDataPlot />}
+            />
+            <SynapseByTheNumbersItem
+              title={'4,400'}
+              description={'Active users per month'}
+              plot={<ActiveUsersPlot />}
+            />
+            <SynapseByTheNumbersItem
+              title={'46,827'}
+              description={'Total downloads per month'}
+              plot={<TotalDownloadsPlot />}
+            />
           </Box>
         </Box>
       </Box>

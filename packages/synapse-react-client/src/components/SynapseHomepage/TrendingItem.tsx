@@ -38,15 +38,21 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
     : ''
 
   return (
-    <Box sx={{ padding: '15px' }}>
+    <Box
+      sx={{
+        padding: '10px',
+        marginBottom: '2px',
+        backgroundColor: 'white',
+        borderRadius: '8px',
+      }}
+    >
       {entityId && <EntityLink entity={entityId} />}
-      <Typography variant="body1">
-        Downloads: {friendlyDownloadCount}
-      </Typography>
-      <Typography variant="body1">Unique Users: {friendlyUserCount}</Typography>
-      <Typography variant="body1">
-        Download Size: {friendlyEgressSize}
-      </Typography>
+      <Box sx={{ display: 'flex' }}>
+        <Typography variant="smallText1">
+          Downloads: {friendlyDownloadCount} • Unique Users: {friendlyUserCount}{' '}
+          • Download Size: {friendlyEgressSize}
+        </Typography>
+      </Box>
     </Box>
   )
 }

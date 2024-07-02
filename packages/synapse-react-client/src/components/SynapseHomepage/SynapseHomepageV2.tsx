@@ -79,6 +79,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
       query: {
         sql: `SELECT * FROM ${past30DaysDownloadMetricsTable}`,
         limit: 10,
+        sort: [
+          { column: 'export_date', direction: 'DESC' }, // First sort by export date desc (only the most recent export)
+          { column: 'n_unique_users', direction: 'DESC' }, // TODO: Is this the correct secondary sort?
+        ],
       },
       partMask: BUNDLE_MASK_QUERY_RESULTS,
       concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',
@@ -289,12 +293,13 @@ export const SynapseHomepageV2: React.FunctionComponent<
         >
           Synapse by the numbers
         </Typography>
-        <Box sx={{ margin: 'auto', width: 'fit-content' }}>
+        <Box sx={{ margin: 'auto', maxWidth: '750px' }}>
           <Box
             sx={{
               backgroundColor: 'white',
               borderRadius: '12px',
               display: 'flex',
+              justifyContent: 'center',
             }}
           >
             {/* TODO: query for these numbers */}
@@ -322,6 +327,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
               fontSize: '32px',
               lineHeight: '40px',
               marginTop: '60px',
+              marginBottom: '25px',
             }}
           >
             Datasets trending this week

@@ -8,8 +8,6 @@ import {
   OutlinedInput,
   InputAdornment,
   Chip,
-  // useMediaQuery,
-  // useTheme,
 } from '@mui/material'
 import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
@@ -32,12 +30,14 @@ import { useSynapseContext } from '../../utils'
 import { SynapseTrendingDatasets } from './SynapseTrendingDatasets'
 import { SynapseByTheNumbers } from './SynapseByTheNumbers'
 import { SynapseFeatures } from './SynapseFeatures'
+import { SynapseInAction } from './SynapseInAction'
 
 export type SynapseHomepageV2Props = {}
 
 const onSearch = (value: string) => {
   window.location.assign(`/Search:${encodeURIComponent(value)}`)
 }
+const sourceAppsTable = 'syn45291362'
 const past30DaysDownloadMetricsTable = 'syn61597084'
 const generalStatsMetricsTable = 'syn61588163'
 
@@ -59,10 +59,9 @@ export const SynapseHomepageV2: React.FunctionComponent<
   const { accessToken } = useSynapseContext()
   const isSignedIn = !!accessToken
   const registrationLink = useOneSageURL('/register1')
-  // const theme = useTheme()
-  // const isMobileView = useMediaQuery(theme.breakpoints.down('md'))
   const [searchValue, setSearchValue] = useState('')
 
+  // TODO: Mount query-based components when getting closer to the component (optimization)
   const navButtonSx: SxProps = {
     fontSize: '18px',
     lineHeight: '24px',
@@ -334,7 +333,8 @@ export const SynapseHomepageV2: React.FunctionComponent<
           variant="headline1"
           sx={{
             ...defaultHomepageText,
-            marginTop: '150px',
+            paddingTop: '75px',
+            paddingBottom: '75px',
             fontSize: '40px',
             lineHeight: '48px',
           }}
@@ -343,17 +343,20 @@ export const SynapseHomepageV2: React.FunctionComponent<
         </Typography>
         {/* TODO: Add Featured datasets based on a collection (and maybe MV) */}
       </Box>
-      <Box>
+      <Box
+        sx={{
+          backgroundColor: '#eeeff1',
+        }}
+      >
         <Typography
           variant="headline1"
           sx={{
             ...defaultHomepageText,
             textAlign: 'center',
-            marginTop: '150px',
+            paddingTop: '75px',
             fontSize: '56px',
             lineHeight: '56px',
             letterSpacing: '-0.56px',
-            marginBottom: '60px',
           }}
         >
           Synapse in action
@@ -367,7 +370,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
               marginTop: '50px',
               fontSize: '32px',
               lineHeight: '40px',
-              marginBottom: '60px',
+              marginBottom: '100px',
             }}
           >
             Explore real-world case studies and success stories showcasing how
@@ -375,6 +378,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             and improve health outcomes.
           </Typography>
         </Box>
+        <SynapseInAction sourceTableId={sourceAppsTable} />
       </Box>
     </Box>
   )

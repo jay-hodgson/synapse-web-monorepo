@@ -18,21 +18,12 @@ export const SynapseFeatures: React.FunctionComponent<
 > = ({}) => {
   const theme = useTheme()
   const isXl = useMediaQuery(theme.breakpoints.up('xl'))
-  const isLg = useMediaQuery(theme.breakpoints.only('lg'))
+  const isLg = useMediaQuery(theme.breakpoints.up('md'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+  // TODO: If mobile, show image below feature items
   return (
     <Box sx={{ position: 'relative' }}>
-      <Box
-        sx={{
-          position: 'absolute',
-          top: -120,
-          right: isXl ? 0 : isLg ? -300 : -800,
-        }}
-      >
-        <TransitionGroup>
-          {/* TODO: Add CSS Transition, and timer to switch graphic?  Probably only mount this when inView */}
-          <GeneComparison />
-        </TransitionGroup>
-      </Box>
       <SynapseFeatureItem
         icon={<SeamlessIntegration />}
         title="Seamless Integrations"
@@ -53,6 +44,23 @@ export const SynapseFeatures: React.FunctionComponent<
         title="Powered by Synapse"
         description="Synapse portals are the front door to innovation. Vibrant research communities exchange data, tools and ideas to accelerate biomedical progress."
       />
+      <Box
+        sx={{
+          position: isMobile ? 'relative' : 'absolute',
+          top: -120,
+          right: isXl ? 0 : isLg ? -300 : undefined,
+        }}
+      >
+        <TransitionGroup>
+          {/* TODO: Add CSS Transition, and timer to switch graphic, or is it by hovering over items?  Probably only mount this when inView */}
+          {/* for our animation of layers, I think we will want to modify these values, eventually ending on the following:
+     opacity: 1;
+      filter: blur(0px);
+      transform: translateZ(0px) translateX(0px); */}
+
+          <GeneComparison />
+        </TransitionGroup>
+      </Box>
     </Box>
   )
 }

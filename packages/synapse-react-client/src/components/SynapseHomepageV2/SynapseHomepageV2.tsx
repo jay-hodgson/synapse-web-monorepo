@@ -38,7 +38,7 @@ export type SynapseHomepageV2Props = {}
 const onSearch = (value: string) => {
   window.location.assign(`/Search:${encodeURIComponent(value)}`)
 }
-const past30DaysDownloadMetricsTable = 'syn55382267'
+const past30DaysDownloadMetricsTable = 'syn61597084'
 const generalStatsMetricsTable = 'syn61588163'
 
 const popularSearches = [
@@ -103,6 +103,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
           }}
         >
           <Button sx={navButtonSx}>Portals</Button>
+          {/* TODO: Place token should be passed to this component. Ability to show nav on a new Pricing page */}
           <Button sx={navButtonSx}>Pricing</Button>
           <Button sx={{ ...navButtonSx, marginRight: '15px' }}>
             Sage Bionetworks
@@ -156,6 +157,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
         </Box>
 
         {/* Search */}
+        {/* TODO: currated/hardcoded dropdown list of searches */}
         <Box
           sx={{
             paddingTop: '70px',
@@ -326,10 +328,54 @@ export const SynapseHomepageV2: React.FunctionComponent<
         </Typography>
         <SynapseFeatures />
       </Box>
-      {/* for our animation of layers, I think we will want to modify these values, eventually ending on the following:
-     opacity: 1;
-      filter: blur(0px);
-      transform: translateZ(0px) translateX(0px); */}
+
+      <Box sx={{ marginLeft: '20px' }}>
+        <Typography
+          variant="headline1"
+          sx={{
+            ...defaultHomepageText,
+            marginTop: '150px',
+            fontSize: '40px',
+            lineHeight: '48px',
+          }}
+        >
+          Featured datasets
+        </Typography>
+        {/* TODO: Add Featured datasets based on a collection (and maybe MV) */}
+      </Box>
+      <Box>
+        <Typography
+          variant="headline1"
+          sx={{
+            ...defaultHomepageText,
+            textAlign: 'center',
+            marginTop: '150px',
+            fontSize: '56px',
+            lineHeight: '56px',
+            letterSpacing: '-0.56px',
+            marginBottom: '60px',
+          }}
+        >
+          Synapse in action
+        </Typography>
+        <Box sx={{ margin: 'auto', maxWidth: '1100px' }}>
+          <Typography
+            variant="headline1"
+            sx={{
+              ...defaultHomepageText,
+              textAlign: 'center',
+              marginTop: '50px',
+              fontSize: '32px',
+              lineHeight: '40px',
+              marginBottom: '60px',
+            }}
+          >
+            Explore real-world case studies and success stories showcasing how
+            researchers use Synapse to drive innovative biomedical discoveries
+            and improve health outcomes.
+          </Typography>
+        </Box>
+      </Box>
     </Box>
   )
 }

@@ -17,8 +17,8 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
         sql: `SELECT * FROM ${past30DaysDownloadMetricsTable}`,
         limit: 10,
         sort: [
-          { column: 'export_date', direction: 'DESC' }, // First sort by export date desc (only the most recent export)
-          { column: 'n_unique_users', direction: 'DESC' }, // TODO: Is this the correct secondary sort?
+          { column: 'last_updated', direction: 'DESC' }, // First sort by export date desc (only the most recent export)
+          { column: 'N_UNIQUE_USERS', direction: 'DESC' }, // TODO: Is this the correct secondary sort?
         ],
       },
       partMask: BUNDLE_MASK_QUERY_RESULTS,
@@ -28,16 +28,13 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
   const rowSet = past30DaysDownloadData?.responseBody?.queryResult?.queryResults
   const headers = rowSet?.headers
   const entityIdColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'project_id',
-  )!
-  const nDownloadsColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'n_downloads',
+    selectColumn => selectColumn.name == 'PROJECT_ID',
   )!
   const nUniqueUsersColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'n_unique_users',
+    selectColumn => selectColumn.name == 'N_UNIQUE_USERS',
   )!
   const egressSizeColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'egress_size_in_b',
+    selectColumn => selectColumn.name == 'TOTAL_DATA_SIZE_GIB',
   )!
 
   if (!rowSet || rowSet.rows.length == 0) {
@@ -47,8 +44,7 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
     <TrendingItem
       rowValues={row.values}
       entityIdColIndex={entityIdColIndex}
-      nDownloadsColIndex={nDownloadsColIndex}
-      egressSizeColIndex={egressSizeColIndex}
+      egressSizeGbColIndex={egressSizeColIndex}
       nUniqueUsersColIndex={nUniqueUsersColIndex}
     />
   ))

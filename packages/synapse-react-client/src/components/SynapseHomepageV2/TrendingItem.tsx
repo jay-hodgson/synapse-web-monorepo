@@ -6,30 +6,22 @@ import { calculateFriendlyFileSize } from '../../utils/functions/calculateFriend
 export type TrendingItemProps = {
   rowValues: (string | null)[]
   entityIdColIndex: number
-  nDownloadsColIndex: number
   nUniqueUsersColIndex: number
-  egressSizeColIndex: number
+  egressSizeGbColIndex: number
 }
 
-const compactFormatter = Intl.NumberFormat('en', { notation: 'compact' })
 const formatter = Intl.NumberFormat('en')
 
 export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
   rowValues,
   entityIdColIndex,
-  nDownloadsColIndex,
   nUniqueUsersColIndex,
-  egressSizeColIndex,
+  egressSizeGbColIndex,
 }) => {
   const entityId = rowValues[entityIdColIndex]
-  const egressSize = rowValues[egressSizeColIndex]
+  const egressSize = rowValues[egressSizeGbColIndex]
   const friendlyEgressSize = egressSize
-    ? calculateFriendlyFileSize(parseInt(egressSize))
-    : ''
-
-  const downloadCount = rowValues[nDownloadsColIndex]
-  const friendlyDownloadCount = downloadCount
-    ? compactFormatter.format(parseInt(downloadCount))
+    ? calculateFriendlyFileSize(parseFloat(egressSize) * 1e9)
     : ''
 
   const userCount = rowValues[nUniqueUsersColIndex]
@@ -49,21 +41,6 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
       {entityId && <EntityLink entity={entityId} />}
       <Box sx={{ display: 'flex', svg: { margin: '0 3px -3px 0' } }}>
         <Typography variant="smallText1">
-          <svg
-            width="16"
-            height="17"
-            viewBox="0 0 16 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M13.5 10.3333V13.3333C13.5 13.7015 13.2015 14 12.8333 14H3.16667C2.79848 14 2.5 13.7015 2.5 13.3333V10.3333M8 10.5V3M8 10.5L5.66667 8.16667M8 10.5L10.3333 8.16667"
-              stroke="#71767F"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          {friendlyDownloadCount} &nbsp; • &nbsp;
           <svg
             width="17"
             height="17"

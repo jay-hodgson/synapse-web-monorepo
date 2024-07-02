@@ -31,6 +31,7 @@ import { ReactComponent as Gray } from '../../assets/homepage/gray.svg'
 import { useSynapseContext } from '../../utils'
 import { SynapseTrendingDatasets } from './SynapseTrendingDatasets'
 import { SynapseByTheNumbers } from './SynapseByTheNumbers'
+import { SynapseFeatures } from './SynapseFeatures'
 
 export type SynapseHomepageV2Props = {}
 
@@ -297,7 +298,34 @@ export const SynapseHomepageV2: React.FunctionComponent<
           />
         </Box>
       </Box>
-
+      <Box sx={{ marginLeft: '20px' }}>
+        <Typography
+          variant="headline1"
+          sx={{
+            ...defaultHomepageText,
+            marginTop: '100px',
+            fontSize: '56px',
+            lineHeight: '56px',
+            letterSpacing: '-0.56px',
+          }}
+        >
+          Features
+        </Typography>
+        <Typography
+          variant="headline1"
+          sx={{
+            ...defaultHomepageText,
+            fontSize: '32px',
+            lineHeight: '40px',
+            maxWidth: '1156px',
+            marginBottom: '30px',
+          }}
+        >
+          Synapse is the open-source research collaboration platform by Sage
+          Bionetworks, tailored for biomedical data reuse and discovery.
+        </Typography>
+        <SynapseFeatures />
+      </Box>
       {/* for our animation of layers, I think we will want to modify these values, eventually ending on the following:
      opacity: 1;
       filter: blur(0px);

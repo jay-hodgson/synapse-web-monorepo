@@ -12,6 +12,8 @@ export type SynapseInActionItemProps = {
   imageFileHandleId: string
   logoFileHandleId: string
   link: string
+  primaryColor: string
+  secondaryColor: string
 }
 
 export const SynapseInActionItem: React.FunctionComponent<
@@ -25,20 +27,45 @@ export const SynapseInActionItem: React.FunctionComponent<
   imageFileHandleId,
   logoFileHandleId,
   link,
+  primaryColor,
+  secondaryColor,
 }) => {
   return (
-    <Box sx={{ padding: '15px', position: 'relative' }}>
-      <Box sx={{ position: 'absolute', right: 0, top: -40 }}>
-        <ImageFromSynapseTable
-          tableId={sourceTableId}
-          fileHandleId={imageFileHandleId}
-          style={{ height: '600px' }}
-        />
-      </Box>
+    <Box
+      sx={{
+        padding: '15px',
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <ImageFromSynapseTable
+        tableId={sourceTableId}
+        fileHandleId={imageFileHandleId}
+        style={{
+          position: 'absolute',
+          right: 0,
+          top: -40,
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'right',
+          zIndex: -1,
+        }}
+      />
       <Box sx={{ maxWidth: '530px' }}>
         {tags &&
-          tags.map(tag => {
-            return <Chip sx={{}} label={tag} />
+          tags.map((tag, index) => {
+            return (
+              <Chip
+                sx={{
+                  marginRight: '5px',
+                  backgroundColor:
+                    index % 2 == 0 ? primaryColor : secondaryColor,
+                  color: 'white',
+                }}
+                label={tag}
+              />
+            )
           })}
         <Typography
           variant="body1"

@@ -17,10 +17,8 @@ export const SynapseFeatures: React.FunctionComponent<
   SynapseFeaturesProps
 > = ({}) => {
   const theme = useTheme()
-  const isXl = useMediaQuery(theme.breakpoints.up('xl'))
-  const isLg = useMediaQuery(theme.breakpoints.up('md'))
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-
+  const isLg = useMediaQuery(theme.breakpoints.up('lg'))
   // TODO: If mobile, show image below feature items
   return (
     <Box sx={{ position: 'relative' }}>
@@ -48,7 +46,11 @@ export const SynapseFeatures: React.FunctionComponent<
         sx={{
           position: isMobile ? 'relative' : 'absolute',
           top: -120,
-          right: isXl ? 0 : isLg ? -300 : undefined,
+          right: isLg || isMobile ? 0 : -600,
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'right',
+          zIndex: -1,
         }}
       >
         <TransitionGroup>

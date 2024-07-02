@@ -45,6 +45,12 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
   const friendlyNameColIndex = headers?.findIndex(
     selectColumn => selectColumn.name == 'friendlyName',
   )!
+  const primaryColorColIndex = headers?.findIndex(
+    selectColumn => selectColumn.name == 'primaryColor',
+  )!
+  const secondaryColorColIndex = headers?.findIndex(
+    selectColumn => selectColumn.name == 'secondaryColor',
+  )!
 
   if (!rowSet || rowSet.rows.length == 0) {
     return <></>
@@ -59,6 +65,8 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
         const logoFileHandleId = row.values[logoColIndex]!
         const link = row.values[linkColIndex]!
         const friendlyName = row.values[friendlyNameColIndex]!
+        const primaryColor = row.values[primaryColorColIndex]!
+        const secondaryColor = row.values[secondaryColorColIndex]!
         return (
           <SynapseInActionItem
             sourceTableId={sourceTableId}
@@ -69,6 +77,8 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
             imageFileHandleId={imageFileHandleId}
             tags={tags}
             link={link}
+            primaryColor={primaryColor}
+            secondaryColor={secondaryColor}
           />
         )
       })}

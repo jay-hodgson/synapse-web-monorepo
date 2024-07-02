@@ -344,9 +344,11 @@ export const SynapseHomepageV2: React.FunctionComponent<
         {/* TODO: Add Featured datasets based on a collection (and maybe MV) */}
       </Box>
       <Box
-        sx={{
-          backgroundColor: '#eeeff1',
-        }}
+        sx={
+          {
+            // backgroundColor: '#eeeff1',
+          }
+        }
       >
         <Typography
           variant="headline1"

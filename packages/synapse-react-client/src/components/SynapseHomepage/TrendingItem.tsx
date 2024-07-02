@@ -2,7 +2,6 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { EntityLink } from '../EntityLink'
 import { calculateFriendlyFileSize } from '../../utils/functions/calculateFriendlyFileSize'
-import { FileDownload } from '@mui/icons-material'
 
 export type TrendingItemProps = {
   rowValues: (string | null)[]

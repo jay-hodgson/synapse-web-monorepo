@@ -28,14 +28,9 @@ import { ReactComponent as NihCommonFund } from '../../assets/homepage/nih-commo
 import { ReactComponent as Cri } from '../../assets/homepage/cri.svg'
 import { ReactComponent as MlCommons } from '../../assets/homepage/ml-commons.svg'
 import { ReactComponent as Gray } from '../../assets/homepage/gray.svg'
-import { ReactComponent as TotalDataPlot } from '../../assets/homepage/total-data-static-plot.svg'
-import { ReactComponent as TotalDownloadsPlot } from '../../assets/homepage/total-downloads-static-plot.svg'
-import { ReactComponent as ActiveUsersPlot } from '../../assets/homepage/active-users-static-plot.svg'
-import { SynapseByTheNumbersItem } from './SynapseByTheNumbersItem'
-import { useGetQueryResultBundleWithAsyncStatus } from '../../synapse-queries'
-import { BUNDLE_MASK_QUERY_RESULTS } from '../../utils/SynapseConstants'
-import { TrendingItem } from './TrendingItem'
 import { useSynapseContext } from '../../utils'
+import { SynapseTrendingDatasets } from './SynapseTrendingDatasets'
+import { SynapseByTheNumbers } from './SynapseByTheNumbers'
 
 export type SynapseHomepageV2Props = {}
 
@@ -43,6 +38,8 @@ const onSearch = (value: string) => {
   window.location.assign(`/Search:${encodeURIComponent(value)}`)
 }
 const past30DaysDownloadMetricsTable = 'syn55382267'
+const generalStatsMetricsTable = 'syn61588163'
+
 const popularSearches = [
   'Alzheimer',
   'Parkinson',
@@ -80,35 +77,6 @@ export const SynapseHomepageV2: React.FunctionComponent<
     fontSize: '72px',
     lineHeight: '72px',
   }
-  const { data: past30DaysDownloadData } =
-    useGetQueryResultBundleWithAsyncStatus({
-      entityId: past30DaysDownloadMetricsTable,
-      query: {
-        sql: `SELECT * FROM ${past30DaysDownloadMetricsTable}`,
-        limit: 10,
-        sort: [
-          { column: 'export_date', direction: 'DESC' }, // First sort by export date desc (only the most recent export)
-          { column: 'n_unique_users', direction: 'DESC' }, // TODO: Is this the correct secondary sort?
-        ],
-      },
-      partMask: BUNDLE_MASK_QUERY_RESULTS,
-      concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',
-    })
-
-  const rowSet = past30DaysDownloadData?.responseBody?.queryResult?.queryResults
-  const headers = rowSet?.headers
-  const entityIdColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'project_id',
-  )!
-  const nDownloadsColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'n_downloads',
-  )!
-  const nUniqueUsersColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'n_unique_users',
-  )!
-  const egressSizeColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'egress_size_in_b',
-  )!
 
   return (
     <Box>
@@ -169,15 +137,12 @@ export const SynapseHomepageV2: React.FunctionComponent<
             <TypeAnimation
               sequence={[
                 // Same substring at the start will only be typed out once, initially
-                ' the next cure',
-                2500, // wait 1s before replacing
-                // TODO: replace with real values
-                ' the golden goose',
-                2500,
-                ' AI magic',
-                2500,
-                ' the best pickles',
-                2500,
+                'the next cure',
+                3000,
+                'the next diagnostic',
+                3000,
+                'the next preventive therapy',
+                3000,
               ]}
               wrapper="span"
               speed={20}
@@ -313,32 +278,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
           Synapse by the numbers
         </Typography>
         <Box sx={{ margin: 'auto', maxWidth: '750px' }}>
-          <Box
-            sx={{
-              backgroundColor: 'white',
-              borderRadius: '12px',
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-            }}
-          >
-            {/* TODO: query for these numbers */}
-            <SynapseByTheNumbersItem
-              title={'2.71 Petabytes'}
-              description={'Total data'}
-              plot={<TotalDataPlot />}
-            />
-            <SynapseByTheNumbersItem
-              title={'4,400'}
-              description={'Active users per month'}
-              plot={<ActiveUsersPlot />}
-            />
-            <SynapseByTheNumbersItem
-              title={'46,827'}
-              description={'Total downloads per month'}
-              plot={<TotalDownloadsPlot />}
-            />
-          </Box>
+          <SynapseByTheNumbers metricsTable={generalStatsMetricsTable} />
           <Typography
             variant="headline2"
             sx={{
@@ -352,16 +292,9 @@ export const SynapseHomepageV2: React.FunctionComponent<
           >
             Datasets trending this week
           </Typography>
-          {rowSet &&
-            rowSet.rows.map(row => (
-              <TrendingItem
-                rowValues={row.values}
-                entityIdColIndex={entityIdColIndex}
-                nDownloadsColIndex={nDownloadsColIndex}
-                egressSizeColIndex={egressSizeColIndex}
-                nUniqueUsersColIndex={nUniqueUsersColIndex}
-              />
-            ))}
+          <SynapseTrendingDatasets
+            past30DaysDownloadMetricsTable={past30DaysDownloadMetricsTable}
+          />
         </Box>
       </Box>
 

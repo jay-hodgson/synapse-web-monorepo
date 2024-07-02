@@ -30,26 +30,30 @@ import { ReactComponent as TotalDataPlot } from '../../assets/homepage/total-dat
 import { ReactComponent as TotalDownloadsPlot } from '../../assets/homepage/total-downloads-static-plot.svg'
 import { ReactComponent as ActiveUsersPlot } from '../../assets/homepage/active-users-static-plot.svg'
 import { SynapseByTheNumbersItem } from './SynapseByTheNumbersItem'
+import { useGetQueryResultBundleWithAsyncStatus } from '../../synapse-queries'
+import { BUNDLE_MASK_QUERY_RESULTS } from '../../utils/SynapseConstants'
+import { TrendingItem } from './TrendingItem'
 
 export type SynapseHomepageV2Props = {}
 
 const onSearch = (value: string) => {
   window.location.assign(`/Search:${encodeURIComponent(value)}`)
 }
+const past30DaysDownloadMetricsTable = 'syn55382267'
+const popularSearches = [
+  'Alzheimer',
+  'Parkinson',
+  'Neurofibromatosis',
+  'HTAN',
+  'ukb-ppp',
+  'ROSMAP',
+  'GENIE',
+]
+const LOGIN_LINK = '/LoginPlace:0'
 
 export const SynapseHomepageV2: React.FunctionComponent<
   SynapseHomepageV2Props
 > = ({}) => {
-  const popularSearches = [
-    'Alzheimer',
-    'Parkinson',
-    'Neurofibromatosis',
-    'HTAN',
-    'ukb-ppp',
-    'ROSMAP',
-    'GENIE',
-  ]
-  const LOGIN_LINK = '/LoginPlace:0'
   const registrationLink = useOneSageURL('/register1')
 
   const [searchValue, setSearchValue] = useState('')
@@ -69,6 +73,31 @@ export const SynapseHomepageV2: React.FunctionComponent<
     fontSize: '72px',
     lineHeight: '72px',
   }
+  const { data: past30DaysDownloadData } =
+    useGetQueryResultBundleWithAsyncStatus({
+      entityId: past30DaysDownloadMetricsTable,
+      query: {
+        sql: `SELECT * FROM ${past30DaysDownloadMetricsTable}`,
+        limit: 10,
+      },
+      partMask: BUNDLE_MASK_QUERY_RESULTS,
+      concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',
+    })
+
+  const rowSet = past30DaysDownloadData?.responseBody?.queryResult?.queryResults
+  const headers = rowSet?.headers
+  const entityIdColIndex = headers?.findIndex(
+    selectColumn => selectColumn.name == 'project_id',
+  )!
+  const nDownloadsColIndex = headers?.findIndex(
+    selectColumn => selectColumn.name == 'n_downloads',
+  )!
+  const nUniqueUsersColIndex = headers?.findIndex(
+    selectColumn => selectColumn.name == 'n_unique_users',
+  )!
+  const egressSizeColIndex = headers?.findIndex(
+    selectColumn => selectColumn.name == 'egress_size_in_b',
+  )!
 
   return (
     <Box>
@@ -285,6 +314,28 @@ export const SynapseHomepageV2: React.FunctionComponent<
               plot={<TotalDownloadsPlot />}
             />
           </Box>
+          <Typography
+            variant="headline2"
+            sx={{
+              ...defaultHomepageText,
+              textAlign: 'center',
+              fontSize: '32px',
+              lineHeight: '40px',
+              marginTop: '60px',
+            }}
+          >
+            Datasets trending this week
+          </Typography>
+          {rowSet &&
+            rowSet.rows.map(row => (
+              <TrendingItem
+                rowValues={row.values}
+                entityIdColIndex={entityIdColIndex}
+                nDownloadsColIndex={nDownloadsColIndex}
+                egressSizeColIndex={egressSizeColIndex}
+                nUniqueUsersColIndex={nUniqueUsersColIndex}
+              />
+            ))}
         </Box>
       </Box>
     </Box>

@@ -8,8 +8,8 @@ import {
   OutlinedInput,
   InputAdornment,
   Chip,
-  useMediaQuery,
-  useTheme,
+  // useMediaQuery,
+  // useTheme,
 } from '@mui/material'
 import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
@@ -35,6 +35,7 @@ import { SynapseByTheNumbersItem } from './SynapseByTheNumbersItem'
 import { useGetQueryResultBundleWithAsyncStatus } from '../../synapse-queries'
 import { BUNDLE_MASK_QUERY_RESULTS } from '../../utils/SynapseConstants'
 import { TrendingItem } from './TrendingItem'
+import { useSynapseContext } from '../../utils'
 
 export type SynapseHomepageV2Props = {}
 
@@ -52,13 +53,16 @@ const popularSearches = [
   'GENIE',
 ]
 const LOGIN_LINK = '/LoginPlace:0'
+const MY_DASHBOARD_LINK = '/Profile:v'
 
 export const SynapseHomepageV2: React.FunctionComponent<
   SynapseHomepageV2Props
 > = ({}) => {
+  const { accessToken } = useSynapseContext()
+  const isSignedIn = !!accessToken
   const registrationLink = useOneSageURL('/register1')
-  const theme = useTheme()
-  const isMobileView = useMediaQuery(theme.breakpoints.down('md'))
+  // const theme = useTheme()
+  // const isMobileView = useMediaQuery(theme.breakpoints.down('md'))
   const [searchValue, setSearchValue] = useState('')
 
   const navButtonSx: SxProps = {
@@ -120,6 +124,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
         {/* Logo */}
         <SynapseFullLogo textColor="#0B1218" />
         {/* Menu Items */}
+        {/* TODO: Add Hamburger mobile version of nav bar options */}
         <Box
           sx={{
             display: 'flex',
@@ -133,16 +138,25 @@ export const SynapseHomepageV2: React.FunctionComponent<
           <Button sx={{ ...navButtonSx, marginRight: '15px' }}>
             Sage Bionetworks
           </Button>
-          <Button size="large" variant="outlined" href={LOGIN_LINK}>
-            Login
-          </Button>
-          <Button
-            size="large"
-            variant="contained"
-            href={registrationLink.toString()}
-          >
-            Register Now
-          </Button>
+          {isSignedIn && (
+            <Button size="large" variant="contained" href={MY_DASHBOARD_LINK}>
+              View My Dashboard
+            </Button>
+          )}
+          {!isSignedIn && (
+            <Button size="large" variant="outlined" href={LOGIN_LINK}>
+              Login
+            </Button>
+          )}
+          {!isSignedIn && (
+            <Button
+              size="large"
+              variant="contained"
+              href={registrationLink.toString()}
+            >
+              Register Now
+            </Button>
+          )}
         </Box>
       </Box>
       <Box sx={{ backgroundColor: '#DAE9E7', padding: '80px 0px' }}>
@@ -157,6 +171,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
                 // Same substring at the start will only be typed out once, initially
                 ' the next cure',
                 2500, // wait 1s before replacing
+                // TODO: replace with real values
                 ' the golden goose',
                 2500,
                 ' AI magic',

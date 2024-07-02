@@ -1,9 +1,9 @@
 import React, { CSSProperties } from 'react'
-import { SynapseQueries } from 'synapse-react-client'
 import {
   FileHandleAssociateType,
   FileHandleAssociation,
 } from '@sage-bionetworks/synapse-types'
+import { useGetStablePresignedUrl } from '../synapse-queries'
 
 export type ImageFromSynapseTableProps = {
   tableId: string
@@ -21,13 +21,9 @@ const ImageFromSynapseTable: React.FC<ImageFromSynapseTableProps> = (
     associateObjectType: FileHandleAssociateType.TableEntity,
     fileHandleId: fileHandleId ?? '',
   }
-  const stablePresignedUrl = SynapseQueries.useGetStablePresignedUrl(
-    fha,
-    true,
-    {
-      enabled: !!fileHandleId,
-    },
-  )
+  const stablePresignedUrl = useGetStablePresignedUrl(fha, true, {
+    enabled: !!fileHandleId,
+  })
 
   const dataUrl = stablePresignedUrl?.dataUrl
   const error = stablePresignedUrl?.queryResult?.error

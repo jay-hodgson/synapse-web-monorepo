@@ -6,9 +6,8 @@ import { ReactComponent as ResearchCredit } from '../../assets/homepage/research
 import { ReactComponent as PrecisionGovernance } from '../../assets/homepage/precision-governance-feature.svg'
 import { ReactComponent as PoweredBySynapse } from '../../assets/homepage/powered-by-synapse-feature.svg'
 import { ReactComponent as GeneComparison } from '../../assets/homepage/gene-comparison-tool-feature.svg'
-import { ReactComponent as Explore } from '../../assets/homepage/explore-feature.svg'
+// import { ReactComponent as Explore } from '../../assets/homepage/explore-feature.svg'
 
-import { TransitionGroup } from 'react-transition-group'
 import { useTheme, useMediaQuery } from '@mui/material'
 
 export type SynapseFeaturesProps = {}
@@ -53,7 +52,7 @@ export const SynapseFeatures: React.FunctionComponent<
           zIndex: -1,
         }}
       >
-        <TransitionGroup>
+        <Box>
           {/* TODO: Add CSS Transition, and timer to switch graphic, or is it by hovering over items?  Probably only mount this when inView */}
           {/* for our animation of layers, I think we will want to modify these values, eventually ending on the following:
      opacity: 1;
@@ -61,7 +60,7 @@ export const SynapseFeatures: React.FunctionComponent<
       transform: translateZ(0px) translateX(0px); */}
 
           <GeneComparison />
-        </TransitionGroup>
+        </Box>
       </Box>
     </Box>
   )

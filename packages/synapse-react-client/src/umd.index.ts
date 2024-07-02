@@ -31,6 +31,7 @@ import { ProgrammaticInstructionsModal } from './components/ProgrammaticInstruct
 import QueryWrapperPlotNav from './components/QueryWrapperPlotNav/QueryWrapperPlotNav'
 import StatisticsPlot from './components/StatisticsPlot'
 import { SynapseHomepage } from './components/SynapseHomepage'
+import { SynapseHomepageV2 } from './components/SynapseHomepageV2'
 import { SynapseNavDrawer } from './components/SynapseNavDrawer/SynapseNavDrawer'
 import { DatasetItemsEditor } from './components/SynapseTable/datasets/DatasetItemsEditor'
 import StandaloneQueryWrapper from './components/StandaloneQueryWrapper/StandaloneQueryWrapper'
@@ -113,6 +114,7 @@ const SynapseComponents = {
   PageProgress,
   ProjectViewCarousel,
   SynapseHomepage,
+  SynapseHomepageV2,
   EntityFinder,
   ErrorPage,
   EntityBadgeIcons,

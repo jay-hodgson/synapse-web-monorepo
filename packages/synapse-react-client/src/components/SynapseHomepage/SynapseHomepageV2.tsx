@@ -8,6 +8,8 @@ import {
   OutlinedInput,
   InputAdornment,
   Chip,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
@@ -55,7 +57,8 @@ export const SynapseHomepageV2: React.FunctionComponent<
   SynapseHomepageV2Props
 > = ({}) => {
   const registrationLink = useOneSageURL('/register1')
-
+  const theme = useTheme()
+  const isMobileView = useMediaQuery(theme.breakpoints.down('md'))
   const [searchValue, setSearchValue] = useState('')
 
   const navButtonSx: SxProps = {
@@ -203,6 +206,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             alignItems: 'center',
             justifyContent: 'center',
             marginTop: '30px',
+            flexWrap: 'wrap',
           }}
         >
           <Typography variant="body1">Popular Searches:</Typography>
@@ -299,6 +303,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
               backgroundColor: 'white',
               borderRadius: '12px',
               display: 'flex',
+              flexWrap: 'wrap',
               justifyContent: 'center',
             }}
           >
@@ -344,6 +349,11 @@ export const SynapseHomepageV2: React.FunctionComponent<
             ))}
         </Box>
       </Box>
+
+      {/* for our animation of layers, I think we will want to modify these values, eventually ending on the following:
+     opacity: 1;
+      filter: blur(0px);
+      transform: translateZ(0px) translateX(0px); */}
     </Box>
   )
 }

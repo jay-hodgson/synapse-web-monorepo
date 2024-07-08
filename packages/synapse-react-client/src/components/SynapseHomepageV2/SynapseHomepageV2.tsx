@@ -13,6 +13,7 @@ import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
 import { Search } from '../../assets/themed_icons'
 import { useOneSageURL } from '../../utils/hooks'
+import { ReactComponent as HeaderSplash } from '../../assets/homepage/header-splash.svg'
 import { ReactComponent as Image1 } from '../../assets/homepage/image1.svg'
 import { ReactComponent as NihHeart } from '../../assets/homepage/nih-heart.svg'
 import { ReactComponent as NihMental } from '../../assets/homepage/nih-mental.svg'
@@ -31,6 +32,7 @@ import { SynapseTrendingDatasets } from './SynapseTrendingDatasets'
 import { SynapseByTheNumbers } from './SynapseByTheNumbers'
 import { SynapseFeatures } from './SynapseFeatures'
 import { SynapseInAction } from './SynapseInAction'
+import { backgroundInlinePng } from '../../assets/homepage/header-splash'
 
 export type SynapseHomepageV2Props = {}
 
@@ -59,6 +61,8 @@ export const SynapseHomepageV2: React.FunctionComponent<
   const { accessToken } = useSynapseContext()
   const isSignedIn = !!accessToken
   const registrationLink = useOneSageURL('/register1')
+  const resourcesLink = useOneSageURL('/sageresources')
+
   const [searchValue, setSearchValue] = useState('')
 
   // TODO: Mount query-based components when getting closer to the component (optimization)
@@ -73,10 +77,14 @@ export const SynapseHomepageV2: React.FunctionComponent<
   }
   const titleSx: SxProps = {
     ...defaultHomepageText,
-    fontWeight: 700,
+    fontWeight: 300,
     fontSize: '72px',
-    lineHeight: '72px',
+    lineHeight: '82px',
+    color: 'white',
   }
+
+  // Some sections have an angled cut in the separators.  Use these clip paths
+  const desktopLowerClipPath = 'polygon(0 0, 100% 0, 100% 65%, 0% 100%)'
 
   return (
     <Box>
@@ -101,10 +109,18 @@ export const SynapseHomepageV2: React.FunctionComponent<
             gap: '20px',
           }}
         >
-          <Button sx={navButtonSx}>Portals</Button>
-          {/* TODO: Place token should be passed to this component. Ability to show nav on a new Pricing page */}
-          <Button sx={navButtonSx}>Pricing</Button>
-          <Button sx={{ ...navButtonSx, marginRight: '15px' }}>
+          <Button
+            sx={navButtonSx}
+            href={resourcesLink.toString()}
+            target="_blank"
+          >
+            Portals
+          </Button>
+          <Button
+            sx={{ ...navButtonSx, marginRight: '15px' }}
+            href="https://sagebionetworks.org/"
+            target="_blank"
+          >
             Sage Bionetworks
           </Button>
           {isSignedIn && (
@@ -128,81 +144,101 @@ export const SynapseHomepageV2: React.FunctionComponent<
           )}
         </Box>
       </Box>
-      <Box sx={{ backgroundColor: '#DAE9E7', padding: '80px 0px' }}>
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="headline1" sx={titleSx}>
-            Explore the data
-          </Typography>
-          <Typography variant="headline1" sx={titleSx}>
-            behind&nbsp;
-            <TypeAnimation
-              sequence={[
-                // Same substring at the start will only be typed out once, initially
-                'the next cure',
-                3000,
-                'the next diagnostic',
-                3000,
-                'the next preventive therapy',
-                3000,
-              ]}
-              wrapper="span"
-              speed={20}
-              repeat={Infinity}
-              style={{
-                color: '#38756A',
-              }}
-            />
-          </Typography>
+      <Box sx={{ position: 'relative', paddingBottom: '80px' }}>
+        <Box
+          sx={{
+            position: 'absolute',
+            background: `linear-gradient(0deg, rgba(23, 36, 48, 0.75) 0%, rgba(23, 36, 48, 0.75) 100%), url(${backgroundInlinePng}) lightgray 50% / cover no-repeat`,
+            minHeight: '600px',
+            width: '100%',
+            height: '100%',
+            content: "''",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: -1,
+            clipPath: desktopLowerClipPath,
+          }}
+        >
+          {' '}
         </Box>
+      </Box>
 
-        {/* Search */}
-        {/* TODO: currated/hardcoded dropdown list of searches */}
-        <Box
-          sx={{
-            paddingTop: '70px',
-            maxWidth: '600px',
-            margin: 'auto',
-          }}
-        >
-          <FormControl fullWidth sx={{ m: 1 }}>
-            <OutlinedInput
-              startAdornment={
-                <InputAdornment
-                  position="start"
-                  sx={{ marginLeft: '20px', marginRight: '18px' }}
-                >
-                  <Search size={32} fill="#172430" />
-                </InputAdornment>
-              }
-              placeholder="Search Synapse"
-              sx={{ fontSize: '24px', borderRadius: 96.6 }}
-              onSubmit={() => onSearch(searchValue)}
-              onChange={event => setSearchValue(event.target.value)}
+      <Box sx={{ textAlign: 'center', paddingTop: '80px' }}>
+        <Typography variant="headline1" sx={titleSx}>
+          Explore the data
+        </Typography>
+        <Typography variant="headline1" sx={titleSx}>
+          behind&nbsp;
+          <TypeAnimation
+            sequence={[
+              // Same substring at the start will only be typed out once, initially
+              'the next cure',
+              3000,
+              'the next diagnostic',
+              3000,
+              'the next preventive therapy',
+              3000,
+            ]}
+            wrapper="span"
+            speed={20}
+            repeat={Infinity}
+            style={{
+              color: '#B5D3CE',
+            }}
+          />
+        </Typography>
+      </Box>
+
+      {/* Search */}
+      {/* TODO: currated/hardcoded dropdown list of searches */}
+      <Box
+        sx={{
+          paddingTop: '70px',
+          maxWidth: '600px',
+          margin: 'auto',
+        }}
+      >
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <OutlinedInput
+            startAdornment={
+              <InputAdornment
+                position="start"
+                sx={{ marginLeft: '20px', marginRight: '18px' }}
+              >
+                <Search size={32} fill="#172430" />
+              </InputAdornment>
+            }
+            placeholder="Search Synapse"
+            sx={{ fontSize: '24px', borderRadius: 96.6 }}
+            onSubmit={() => onSearch(searchValue)}
+            onChange={event => setSearchValue(event.target.value)}
+          />
+        </FormControl>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: '30px',
+          flexWrap: 'wrap',
+        }}
+      >
+        {popularSearches.map(value => {
+          return (
+            <Chip
+              label={value}
+              onClick={() => onSearch(value)}
+              variant="outlined"
+              sx={{ color: '#2A5850', backgroundColor: '#DAE9E7' }}
             />
-          </FormControl>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            gap: '10px',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: '30px',
-            flexWrap: 'wrap',
-          }}
-        >
-          <Typography variant="body1">Popular Searches:</Typography>
-          {popularSearches.map(value => {
-            return (
-              <Chip
-                label={value}
-                onClick={() => onSearch(value)}
-                variant="outlined"
-                sx={{ borderColor: '#6BA89D' }}
-              />
-            )
-          })}
-        </Box>
+          )
+        })}
+      </Box>
+      <Box>
         <Box
           sx={{
             maxWidth: '800px',

@@ -13,7 +13,7 @@ import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
 import { Search } from '../../assets/themed_icons'
 import { useOneSageURL } from '../../utils/hooks'
-import { ReactComponent as HeaderSplash } from '../../assets/homepage/header-splash.svg'
+import { ReactComponent as SageLogo } from '../../assets/logos/sage-logo.svg'
 import { ReactComponent as Image1 } from '../../assets/homepage/image1.svg'
 import { ReactComponent as NihHeart } from '../../assets/homepage/nih-heart.svg'
 import { ReactComponent as NihMental } from '../../assets/homepage/nih-mental.svg'
@@ -44,7 +44,7 @@ const past30DaysDownloadMetricsTable = 'syn61597084'
 const generalStatsMetricsTable = 'syn61588163'
 
 const popularSearches = [
-  'Alzheimer',
+  "Alzheimer's Disease",
   'Parkinson',
   'Neurofibromatosis',
   'HTAN',
@@ -124,12 +124,22 @@ export const SynapseHomepageV2: React.FunctionComponent<
             Sage Bionetworks
           </Button>
           {isSignedIn && (
-            <Button size="large" variant="contained" href={MY_DASHBOARD_LINK}>
+            <Button
+              size="large"
+              variant="contained"
+              color="secondary"
+              href={MY_DASHBOARD_LINK}
+            >
               View My Dashboard
             </Button>
           )}
           {!isSignedIn && (
-            <Button size="large" variant="outlined" href={LOGIN_LINK}>
+            <Button
+              size="large"
+              variant="outlined"
+              color="secondary"
+              href={LOGIN_LINK}
+            >
               Login
             </Button>
           )}
@@ -137,6 +147,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             <Button
               size="large"
               variant="contained"
+              color="secondary"
               href={registrationLink.toString()}
             >
               Register Now
@@ -238,44 +249,78 @@ export const SynapseHomepageV2: React.FunctionComponent<
           )
         })}
       </Box>
-      <Box>
-        <Box
-          sx={{
-            maxWidth: '800px',
-            margin: 'auto',
-            marginTop: '50px',
-          }}
-        >
+      {/* TODO: This Grid is mobile unfriendly (see the image).  */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: '50% 50%',
+          backgroundColor: '#DAE9E7',
+          marginTop: '150px',
+        }}
+      >
+        <Box sx={{ padding: '70px 0px 25px 60px' }}>
+          <SageLogo style={{ height: '60px', marginLeft: '-100px' }} />
           <Typography
             variant="headline2"
             sx={{
               ...defaultHomepageText,
-              textAlign: 'center',
-              fontSize: '32px',
-              lineHeight: '40px',
+              fontSize: '40px',
+              lineHeight: '60px',
+              maxWidth: '600px',
+              color: '#38756A',
+              marginTop: '20px',
+              fontWeight: 400,
+              marginBottom: '35px',
             }}
           >
-            Synapse is your ecosystem for responsible data sharing, innovative
-            data reuse, and collaboration.
+            Created by <strong>Sage Bionetworks</strong>, Synapse is your
+            ecosystem for responsible data sharing, innovative data reuse, and
+            collaboration.
           </Typography>
+          <Button
+            size="large"
+            variant="contained"
+            color="secondary"
+            href="https://www.sagebionetworks.org"
+            target="_blank"
+          >
+            About Sage Bionetworks
+          </Button>
         </Box>
-        <Box sx={{ maxWidth: '900px', margin: 'auto', marginTop: '60px' }}>
+        <Box sx={{ height: '100%', justifySelf: 'end' }}>
           <Image1 />
         </Box>
+      </Box>
+      <Box>
         <Typography
           variant="headline1"
           sx={{
             ...defaultHomepageText,
             textAlign: 'center',
             marginTop: '100px',
-            fontSize: '56px',
-            lineHeight: '56px',
+            fontSize: '40px',
+            lineHeight: '72px',
             letterSpacing: '-0.56px',
-            marginBottom: '60px',
           }}
         >
-          Our Partners
+          We partner with scientific leaders
         </Typography>
+        <Box sx={{ margin: 'auto', maxWidth: '750px' }}>
+          <Typography
+            variant="headline1"
+            sx={{
+              ...defaultHomepageText,
+              textAlign: 'center',
+              fontSize: '24px',
+              fontWeight: 400,
+              marginBottom: '60px',
+              lineHeight: '34px',
+            }}
+          >
+            Synapse is your ecosystem for responsible data sharing, innovative
+            data reuse, and collaboration.
+          </Typography>
+        </Box>
         <Box sx={{ margin: 'auto', maxWidth: '1200px' }}>
           <Box
             sx={{

@@ -169,7 +169,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             bottom: 0,
             left: 0,
             zIndex: -1,
-            clipPath: desktopLowerClipPath,
+            clipPath: 'polygon(0 0, 100% 0, 100% 65%, 0% 100%)',
           }}
         >
           {' '}
@@ -348,7 +348,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
         <Box
           sx={{
             paddingBottom: '220px',
-            clipPath: desktopLowerClipPath,
+            clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0% 100%)',
             backgroundColor: 'white',
             zIndex: 100,
           }}
@@ -366,7 +366,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             sx={{
               ...defaultHomepageText,
               textAlign: 'center',
-              marginTop: '150px',
+              marginTop: '100px',
               fontSize: '52px',
               lineHeight: '62px',
               marginBottom: '60px',

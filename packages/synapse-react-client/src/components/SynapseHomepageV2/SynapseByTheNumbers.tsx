@@ -56,7 +56,7 @@ export const SynapseByTheNumbers: React.FunctionComponent<
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
       }}
     >
       <SynapseByTheNumbersItem

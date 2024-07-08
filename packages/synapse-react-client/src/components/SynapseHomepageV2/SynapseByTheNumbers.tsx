@@ -54,8 +54,6 @@ export const SynapseByTheNumbers: React.FunctionComponent<
   return (
     <Box
       sx={{
-        backgroundColor: 'white',
-        borderRadius: '12px',
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',

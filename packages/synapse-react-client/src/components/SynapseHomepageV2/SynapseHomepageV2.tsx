@@ -345,32 +345,47 @@ export const SynapseHomepageV2: React.FunctionComponent<
             <Gray />
           </Box>
         </Box>
-
-        <Typography
-          variant="headline1"
+        <Box
           sx={{
-            ...defaultHomepageText,
-            textAlign: 'center',
-            marginTop: '150px',
-            fontSize: '56px',
-            lineHeight: '56px',
-            letterSpacing: '-0.56px',
-            marginBottom: '60px',
+            paddingBottom: '220px',
+            clipPath: desktopLowerClipPath,
+            backgroundColor: 'white',
+            zIndex: 100,
+          }}
+        ></Box>
+
+        <Box
+          sx={{
+            backgroundColor: '#223549',
+            paddingTop: '200px',
+            marginTop: '-200px',
           }}
         >
-          Synapse by the numbers
-        </Typography>
-        <Box sx={{ margin: 'auto', maxWidth: '750px' }}>
+          <Typography
+            variant="headline1"
+            sx={{
+              ...defaultHomepageText,
+              textAlign: 'center',
+              marginTop: '150px',
+              fontSize: '52px',
+              lineHeight: '62px',
+              marginBottom: '60px',
+              color: 'white',
+            }}
+          >
+            Synapse by the numbers
+          </Typography>
           <SynapseByTheNumbers metricsTable={generalStatsMetricsTable} />
           <Typography
             variant="headline2"
             sx={{
               ...defaultHomepageText,
               textAlign: 'center',
-              fontSize: '32px',
+              fontSize: '36px',
               lineHeight: '40px',
               marginTop: '60px',
               marginBottom: '25px',
+              color: 'white',
             }}
           >
             Datasets trending this week

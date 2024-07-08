@@ -34,13 +34,12 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
       sx={{
         padding: '10px',
         marginBottom: '2px',
-        backgroundColor: 'white',
-        borderRadius: '8px',
       }}
     >
-      {entityId && <EntityLink entity={entityId} />}
+      {/* TODO: get the entity header, and show the entity name here in color #D7DEE4
+      {entityId && <EntityLink entity={entityId} />} */}
       <Box sx={{ display: 'flex', svg: { margin: '0 3px -3px 0' } }}>
-        <Typography variant="smallText1">
+        <Typography variant="smallText1" sx={{ color: '#D7DEE4' }}>
           <svg
             width="17"
             height="17"

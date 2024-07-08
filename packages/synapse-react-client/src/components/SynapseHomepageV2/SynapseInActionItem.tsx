@@ -4,7 +4,7 @@ import ImageFromSynapseTable from '../ImageFromSynapseTable'
 import { EastTwoTone } from '@mui/icons-material'
 
 export type SynapseInActionItemProps = {
-  sourceTableId: string
+  tableId: string
   friendlyName: string
   title: string
   description: string
@@ -19,7 +19,7 @@ export type SynapseInActionItemProps = {
 export const SynapseInActionItem: React.FunctionComponent<
   SynapseInActionItemProps
 > = ({
-  sourceTableId,
+  tableId,
   friendlyName,
   title,
   description,
@@ -27,8 +27,6 @@ export const SynapseInActionItem: React.FunctionComponent<
   imageFileHandleId,
   logoFileHandleId,
   link,
-  primaryColor,
-  secondaryColor,
 }) => {
   return (
     <Box
@@ -40,7 +38,7 @@ export const SynapseInActionItem: React.FunctionComponent<
       }}
     >
       <ImageFromSynapseTable
-        tableId={sourceTableId}
+        tableId={tableId}
         fileHandleId={imageFileHandleId}
         style={{
           position: 'absolute',
@@ -59,9 +57,8 @@ export const SynapseInActionItem: React.FunctionComponent<
               <Chip
                 sx={{
                   marginRight: '5px',
-                  backgroundColor:
-                    index % 2 == 0 ? primaryColor : secondaryColor,
-                  color: 'white',
+                  color: '#38756A',
+                  backgroundColor: '#DAE9E7',
                 }}
                 label={tag}
               />
@@ -91,7 +88,7 @@ export const SynapseInActionItem: React.FunctionComponent<
           {description}
         </Typography>
         <ImageFromSynapseTable
-          tableId={sourceTableId}
+          tableId={tableId}
           fileHandleId={logoFileHandleId}
           friendlyName={`${friendlyName} logo`}
           style={{ height: '40px' }}

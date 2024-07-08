@@ -37,7 +37,7 @@ export type SynapseHomepageV2Props = {}
 const onSearch = (value: string) => {
   window.location.assign(`/Search:${encodeURIComponent(value)}`)
 }
-const sourceAppsTable = 'syn45291362'
+const synapseInActionTable = 'syn61670075'
 const past30DaysDownloadMetricsTable = 'syn61597084'
 const generalStatsMetricsTable = 'syn61588163'
 
@@ -380,7 +380,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             and improve health outcomes.
           </Typography>
         </Box>
-        <SynapseInAction sourceTableId={sourceAppsTable} />
+        <SynapseInAction tableId={synapseInActionTable} />
       </Box>
     </Box>
   )

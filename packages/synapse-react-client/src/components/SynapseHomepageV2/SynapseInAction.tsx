@@ -5,16 +5,16 @@ import { Box } from '@mui/material'
 import { SynapseInActionItem } from './SynapseInActionItem'
 
 export type SynapseInActionProps = {
-  sourceTableId: string
+  tableId: string
 }
 
 export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
-  sourceTableId,
+  tableId,
 }) => {
   const { data } = useGetQueryResultBundleWithAsyncStatus({
-    entityId: sourceTableId,
+    entityId: tableId,
     query: {
-      sql: `SELECT * FROM ${sourceTableId} WHERE synapseHomepageTitle is not null`,
+      sql: `SELECT * FROM ${tableId}`,
       limit: 5,
       sort: [{ column: 'friendlyName', direction: 'DESC' }],
     },
@@ -25,16 +25,16 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
   const rowSet = data?.responseBody?.queryResult?.queryResults
   const headers = rowSet?.headers
   const titleColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'synapseHomepageTitle',
+    selectColumn => selectColumn.name == 'title',
   )!
   const descriptionColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'synapseHomepageDescription',
+    selectColumn => selectColumn.name == 'description',
   )!
   const tagsColIndex = headers?.findIndex(
     selectColumn => selectColumn.name == 'tags',
   )!
   const imageFileColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'synapseHomepageImage',
+    selectColumn => selectColumn.name == 'image',
   )!
   const logoColIndex = headers?.findIndex(
     selectColumn => selectColumn.name == 'logo',
@@ -69,7 +69,7 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
         const secondaryColor = row.values[secondaryColorColIndex]!
         return (
           <SynapseInActionItem
-            sourceTableId={sourceTableId}
+            tableId={tableId}
             friendlyName={friendlyName}
             title={title}
             description={description}

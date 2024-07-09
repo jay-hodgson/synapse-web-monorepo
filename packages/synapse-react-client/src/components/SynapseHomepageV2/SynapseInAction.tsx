@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useGetQueryResultBundleWithAsyncStatus } from '../../synapse-queries'
 import { BUNDLE_MASK_QUERY_RESULTS } from '../../utils/SynapseConstants'
-import { Box } from '@mui/material'
+import { Box, useMediaQuery } from '@mui/material'
 import { SynapseInActionItem } from './SynapseInActionItem'
+import { useTheme } from '@mui/material'
+import ImageFromSynapseTable from '../ImageFromSynapseTable'
+import { useInView } from 'react-intersection-observer'
 
 export type SynapseInActionProps = {
   tableId: string
@@ -11,6 +14,13 @@ export type SynapseInActionProps = {
 export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
   tableId,
 }) => {
+  const theme = useTheme()
+  // Show the associated image (in desktop mode) if 25% of the div is visible
+  const [ref, inView] = useInView({ threshold: 0.25 })
+  const isMobileView = useMediaQuery(theme.breakpoints.down('sm'))
+  const [imageFileHandleIdInView, setImageFileHandleIdInView] = useState<
+    string | undefined
+  >()
   const { data } = useGetQueryResultBundleWithAsyncStatus({
     entityId: tableId,
     query: {
@@ -56,32 +66,69 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
     return <></>
   }
   return (
-    <Box>
-      {rowSet.rows.map(row => {
-        const title = row.values[titleColIndex]!
-        const description = row.values[descriptionColIndex]!
-        const tags: string[] = JSON.parse(row.values[tagsColIndex]!)
-        const imageFileHandleId = row.values[imageFileColIndex]!
-        const logoFileHandleId = row.values[logoColIndex]!
-        const link = row.values[linkColIndex]!
-        const friendlyName = row.values[friendlyNameColIndex]!
-        const primaryColor = row.values[primaryColorColIndex]!
-        const secondaryColor = row.values[secondaryColorColIndex]!
-        return (
-          <SynapseInActionItem
-            tableId={tableId}
-            friendlyName={friendlyName}
-            title={title}
-            description={description}
-            logoFileHandleId={logoFileHandleId}
-            imageFileHandleId={imageFileHandleId}
-            tags={tags}
-            link={link}
-            primaryColor={primaryColor}
-            secondaryColor={secondaryColor}
-          />
-        )
-      })}
+    <Box sx={{ position: 'relative' }} ref={ref}>
+      <Box
+        sx={{
+          width: '400px',
+          marginLeft: isMobileView ? '5px' : '150px',
+          zIndex: 100,
+          position: 'relative',
+          backgroundColor: 'rgba(245, 249, 249, .8)',
+        }}
+      >
+        {rowSet.rows.map(row => {
+          const title = row.values[titleColIndex]!
+          const description = row.values[descriptionColIndex]!
+          const tags: string[] = JSON.parse(row.values[tagsColIndex]!)
+          const imageFileHandleId = row.values[imageFileColIndex]!
+          const logoFileHandleId = row.values[logoColIndex]!
+          const link = row.values[linkColIndex]!
+          const friendlyName = row.values[friendlyNameColIndex]!
+          const primaryColor = row.values[primaryColorColIndex]!
+          const secondaryColor = row.values[secondaryColorColIndex]!
+          return (
+            <>
+              <SynapseInActionItem
+                tableId={tableId}
+                friendlyName={friendlyName}
+                title={title}
+                description={description}
+                logoFileHandleId={logoFileHandleId}
+                tags={tags}
+                link={link}
+                primaryColor={primaryColor}
+                secondaryColor={secondaryColor}
+                onInView={() => setImageFileHandleIdInView(imageFileHandleId)}
+              />
+              {isMobileView && (
+                <ImageFromSynapseTable
+                  tableId={tableId}
+                  fileHandleId={imageFileHandleId}
+                  style={{
+                    marginTop: '-100px',
+                  }}
+                />
+              )}
+            </>
+          )
+        })}
+      </Box>
+      {!isMobileView && inView && (
+        <Box
+          key={imageFileHandleIdInView}
+          sx={{ position: 'fixed', top: '150px', right: 0, zIndex: 1 }}
+        >
+          {imageFileHandleIdInView && (
+            <ImageFromSynapseTable
+              tableId={tableId}
+              fileHandleId={imageFileHandleIdInView}
+              style={{
+                marginTop: '-100px',
+              }}
+            />
+          )}
+        </Box>
+      )}
     </Box>
   )
 }

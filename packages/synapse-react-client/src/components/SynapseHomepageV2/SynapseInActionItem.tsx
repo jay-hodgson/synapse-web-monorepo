@@ -1,7 +1,8 @@
 import { Box, Chip, Link, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ImageFromSynapseTable from '../ImageFromSynapseTable'
 import { EastTwoTone } from '@mui/icons-material'
+import { useInView } from 'react-intersection-observer'
 
 export type SynapseInActionItemProps = {
   tableId: string
@@ -9,11 +10,11 @@ export type SynapseInActionItemProps = {
   title: string
   description: string
   tags?: string[] | null
-  imageFileHandleId: string
   logoFileHandleId: string
   link: string
   primaryColor: string
   secondaryColor: string
+  onInView: () => void
 }
 
 export const SynapseInActionItem: React.FunctionComponent<
@@ -24,33 +25,23 @@ export const SynapseInActionItem: React.FunctionComponent<
   title,
   description,
   tags,
-  imageFileHandleId,
   logoFileHandleId,
   link,
+  onInView,
 }) => {
+  const { ref, inView } = useInView()
+  useEffect(() => {
+    if (inView) {
+      onInView()
+    }
+  }, [inView])
   return (
     <Box
       sx={{
         padding: '15px',
-        position: 'relative',
-        width: '100%',
-        height: '100%',
       }}
     >
-      <ImageFromSynapseTable
-        tableId={tableId}
-        fileHandleId={imageFileHandleId}
-        style={{
-          position: 'absolute',
-          right: 0,
-          top: -40,
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'right',
-          zIndex: -1,
-        }}
-      />
-      <Box sx={{ maxWidth: '530px' }}>
+      <Box>
         {tags &&
           tags.map((tag, index) => {
             return (
@@ -93,7 +84,7 @@ export const SynapseInActionItem: React.FunctionComponent<
           friendlyName={`${friendlyName} logo`}
           style={{ height: '40px' }}
         />
-        <Box sx={{ marginTop: '32px', marginBottom: '200px' }}>
+        <Box sx={{ marginTop: '32px' }} ref={ref}>
           <Link href={link}>
             View {friendlyName.endsWith('Portal') ? 'the' : ''} {friendlyName}{' '}
             <EastTwoTone sx={{ marginBottom: '-8px', marginLeft: '6px' }} />

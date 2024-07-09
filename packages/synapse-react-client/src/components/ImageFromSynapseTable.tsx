@@ -4,6 +4,7 @@ import {
   FileHandleAssociation,
 } from '@sage-bionetworks/synapse-types'
 import { useGetStablePresignedUrl } from '../synapse-queries'
+import { Fade } from '@mui/material'
 
 export type ImageFromSynapseTableProps = {
   tableId: string
@@ -32,11 +33,13 @@ const ImageFromSynapseTable: React.FC<ImageFromSynapseTableProps> = (
     return <></>
   }
   return (
-    <img
-      style={style}
-      alt={friendlyName ? `${friendlyName}` : 'Image from table'}
-      src={dataUrl}
-    />
+    <Fade in={!!dataUrl}>
+      <img
+        style={style}
+        alt={friendlyName ? `${friendlyName}` : 'Image from table'}
+        src={dataUrl}
+      />
+    </Fade>
   )
 }
 

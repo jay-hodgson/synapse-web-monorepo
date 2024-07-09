@@ -82,10 +82,6 @@ export const SynapseHomepageV2: React.FunctionComponent<
     lineHeight: '82px',
     color: 'white',
   }
-
-  // Some sections have an angled cut in the separators.  Use these clip paths
-  const desktopLowerClipPath = 'polygon(0 0, 100% 0, 100% 65%, 0% 100%)'
-
   return (
     <Box>
       {/* Top nav bar */}

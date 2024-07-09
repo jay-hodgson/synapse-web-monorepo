@@ -451,11 +451,19 @@ export const SynapseHomepageV2: React.FunctionComponent<
         {/* TODO: Add Featured datasets based on a collection (and maybe MV) */}
       </Box>
       <Box
-        sx={
-          {
-            // backgroundColor: '#eeeff1',
-          }
-        }
+        sx={{
+          paddingBottom: '190px',
+          clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0 100%)',
+          backgroundColor: '#f5f9f9',
+          zIndex: -100,
+          marginTop: '-190px',
+          position: 'relative',
+        }}
+      />
+      <Box
+        sx={{
+          backgroundColor: '#f5f9f9',
+        }}
       >
         <Typography
           variant="headline1"
@@ -477,9 +485,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
               ...defaultHomepageText,
               textAlign: 'center',
               marginTop: '50px',
-              fontSize: '32px',
-              lineHeight: '40px',
+              fontSize: '24px',
+              lineHeight: '34px',
               marginBottom: '100px',
+              fontWeight: 400,
             }}
           >
             Explore real-world case studies and success stories showcasing how

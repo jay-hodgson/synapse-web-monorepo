@@ -19,7 +19,7 @@ export const SynapseFeatureItem: React.FunctionComponent<
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        gap: '40px',
+        columnGap: '40px',
         paddingBottom: '120px',
       }}
     >
@@ -67,7 +67,13 @@ export const SynapseFeatureItem: React.FunctionComponent<
         >
           {icons && icons.map(icon => icon)}
         </Box>
-        <Button variant="contained" size="large" color="neutral" href={link}>
+        <Button
+          variant="contained"
+          size="large"
+          color="neutral"
+          href={link}
+          target="_blank"
+        >
           About {featureName}
         </Button>
       </Box>

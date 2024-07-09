@@ -32,7 +32,7 @@ import { SynapseTrendingDatasets } from './SynapseTrendingDatasets'
 import { SynapseByTheNumbers } from './SynapseByTheNumbers'
 import { SynapseFeatures } from './SynapseFeatures'
 import { SynapseInAction } from './SynapseInAction'
-import { backgroundInlinePng } from '../../assets/homepage/header-splash'
+import { backgroundInlineJpeg } from '../../assets/homepage/header-splash'
 
 export type SynapseHomepageV2Props = {}
 
@@ -155,7 +155,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
         <Box
           sx={{
             position: 'absolute',
-            background: `linear-gradient(0deg, rgba(23, 36, 48, 0.75) 0%, rgba(23, 36, 48, 0.75) 100%), url(${backgroundInlinePng}) lightgray 50% / cover no-repeat`,
+            background: `url(${backgroundInlineJpeg}) lightgray 50% / cover no-repeat`,
             minHeight: '600px',
             width: '100%',
             height: '100%',

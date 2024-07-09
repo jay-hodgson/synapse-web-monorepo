@@ -35,10 +35,12 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
   const friendlyUserCount = userCount
     ? formatter.format(parseInt(userCount))
     : ''
-  let backgroundColor
+  let backgroundColor = '#223549'
+  let borderRadius
   switch (rank) {
     case 1:
       backgroundColor = '#447A74'
+      borderRadius = '12px 12px 0px 0px'
       break
     case 2:
       backgroundColor = '#33575E'
@@ -46,9 +48,11 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
     case 3:
       backgroundColor = '#294251'
       break
-    default:
-      backgroundColor = '#395979'
+    case 10:
+      borderRadius = '0px 0px 12px 12px'
+      break
   }
+
   return (
     <div
       onClick={() => {
@@ -64,9 +68,11 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
         sx={{
           color: '#D7DEE4',
           backgroundColor,
+          borderRadius,
           '&:hover': {
             color: 'white',
             cursor: 'pointer',
+            filter: 'brightness(105%)',
           },
           padding: '15px 0px',
           display: 'grid',

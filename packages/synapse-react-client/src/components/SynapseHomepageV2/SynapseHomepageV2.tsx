@@ -352,13 +352,15 @@ export const SynapseHomepageV2: React.FunctionComponent<
             backgroundColor: 'white',
             zIndex: 100,
           }}
-        ></Box>
-
+        />
         <Box
           sx={{
             backgroundColor: '#223549',
             paddingTop: '200px',
             marginTop: '-200px',
+            paddingLeft: '50px',
+            paddingRight: '50px',
+            paddingBottom: '5px',
           }}
         >
           <Typography
@@ -394,6 +396,42 @@ export const SynapseHomepageV2: React.FunctionComponent<
             past30DaysDownloadMetricsTable={past30DaysDownloadMetricsTable}
           />
         </Box>
+        <Box
+          sx={{
+            paddingBottom: '220px',
+            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 0%)',
+            backgroundColor: '#223549',
+            zIndex: 100,
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          paddingTop: '300px',
+          marginTop: '-220px',
+          backgroundColor: '#172430',
+        }}
+      />
+
+      <Box
+        sx={{
+          backgroundColor: '#172430',
+          paddingLeft: '70px',
+        }}
+      >
+        <Typography
+          variant="headline1"
+          sx={{
+            ...defaultHomepageText,
+            fontSize: '52px',
+            lineHeight: '62px',
+            color: 'white',
+            maxWidth: '700px',
+            paddingBottom: '100px',
+          }}
+        >
+          Made for biomedical data reuse and discovery
+        </Typography>
       </Box>
       <Box sx={{ marginLeft: '20px' }}>
         <Typography

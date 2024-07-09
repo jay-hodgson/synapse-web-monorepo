@@ -1,7 +1,9 @@
 import React from 'react'
 import { useGetQueryResultBundleWithAsyncStatus } from '../../synapse-queries'
 import { BUNDLE_MASK_QUERY_RESULTS } from '../../utils/SynapseConstants'
-import { TrendingItem } from './TrendingItem'
+import { TrendingItem, gridTemplateColumns } from './TrendingItem'
+import { Box } from '@mui/material'
+import { Typography } from '@mui/material'
 
 export type SynapseTrendingDatasetsProps = {
   past30DaysDownloadMetricsTable: string
@@ -40,13 +42,33 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
   if (!rowSet || rowSet.rows.length == 0) {
     return <></>
   }
-  return rowSet.rows.map((row, index) => (
-    <TrendingItem
-      rank={index + 1}
-      rowValues={row.values}
-      entityIdColIndex={entityIdColIndex}
-      egressSizeGbColIndex={egressSizeColIndex}
-      nUniqueUsersColIndex={nUniqueUsersColIndex}
-    />
-  ))
+  return (
+    <>
+      <Box
+        sx={{
+          color: '#D7DEE4',
+          display: 'grid',
+          gridTemplateColumns,
+          justifyItems: 'start',
+        }}
+      >
+        <Typography variant="body1" sx={{ marginLeft: '15px' }}>
+          Rank
+        </Typography>
+        <Typography variant="body1">Project</Typography>
+        <Typography variant="body1">Data Downloaded</Typography>
+        <Typography variant="body1">Unique Users</Typography>
+        <Box></Box>
+      </Box>
+      {rowSet.rows.map((row, index) => (
+        <TrendingItem
+          rank={index + 1}
+          rowValues={row.values}
+          entityIdColIndex={entityIdColIndex}
+          egressSizeGbColIndex={egressSizeColIndex}
+          nUniqueUsersColIndex={nUniqueUsersColIndex}
+        />
+      ))}
+    </>
+  )
 }

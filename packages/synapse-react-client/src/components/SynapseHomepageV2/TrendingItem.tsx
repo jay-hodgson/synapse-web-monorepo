@@ -14,7 +14,7 @@ export type TrendingItemProps = {
 }
 
 const formatter = Intl.NumberFormat('en')
-
+export const gridTemplateColumns = '100px auto 170px 150px 40px'
 export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
   rank,
   rowValues,
@@ -70,12 +70,12 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
           },
           padding: '15px 0px',
           display: 'grid',
-          gridTemplateColumns: '50px auto 150px 100px 40px',
+          gridTemplateColumns,
           justifyItems: 'start',
           svg: { margin: '0 3px -3px 0' },
         }}
       >
-        <Typography variant="body1" sx={{ marginLeft: '15px' }}>
+        <Typography variant="body1" sx={{ marginLeft: '30px' }}>
           {rank}
         </Typography>
         <Typography variant="body1">{entityHeader?.name}</Typography>

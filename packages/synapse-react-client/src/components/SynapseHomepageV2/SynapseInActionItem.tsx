@@ -29,7 +29,7 @@ export const SynapseInActionItem: React.FunctionComponent<
   link,
   onInView,
 }) => {
-  const { ref, inView } = useInView()
+  const { ref, inView } = useInView({ threshold: 0.9 }) //do not report this is in view until it is almost entirely shown (90%)
   useEffect(() => {
     if (inView) {
       onInView()
@@ -40,6 +40,7 @@ export const SynapseInActionItem: React.FunctionComponent<
       sx={{
         padding: '15px',
       }}
+      ref={ref}
     >
       <Box>
         {tags &&
@@ -84,7 +85,7 @@ export const SynapseInActionItem: React.FunctionComponent<
           friendlyName={`${friendlyName} logo`}
           style={{ height: '40px' }}
         />
-        <Box sx={{ marginTop: '32px' }} ref={ref}>
+        <Box sx={{ marginTop: '32px' }}>
           <Link href={link}>
             View {friendlyName.endsWith('Portal') ? 'the' : ''} {friendlyName}{' '}
             <EastTwoTone sx={{ marginBottom: '-8px', marginLeft: '6px' }} />

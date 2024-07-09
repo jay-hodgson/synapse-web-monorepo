@@ -33,7 +33,7 @@ const ImageFromSynapseTable: React.FC<ImageFromSynapseTableProps> = (
     return <></>
   }
   return (
-    <Fade in={!!dataUrl}>
+    <Fade in={!!dataUrl} timeout={250}>
       <img
         style={style}
         alt={friendlyName ? `${friendlyName}` : 'Image from table'}

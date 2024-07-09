@@ -26,7 +26,7 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
     query: {
       sql: `SELECT * FROM ${tableId}`,
       limit: 5,
-      sort: [{ column: 'friendlyName', direction: 'DESC' }],
+      sort: [{ column: 'order', direction: 'ASC' }],
     },
     partMask: BUNDLE_MASK_QUERY_RESULTS,
     concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',

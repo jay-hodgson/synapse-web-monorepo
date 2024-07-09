@@ -432,41 +432,14 @@ export const SynapseHomepageV2: React.FunctionComponent<
         >
           Made for biomedical data reuse and discovery
         </Typography>
-      </Box>
-      <Box sx={{ marginLeft: '20px' }}>
-        <Typography
-          variant="headline1"
-          sx={{
-            ...defaultHomepageText,
-            marginTop: '100px',
-            fontSize: '56px',
-            lineHeight: '56px',
-            letterSpacing: '-0.56px',
-          }}
-        >
-          Features
-        </Typography>
-        <Typography
-          variant="headline1"
-          sx={{
-            ...defaultHomepageText,
-            fontSize: '32px',
-            lineHeight: '40px',
-            maxWidth: '1156px',
-            marginBottom: '30px',
-          }}
-        >
-          Synapse is the open-source research collaboration platform by Sage
-          Bionetworks, tailored for biomedical data reuse and discovery.
-        </Typography>
         <SynapseFeatures />
       </Box>
-
       <Box sx={{ marginLeft: '20px' }}>
         <Typography
           variant="headline1"
           sx={{
             ...defaultHomepageText,
+            textAlign: 'center',
             paddingTop: '75px',
             paddingBottom: '75px',
             fontSize: '40px',

@@ -5,63 +5,52 @@ import { ReactComponent as SeamlessIntegration } from '../../assets/homepage/sea
 import { ReactComponent as ResearchCredit } from '../../assets/homepage/research-credit-feature.svg'
 import { ReactComponent as PrecisionGovernance } from '../../assets/homepage/precision-governance-feature.svg'
 import { ReactComponent as PoweredBySynapse } from '../../assets/homepage/powered-by-synapse-feature.svg'
-import { ReactComponent as GeneComparison } from '../../assets/homepage/gene-comparison-tool-feature.svg'
-// import { ReactComponent as Explore } from '../../assets/homepage/explore-feature.svg'
-
-import { useTheme, useMediaQuery } from '@mui/material'
+import { ReactComponent as Python } from '../../assets/homepage/python.svg'
+import { ReactComponent as R } from '../../assets/homepage/r.svg'
+import { ReactComponent as Fedramp } from '../../assets/homepage/fedramp.svg'
+import { ReactComponent as Hipaa } from '../../assets/homepage/hipaa-compliant.svg'
 
 export type SynapseFeaturesProps = {}
 
 export const SynapseFeatures: React.FunctionComponent<
   SynapseFeaturesProps
 > = ({}) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const isLg = useMediaQuery(theme.breakpoints.up('lg'))
-  // TODO: If mobile, show image below feature items
   return (
     <Box sx={{ position: 'relative' }}>
       <SynapseFeatureItem
-        icon={<SeamlessIntegration />}
-        title="Seamless Integrations"
+        title="Access or query data"
+        image={<SeamlessIntegration />}
+        subtitle="Seamless Integrations"
         description="Synapse provides you with APIs to access or query your data from your web browser, or programmatically  via R, Python, and the command line."
+        icons={[<Python />, <R />]}
+        featureName="integrations"
+        link="https://help.synapse.org/docs/API-Clients-and-Documentation.1985446128.html"
       />
       <SynapseFeatureItem
-        icon={<ResearchCredit />}
-        title="Research Credit"
+        title="Display your provenance"
+        image={<ResearchCredit />}
+        subtitle="Research Credit"
         description="Synapse records and displays the provenance of your analysis at every step. Analyses, data and code can all be referenced through DOIs (Digital Object Identifiers)."
+        featureName="provenance"
+        link="https://help.synapse.org/docs/Provenance.1972470373.html"
       />
       <SynapseFeatureItem
-        icon={<PrecisionGovernance />}
-        title="Precision Governance"
+        title="Safeguard your data"
+        image={<PrecisionGovernance />}
+        subtitle="Precision Governance"
         description='Ethical openness is our top priority. Your sensitive data is safeguarded by a complete process of access controls, audits and privacy-enhancing technologies. Protect the data, protect the patient [Highlight "compliance" standards (HIPAA + fedRAMP)].'
+        icons={[<Fedramp />, <Hipaa />]}
+        featureName="governance"
+        link="https://help.synapse.org/docs/Synapse-Governance.2004255211.html"
       />
       <SynapseFeatureItem
-        icon={<PoweredBySynapse />}
-        title="Powered by Synapse"
+        title="Accelerate biomedical progress"
+        image={<PoweredBySynapse />}
+        subtitle="Powered by Synapse"
         description="Synapse portals are the front door to innovation. Vibrant research communities exchange data, tools and ideas to accelerate biomedical progress."
+        featureName="our portals"
+        link="https://accounts.synapse.org/sageresources"
       />
-      <Box
-        sx={{
-          position: isMobile ? 'relative' : 'absolute',
-          top: -120,
-          right: isLg || isMobile ? 0 : -600,
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'right',
-          zIndex: -1,
-        }}
-      >
-        <Box>
-          {/* TODO: Add CSS Transition, and timer to switch graphic, or is it by hovering over items?  Probably only mount this when inView */}
-          {/* for our animation of layers, I think we will want to modify these values, eventually ending on the following:
-     opacity: 1;
-      filter: blur(0px);
-      transform: translateZ(0px) translateX(0px); */}
-
-          <GeneComparison />
-        </Box>
-      </Box>
     </Box>
   )
 }

@@ -40,8 +40,9 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
   if (!rowSet || rowSet.rows.length == 0) {
     return <></>
   }
-  return rowSet.rows.map(row => (
+  return rowSet.rows.map((row, index) => (
     <TrendingItem
+      rank={index + 1}
       rowValues={row.values}
       entityIdColIndex={entityIdColIndex}
       egressSizeGbColIndex={egressSizeColIndex}

@@ -11,12 +11,19 @@ export type ImageFromSynapseTableProps = {
   fileHandleId: string | null
   friendlyName?: string
   style?: CSSProperties
+  fadeInTimeoutMs?: number
 }
 
 const ImageFromSynapseTable: React.FC<ImageFromSynapseTableProps> = (
   props: ImageFromSynapseTableProps,
 ) => {
-  const { tableId, fileHandleId, friendlyName, style } = props
+  const {
+    tableId,
+    fileHandleId,
+    friendlyName,
+    style,
+    fadeInTimeoutMs = 0,
+  } = props
   const fha: FileHandleAssociation = {
     associateObjectId: tableId,
     associateObjectType: FileHandleAssociateType.TableEntity,
@@ -33,7 +40,7 @@ const ImageFromSynapseTable: React.FC<ImageFromSynapseTableProps> = (
     return <></>
   }
   return (
-    <Fade in={!!dataUrl} timeout={250}>
+    <Fade in={!!dataUrl} timeout={fadeInTimeoutMs}>
       <img
         style={style}
         alt={friendlyName ? `${friendlyName}` : 'Image from table'}

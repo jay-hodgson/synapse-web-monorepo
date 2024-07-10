@@ -15,24 +15,14 @@ import { Search } from '../../assets/themed_icons'
 import { useOneSageURL } from '../../utils/hooks'
 import { ReactComponent as SageLogo } from '../../assets/logos/sage-logo.svg'
 import { ReactComponent as Image1 } from '../../assets/homepage/image1.svg'
-import { ReactComponent as NihHeart } from '../../assets/homepage/nih-heart.svg'
-import { ReactComponent as NihMental } from '../../assets/homepage/nih-mental.svg'
-import { ReactComponent as Sloan } from '../../assets/homepage/sloan.svg'
-import { ReactComponent as NihAging } from '../../assets/homepage/nih-aging.svg'
-import { ReactComponent as Ctf } from '../../assets/homepage/ctf.svg'
-import { ReactComponent as Ntap } from '../../assets/homepage/ntap.svg'
-import { ReactComponent as Gff } from '../../assets/homepage/gff.svg'
-import { ReactComponent as Nci } from '../../assets/homepage/nci.svg'
-import { ReactComponent as NihCommonFund } from '../../assets/homepage/nih-common-fund.svg'
-import { ReactComponent as Cri } from '../../assets/homepage/cri.svg'
-import { ReactComponent as MlCommons } from '../../assets/homepage/ml-commons.svg'
-import { ReactComponent as Gray } from '../../assets/homepage/gray.svg'
 import { useSynapseContext } from '../../utils'
 import { SynapseTrendingDatasets } from './SynapseTrendingDatasets'
 import { SynapseByTheNumbers } from './SynapseByTheNumbers'
 import { SynapseFeatures } from './SynapseFeatures'
 import { SynapseInAction } from './SynapseInAction'
 import { backgroundInlineJpeg } from '../../assets/homepage/header-splash'
+import { SynapsePartners } from './SynapsePartners'
+import { SynapsePlans } from './SynapsePlans'
 
 export type SynapseHomepageV2Props = {}
 
@@ -317,30 +307,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             data reuse, and collaboration.
           </Typography>
         </Box>
-        <Box sx={{ margin: 'auto', maxWidth: '1200px' }}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              gap: '20px',
-            }}
-          >
-            <NihHeart />
-            <NihMental />
-            <Sloan />
-            <NihAging />
-            <Ctf />
-            <Ntap />
-            <Gff />
-            <Nci />
-            <NihCommonFund />
-            <Cri />
-            <MlCommons />
-            <Gray />
-          </Box>
-        </Box>
+        <SynapsePartners />
         <Box
           sx={{
             paddingBottom: '220px',
@@ -459,6 +426,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
       <Box
         sx={{
           backgroundColor: '#f5f9f9',
+          paddingBottom: '150px',
         }}
       >
         <Typography
@@ -470,6 +438,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
             fontSize: '56px',
             lineHeight: '56px',
             letterSpacing: '-0.56px',
+            position: 'relative',
+            zIndex: 100,
+            backgroundColor: 'rgba(245, 249, 249, .8)',
+            borderRadius: '12px',
           }}
         >
           Synapse in action
@@ -485,6 +457,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
               lineHeight: '34px',
               marginBottom: '100px',
               fontWeight: 400,
+              position: 'relative',
+              zIndex: 100,
+              backgroundColor: 'rgba(245, 249, 249, .8)',
+              borderRadius: '12px',
             }}
           >
             Explore real-world case studies and success stories showcasing how
@@ -493,6 +469,52 @@ export const SynapseHomepageV2: React.FunctionComponent<
           </Typography>
         </Box>
         <SynapseInAction tableId={synapseInActionTable} />
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: '#223549',
+          paddingLeft: '50px',
+          paddingRight: '50px',
+          paddingBottom: '200px',
+          position: 'relative',
+          zIndex: 100,
+        }}
+      >
+        <Box
+          sx={{
+            maxWidth: '1200px',
+            margin: 'auto',
+          }}
+        >
+          <Typography
+            variant="headline1"
+            sx={{
+              ...defaultHomepageText,
+              fontSize: '52px',
+              lineHeight: '62px',
+              color: 'white',
+              paddingTop: '75px',
+            }}
+          >
+            Pricing and Plans
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '24px',
+              lineHeight: '34px',
+              color: 'white',
+              fontWeight: 400,
+              paddingTop: '20px',
+              paddingBottom: '80px',
+            }}
+          >
+            Synapse is free and open source for all. We offer different plans to
+            help you if you need extra storage or help with your data
+            management. Find out about managed plans
+          </Typography>
+          <SynapsePlans />
+        </Box>
       </Box>
     </Box>
   )

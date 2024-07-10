@@ -6,6 +6,13 @@ import { Box, Button, Typography } from '@mui/material'
 import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import SageFullLogo from 'src/assets/icons/SageFullLogo'
 import { SynapseLinksColumn } from './SynapseLinksColumn'
+import { ReactComponent as Github } from '../../assets/homepage/github.svg'
+import { ReactComponent as Twitter } from '../../assets/homepage/twitter.svg'
+import { ReactComponent as LinkedIn } from '../../assets/homepage/linkedin.svg'
+import { ReactComponent as Facebook } from '../../assets/homepage/facebook.svg'
+import { ReactComponent as Instagram } from '../../assets/homepage/instagram.svg'
+import { ReactComponent as Youtube } from '../../assets/homepage/youtube.svg'
+import ExperimentalMode from '../ExperimentalMode'
 
 export type SynapseFooterProps = {
   portalVersion: string
@@ -41,7 +48,7 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
   }
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateRows: 'auto 70px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Box
         sx={{
           backgroundColor: '#172430',
@@ -53,6 +60,7 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'space-between',
+            rowGap: '50px',
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -81,7 +89,12 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
               <Box sx={{ display: 'flex', columnGap: '20px' }}>
                 <Button
                   variant="outlined"
-                  sx={{ color: 'white' }}
+                  sx={{
+                    color: '#B0BDC9',
+                    '&:hover': {
+                      color: 'white',
+                    },
+                  }}
                   onClick={() => {
                     gotoPlace('/LoginPlace:0')
                   }}
@@ -101,7 +114,12 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
               <Box sx={{ display: 'flex', columnGap: '20px' }}>
                 <Button
                   variant="outlined"
-                  sx={{ color: 'white' }}
+                  sx={{
+                    color: '#B0BDC9',
+                    '&:hover': {
+                      color: 'white',
+                    },
+                  }}
                   onClick={signOut}
                 >
                   Sign out
@@ -119,7 +137,14 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
             )}
           </Box>
           <Box>
-            <Box sx={{ display: 'flex', columnGap: '40px' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                columnGap: '40px',
+                rowGap: '40px',
+                flexWrap: 'wrap',
+              }}
+            >
               <SynapseLinksColumn
                 category="Synapse"
                 synapseLinks={[
@@ -190,10 +215,16 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
             justifyContent: 'space-between',
             alignItems: 'center',
             marginTop: '60px',
+            rowGap: '40px',
           }}
         >
           <Box
-            sx={{ display: 'flex', columnGap: '20px', alignItems: 'center' }}
+            sx={{
+              display: 'flex',
+              columnGap: '20px',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+            }}
           >
             <SageFullLogo textColor="white" width={285} />
             <Typography
@@ -206,7 +237,47 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
               © Sage Bionetworks {currentYear}
             </Typography>
           </Box>
-          <Box>social media links</Box>
+          <Box
+            sx={{
+              display: 'flex',
+              columnGap: '15px',
+              svg: {
+                '&:hover': {
+                  stroke: 'rgba(255, 255, 255, .4)',
+                  // fill: 'rgba(245, 246, 241, .05)',
+                  cursor: 'pointer',
+                },
+              },
+            }}
+          >
+            <a href="https://github.com/Sage-Bionetworks" target="_blank">
+              <Github />
+            </a>
+            <a href="https://twitter.com/sagebio" target="_blank">
+              <Twitter />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/sage-bionetworks"
+              target="_blank"
+            >
+              <LinkedIn />
+            </a>
+            <a href="https://www.facebook.com/sagebionetworks/" target="_blank">
+              <Facebook />
+            </a>
+            <a
+              href="https://www.instagram.com/sagebionetworks/"
+              target="_blank"
+            >
+              <Instagram />
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UCiWTMRdO82wNq6o8JOs3WzQ"
+              target="_blank"
+            >
+              <Youtube />
+            </a>
+          </Box>
         </Box>
       </Box>
       {/* Versions and experimental mode */}
@@ -216,8 +287,46 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
           flexWrap: 'wrap',
           justifyContent: 'space-between',
           backgroundColor: '#121B23',
+          alignItems: 'center',
+          padding: '15px 50px',
         }}
-      ></Box>
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            columnGap: '40px',
+            rowGap: '0px',
+            color: '##889BAF',
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '14px',
+            }}
+          >
+            portal: {portalVersion}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '14px',
+            }}
+          >
+            synapse-react-client: {srcVersion}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '14px',
+            }}
+          >
+            repo: {repoVersion}
+          </Typography>
+        </Box>
+        <ExperimentalMode />
+      </Box>
     </Box>
   )
 }

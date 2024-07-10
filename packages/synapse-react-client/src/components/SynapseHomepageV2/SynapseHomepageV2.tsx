@@ -8,6 +8,8 @@ import {
   OutlinedInput,
   InputAdornment,
   Chip,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material'
 import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
@@ -52,7 +54,8 @@ export const SynapseHomepageV2: React.FunctionComponent<
   const isSignedIn = !!accessToken
   const registrationLink = useOneSageURL('/register1')
   const resourcesLink = useOneSageURL('/sageresources')
-
+  const theme = useTheme()
+  const isDesktopView = useMediaQuery(theme.breakpoints.up('lg'))
   const [searchValue, setSearchValue] = useState('')
 
   // TODO: Mount query-based components when getting closer to the component (optimization)
@@ -162,7 +165,12 @@ export const SynapseHomepageV2: React.FunctionComponent<
         </Box>
       </Box>
 
-      <Box sx={{ textAlign: 'center', paddingTop: '80px' }}>
+      <Box
+        sx={{
+          textAlign: 'center',
+          padding: isDesktopView ? '80px 0px 0px 0px' : '20px',
+        }}
+      >
         <Typography variant="headline1" sx={titleSx}>
           Explore the data
         </Typography>
@@ -230,7 +238,12 @@ export const SynapseHomepageV2: React.FunctionComponent<
               label={value}
               onClick={() => onSearch(value)}
               variant="outlined"
-              sx={{ color: '#2A5850', backgroundColor: '#DAE9E7' }}
+              // by default, on hover the background color changes to mostly transparent (4%), which looks terrible on top of the header splash image
+              sx={{
+                color: '#2A5850',
+                backgroundColor: '#DAE9E7',
+                '&:hover': { backgroundColor: '#f5f5f3 !important' },
+              }}
             />
           )
         })}
@@ -238,13 +251,13 @@ export const SynapseHomepageV2: React.FunctionComponent<
       {/* TODO: This Grid is mobile unfriendly (see the image).  */}
       <Box
         sx={{
-          display: 'grid',
+          display: isDesktopView ? 'grid' : 'relative',
           gridTemplateColumns: '50% 50%',
           backgroundColor: '#DAE9E7',
           marginTop: '150px',
         }}
       >
-        <Box sx={{ padding: '70px 0px 25px 60px' }}>
+        <Box sx={{ padding: isDesktopView ? '70px 0px 25px 60px' : '25px' }}>
           <SageLogo style={{ height: '60px', marginLeft: '-100px' }} />
           <Typography
             variant="headline2"
@@ -273,9 +286,11 @@ export const SynapseHomepageV2: React.FunctionComponent<
             About Sage Bionetworks
           </Button>
         </Box>
-        <Box sx={{ height: '100%', justifySelf: 'end' }}>
-          <Image1 />
-        </Box>
+        {isDesktopView && (
+          <Box sx={{ height: '100%', justifySelf: 'end' }}>
+            <Image1 />
+          </Box>
+        )}
       </Box>
       <Box>
         <Typography

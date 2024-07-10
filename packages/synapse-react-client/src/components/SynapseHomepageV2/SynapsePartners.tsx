@@ -25,18 +25,42 @@ export const SynapsePartners: React.FunctionComponent = () => {
           gap: '20px',
         }}
       >
-        <NihHeart />
-        <NihMental />
-        <Sloan />
-        <NihAging />
-        <Ctf />
-        <Ntap />
-        <Gff />
-        <Nci />
-        <NihCommonFund />
-        <Cri />
-        <MlCommons />
-        <Gray />
+        <a href="https://www.nhlbi.nih.gov/" target="_blank">
+          <NihHeart />
+        </a>
+        <a href="https://www.nimh.nih.gov/" target="_blank">
+          <NihMental />
+        </a>
+        <a href="https://sloan.org/" target="_blank">
+          <Sloan />
+        </a>
+        <a href="https://www.nia.nih.gov/" target="_blank">
+          <NihAging />
+        </a>
+        <a href="https://www.ctf.org/" target="_blank">
+          <Ctf />
+        </a>
+        <a href="https://www.n-tap.org/" target="_blank">
+          <Ntap />
+        </a>
+        <a href="https://gilbertfamilyfoundation.org/" target="_blank">
+          <Gff />
+        </a>
+        <a href="https://www.cancer.gov/" target="_blank">
+          <Nci />
+        </a>
+        <a href="https://commonfund.nih.gov/" target="_blank">
+          <NihCommonFund />
+        </a>
+        <a href="https://www.cancerresearch.org/" target="_blank">
+          <Cri />
+        </a>
+        <a href="https://mlcommons.org/" target="_blank">
+          <MlCommons />
+        </a>
+        <a href="http://grayfoundation.org/" target="_blank">
+          <Gray />
+        </a>
       </Box>
     </Box>
   )

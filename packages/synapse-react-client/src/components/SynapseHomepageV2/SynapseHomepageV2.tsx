@@ -172,7 +172,6 @@ export const SynapseHomepageV2: React.FunctionComponent<
           textAlign: 'center',
           padding: isDesktopView ? '80px 0px 0px 0px' : '20px',
         }}
-        ref={ref}
       >
         <Typography variant="headline1" sx={titleSx}>
           Explore the data
@@ -286,6 +285,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             color="secondary"
             href="https://www.sagebionetworks.org"
             target="_blank"
+            ref={ref} // use this UI to trigger loading the rest of the page content
           >
             About Sage Bionetworks
           </Button>

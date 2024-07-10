@@ -75,6 +75,7 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
             zIndex: 100,
             position: 'relative',
             backgroundColor: 'rgba(245, 249, 249, .8)',
+            borderRadius: '12px',
           }}
         >
           {rowSet.rows.map(row => {
@@ -117,13 +118,14 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
       </Box>
       {!isMobileView && inView && (
         <Box
-          key={imageFileHandleIdInView}
+          key={imageFileHandleIdInView} //force remount for css animation
           sx={{ position: 'fixed', top: '10%', right: 0, zIndex: 1 }}
         >
           {imageFileHandleIdInView && (
             <ImageFromSynapseTable
               tableId={tableId}
               fileHandleId={imageFileHandleIdInView}
+              fadeInTimeoutMs={1300}
               style={{
                 marginTop: '-100px',
               }}

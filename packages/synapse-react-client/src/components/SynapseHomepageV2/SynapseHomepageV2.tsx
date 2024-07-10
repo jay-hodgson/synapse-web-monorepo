@@ -438,6 +438,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
             fontSize: '56px',
             lineHeight: '56px',
             letterSpacing: '-0.56px',
+            position: 'relative',
+            zIndex: 100,
+            backgroundColor: 'rgba(245, 249, 249, .8)',
+            borderRadius: '12px',
           }}
         >
           Synapse in action
@@ -453,6 +457,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
               lineHeight: '34px',
               marginBottom: '100px',
               fontWeight: 400,
+              position: 'relative',
+              zIndex: 100,
+              backgroundColor: 'rgba(245, 249, 249, .8)',
+              borderRadius: '12px',
             }}
           >
             Explore real-world case studies and success stories showcasing how
@@ -468,6 +476,8 @@ export const SynapseHomepageV2: React.FunctionComponent<
           paddingLeft: '50px',
           paddingRight: '50px',
           paddingBottom: '200px',
+          position: 'relative',
+          zIndex: 100,
         }}
       >
         <Box

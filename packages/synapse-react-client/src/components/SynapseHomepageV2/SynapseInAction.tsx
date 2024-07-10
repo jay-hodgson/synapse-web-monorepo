@@ -89,7 +89,7 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
             const primaryColor = row.values[primaryColorColIndex]!
             const secondaryColor = row.values[secondaryColorColIndex]!
             return (
-              <Box sx={{ marginBottom: '120px' }}>
+              <Box key={row.rowId} sx={{ marginBottom: '120px' }}>
                 <SynapseInActionItem
                   tableId={tableId}
                   friendlyName={friendlyName}

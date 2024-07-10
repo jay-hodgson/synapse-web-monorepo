@@ -65,7 +65,7 @@ export const SynapseFeatureItem: React.FunctionComponent<
             marginBottom: '25px',
           }}
         >
-          {icons && icons.map(icon => icon)}
+          {icons && icons.map((icon, index) => <Box key={index}>{icon}</Box>)}
         </Box>
         <Button
           variant="contained"

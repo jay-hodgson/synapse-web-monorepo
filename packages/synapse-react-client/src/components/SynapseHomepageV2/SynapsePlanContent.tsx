@@ -26,6 +26,7 @@ export const SynapsePlanContent: React.FunctionComponent<
       </Typography>
       {items.map(item => (
         <Box
+          key={item}
           sx={{
             display: 'grid',
             gridTemplateColumns: '30px auto',

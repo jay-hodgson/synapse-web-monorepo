@@ -25,6 +25,7 @@ import { SynapseInAction } from './SynapseInAction'
 import { backgroundInlineJpeg } from '../../assets/homepage/header-splash'
 import { SynapsePartners } from './SynapsePartners'
 import { SynapsePlans } from './SynapsePlans'
+import { useInView } from 'react-intersection-observer'
 
 export type SynapseHomepageV2Props = {}
 
@@ -58,7 +59,8 @@ export const SynapseHomepageV2: React.FunctionComponent<
   const isDesktopView = useMediaQuery(theme.breakpoints.up('lg'))
   const [searchValue, setSearchValue] = useState('')
 
-  // TODO: Mount query-based components when getting closer to the component (optimization)
+  //optimization - prioritize loading above-the-fold content (delay loading below the fold)
+  const { ref, inView } = useInView({ triggerOnce: true })
   const navButtonSx: SxProps = {
     fontSize: '18px',
     lineHeight: '24px',
@@ -170,6 +172,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
           textAlign: 'center',
           padding: isDesktopView ? '80px 0px 0px 0px' : '20px',
         }}
+        ref={ref}
       >
         <Typography variant="headline1" sx={titleSx}>
           Explore the data
@@ -235,6 +238,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
         {popularSearches.map(value => {
           return (
             <Chip
+              key={value}
               label={value}
               onClick={() => onSearch(value)}
               variant="outlined"
@@ -248,13 +252,13 @@ export const SynapseHomepageV2: React.FunctionComponent<
           )
         })}
       </Box>
-      {/* TODO: This Grid is mobile unfriendly (see the image).  */}
       <Box
         sx={{
           display: isDesktopView ? 'grid' : 'relative',
           gridTemplateColumns: '50% 50%',
           backgroundColor: '#DAE9E7',
           marginTop: '150px',
+          height: isDesktopView ? '608px' : undefined, //force container to the same height as the image
         }}
       >
         <Box sx={{ padding: isDesktopView ? '70px 0px 25px 60px' : '25px' }}>
@@ -292,245 +296,250 @@ export const SynapseHomepageV2: React.FunctionComponent<
           </Box>
         )}
       </Box>
-      <Box>
-        <Typography
-          variant="headline1"
-          sx={{
-            ...defaultHomepageText,
-            textAlign: 'center',
-            marginTop: '100px',
-            fontSize: '40px',
-            lineHeight: '72px',
-            letterSpacing: '-0.56px',
-          }}
-        >
-          We partner with scientific leaders
-        </Typography>
-        <Box sx={{ margin: 'auto', maxWidth: '750px' }}>
-          <Typography
-            variant="headline1"
+      {/* Below the fold content... */}
+      {inView && (
+        <Box>
+          <Box>
+            <Typography
+              variant="headline1"
+              sx={{
+                ...defaultHomepageText,
+                textAlign: 'center',
+                marginTop: '100px',
+                fontSize: '40px',
+                lineHeight: '72px',
+                letterSpacing: '-0.56px',
+              }}
+            >
+              We partner with scientific leaders
+            </Typography>
+            <Box sx={{ margin: 'auto', maxWidth: '750px' }}>
+              <Typography
+                variant="headline1"
+                sx={{
+                  ...defaultHomepageText,
+                  textAlign: 'center',
+                  fontSize: '24px',
+                  fontWeight: 400,
+                  marginBottom: '60px',
+                  lineHeight: '34px',
+                }}
+              >
+                Synapse is your ecosystem for responsible data sharing,
+                innovative data reuse, and collaboration.
+              </Typography>
+            </Box>
+            <SynapsePartners />
+            <Box
+              sx={{
+                paddingBottom: '220px',
+                clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0% 100%)',
+                backgroundColor: 'white',
+                zIndex: 100,
+              }}
+            />
+            <Box
+              sx={{
+                backgroundColor: '#223549',
+                paddingTop: '200px',
+                marginTop: '-200px',
+                paddingLeft: '50px',
+                paddingRight: '50px',
+                paddingBottom: '5px',
+              }}
+            >
+              <Typography
+                variant="headline1"
+                sx={{
+                  ...defaultHomepageText,
+                  textAlign: 'center',
+                  marginTop: '100px',
+                  fontSize: '52px',
+                  lineHeight: '62px',
+                  marginBottom: '60px',
+                  color: 'white',
+                }}
+              >
+                Synapse by the numbers
+              </Typography>
+              <SynapseByTheNumbers metricsTable={generalStatsMetricsTable} />
+              <Typography
+                variant="headline2"
+                sx={{
+                  ...defaultHomepageText,
+                  textAlign: 'center',
+                  fontSize: '36px',
+                  lineHeight: '40px',
+                  marginTop: '60px',
+                  marginBottom: '25px',
+                  color: 'white',
+                }}
+              >
+                Datasets trending this week
+              </Typography>
+              <SynapseTrendingDatasets
+                past30DaysDownloadMetricsTable={past30DaysDownloadMetricsTable}
+              />
+            </Box>
+            <Box
+              sx={{
+                paddingBottom: '220px',
+                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 0%)',
+                backgroundColor: '#223549',
+                zIndex: 100,
+              }}
+            />
+          </Box>
+          <Box
             sx={{
-              ...defaultHomepageText,
-              textAlign: 'center',
-              fontSize: '24px',
-              fontWeight: 400,
-              marginBottom: '60px',
-              lineHeight: '34px',
+              paddingTop: '300px',
+              marginTop: '-220px',
+              backgroundColor: '#172430',
             }}
-          >
-            Synapse is your ecosystem for responsible data sharing, innovative
-            data reuse, and collaboration.
-          </Typography>
-        </Box>
-        <SynapsePartners />
-        <Box
-          sx={{
-            paddingBottom: '220px',
-            clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0% 100%)',
-            backgroundColor: 'white',
-            zIndex: 100,
-          }}
-        />
-        <Box
-          sx={{
-            backgroundColor: '#223549',
-            paddingTop: '200px',
-            marginTop: '-200px',
-            paddingLeft: '50px',
-            paddingRight: '50px',
-            paddingBottom: '5px',
-          }}
-        >
-          <Typography
-            variant="headline1"
-            sx={{
-              ...defaultHomepageText,
-              textAlign: 'center',
-              marginTop: '100px',
-              fontSize: '52px',
-              lineHeight: '62px',
-              marginBottom: '60px',
-              color: 'white',
-            }}
-          >
-            Synapse by the numbers
-          </Typography>
-          <SynapseByTheNumbers metricsTable={generalStatsMetricsTable} />
-          <Typography
-            variant="headline2"
-            sx={{
-              ...defaultHomepageText,
-              textAlign: 'center',
-              fontSize: '36px',
-              lineHeight: '40px',
-              marginTop: '60px',
-              marginBottom: '25px',
-              color: 'white',
-            }}
-          >
-            Datasets trending this week
-          </Typography>
-          <SynapseTrendingDatasets
-            past30DaysDownloadMetricsTable={past30DaysDownloadMetricsTable}
           />
-        </Box>
-        <Box
-          sx={{
-            paddingBottom: '220px',
-            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 0%)',
-            backgroundColor: '#223549',
-            zIndex: 100,
-          }}
-        />
-      </Box>
-      <Box
-        sx={{
-          paddingTop: '300px',
-          marginTop: '-220px',
-          backgroundColor: '#172430',
-        }}
-      />
 
-      <Box
-        sx={{
-          backgroundColor: '#172430',
-          paddingLeft: '70px',
-        }}
-      >
-        <Typography
-          variant="headline1"
-          sx={{
-            ...defaultHomepageText,
-            fontSize: '52px',
-            lineHeight: '62px',
-            color: 'white',
-            maxWidth: '700px',
-            paddingBottom: '100px',
-          }}
-        >
-          Made for biomedical data reuse and discovery
-        </Typography>
-        <SynapseFeatures />
-      </Box>
-      <Box sx={{ marginLeft: '20px' }}>
-        <Typography
-          variant="headline1"
-          sx={{
-            ...defaultHomepageText,
-            textAlign: 'center',
-            paddingTop: '75px',
-            paddingBottom: '75px',
-            fontSize: '40px',
-            lineHeight: '48px',
-          }}
-        >
-          Featured datasets
-        </Typography>
-        {/* TODO: Add Featured datasets based on a collection (and maybe MV) */}
-      </Box>
-      <Box
-        sx={{
-          paddingBottom: '190px',
-          clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0 100%)',
-          backgroundColor: '#f5f9f9',
-          zIndex: -100,
-          marginTop: '-190px',
-          position: 'relative',
-        }}
-      />
-      <Box
-        sx={{
-          backgroundColor: '#f5f9f9',
-          paddingBottom: '150px',
-        }}
-      >
-        <Typography
-          variant="headline1"
-          sx={{
-            ...defaultHomepageText,
-            textAlign: 'center',
-            paddingTop: '75px',
-            fontSize: '56px',
-            lineHeight: '56px',
-            letterSpacing: '-0.56px',
-            position: 'relative',
-            zIndex: 100,
-            backgroundColor: 'rgba(245, 249, 249, .8)',
-            borderRadius: '12px',
-          }}
-        >
-          Synapse in action
-        </Typography>
-        <Box sx={{ margin: 'auto', maxWidth: '1100px' }}>
-          <Typography
-            variant="headline1"
+          <Box
             sx={{
-              ...defaultHomepageText,
-              textAlign: 'center',
-              marginTop: '50px',
-              fontSize: '24px',
-              lineHeight: '34px',
-              marginBottom: '100px',
-              fontWeight: 400,
+              backgroundColor: '#172430',
+              paddingLeft: '70px',
+            }}
+          >
+            <Typography
+              variant="headline1"
+              sx={{
+                ...defaultHomepageText,
+                fontSize: '52px',
+                lineHeight: '62px',
+                color: 'white',
+                maxWidth: '700px',
+                paddingBottom: '100px',
+              }}
+            >
+              Made for biomedical data reuse and discovery
+            </Typography>
+            <SynapseFeatures />
+          </Box>
+          <Box sx={{ marginLeft: '20px' }}>
+            <Typography
+              variant="headline1"
+              sx={{
+                ...defaultHomepageText,
+                textAlign: 'center',
+                paddingTop: '75px',
+                paddingBottom: '75px',
+                fontSize: '40px',
+                lineHeight: '48px',
+              }}
+            >
+              Featured datasets
+            </Typography>
+            {/* TODO: Add Featured datasets based on a collection (and maybe MV) */}
+          </Box>
+          <Box
+            sx={{
+              paddingBottom: '190px',
+              clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0 100%)',
+              backgroundColor: '#f5f9f9',
+              zIndex: -100,
+              marginTop: '-190px',
+              position: 'relative',
+            }}
+          />
+          <Box
+            sx={{
+              backgroundColor: '#f5f9f9',
+              paddingBottom: '150px',
+            }}
+          >
+            <Typography
+              variant="headline1"
+              sx={{
+                ...defaultHomepageText,
+                textAlign: 'center',
+                paddingTop: '75px',
+                fontSize: '56px',
+                lineHeight: '56px',
+                letterSpacing: '-0.56px',
+                position: 'relative',
+                zIndex: 100,
+                backgroundColor: 'rgba(245, 249, 249, .8)',
+                borderRadius: '12px',
+              }}
+            >
+              Synapse in action
+            </Typography>
+            <Box sx={{ margin: 'auto', maxWidth: '1100px' }}>
+              <Typography
+                variant="headline1"
+                sx={{
+                  ...defaultHomepageText,
+                  textAlign: 'center',
+                  marginTop: '50px',
+                  fontSize: '24px',
+                  lineHeight: '34px',
+                  marginBottom: '100px',
+                  fontWeight: 400,
+                  position: 'relative',
+                  zIndex: 100,
+                  backgroundColor: 'rgba(245, 249, 249, .8)',
+                  borderRadius: '12px',
+                }}
+              >
+                Explore real-world case studies and success stories showcasing
+                how researchers use Synapse to drive innovative biomedical
+                discoveries and improve health outcomes.
+              </Typography>
+            </Box>
+            <SynapseInAction tableId={synapseInActionTable} />
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: '#223549',
+              paddingLeft: '50px',
+              paddingRight: '50px',
+              paddingBottom: '200px',
               position: 'relative',
               zIndex: 100,
-              backgroundColor: 'rgba(245, 249, 249, .8)',
-              borderRadius: '12px',
             }}
           >
-            Explore real-world case studies and success stories showcasing how
-            researchers use Synapse to drive innovative biomedical discoveries
-            and improve health outcomes.
-          </Typography>
+            <Box
+              sx={{
+                maxWidth: '1200px',
+                margin: 'auto',
+              }}
+            >
+              <Typography
+                variant="headline1"
+                sx={{
+                  ...defaultHomepageText,
+                  fontSize: '52px',
+                  lineHeight: '62px',
+                  color: 'white',
+                  paddingTop: '75px',
+                }}
+              >
+                Pricing and Plans
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: '24px',
+                  lineHeight: '34px',
+                  color: 'white',
+                  fontWeight: 400,
+                  paddingTop: '20px',
+                  paddingBottom: '80px',
+                }}
+              >
+                Synapse is free and open source for all. We offer different
+                plans to help you if you need extra storage or help with your
+                data management. Find out about managed plans
+              </Typography>
+              <SynapsePlans />
+            </Box>
+          </Box>
         </Box>
-        <SynapseInAction tableId={synapseInActionTable} />
-      </Box>
-      <Box
-        sx={{
-          backgroundColor: '#223549',
-          paddingLeft: '50px',
-          paddingRight: '50px',
-          paddingBottom: '200px',
-          position: 'relative',
-          zIndex: 100,
-        }}
-      >
-        <Box
-          sx={{
-            maxWidth: '1200px',
-            margin: 'auto',
-          }}
-        >
-          <Typography
-            variant="headline1"
-            sx={{
-              ...defaultHomepageText,
-              fontSize: '52px',
-              lineHeight: '62px',
-              color: 'white',
-              paddingTop: '75px',
-            }}
-          >
-            Pricing and Plans
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontSize: '24px',
-              lineHeight: '34px',
-              color: 'white',
-              fontWeight: 400,
-              paddingTop: '20px',
-              paddingBottom: '80px',
-            }}
-          >
-            Synapse is free and open source for all. We offer different plans to
-            help you if you need extra storage or help with your data
-            management. Find out about managed plans
-          </Typography>
-          <SynapsePlans />
-        </Box>
-      </Box>
+      )}
     </Box>
   )
 }

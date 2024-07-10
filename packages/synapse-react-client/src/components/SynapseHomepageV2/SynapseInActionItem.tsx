@@ -44,9 +44,10 @@ export const SynapseInActionItem: React.FunctionComponent<
     >
       <Box>
         {tags &&
-          tags.map((tag, index) => {
+          tags.map(tag => {
             return (
               <Chip
+                key={tag}
                 sx={{
                   marginRight: '5px',
                   color: '#38756A',

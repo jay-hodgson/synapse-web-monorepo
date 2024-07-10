@@ -66,6 +66,7 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
       </Box>
       {rowSet.rows.map((row, index) => (
         <TrendingItem
+          key={row.rowId}
           rank={index + 1}
           rowValues={row.values}
           entityIdColIndex={entityIdColIndex}

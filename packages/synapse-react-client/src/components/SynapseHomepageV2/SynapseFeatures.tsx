@@ -9,12 +9,14 @@ import { ReactComponent as Python } from '../../assets/homepage/python.svg'
 import { ReactComponent as R } from '../../assets/homepage/r.svg'
 import { ReactComponent as Fedramp } from '../../assets/homepage/fedramp.svg'
 import { ReactComponent as Hipaa } from '../../assets/homepage/hipaa-compliant.svg'
+import { useOneSageURL } from 'src/utils/hooks'
 
 export type SynapseFeaturesProps = {}
 
 export const SynapseFeatures: React.FunctionComponent<
   SynapseFeaturesProps
 > = ({}) => {
+  const sageResourcesUrl = useOneSageURL('/sageresources')
   return (
     <Box sx={{ position: 'relative' }}>
       <SynapseFeatureItem
@@ -49,7 +51,7 @@ export const SynapseFeatures: React.FunctionComponent<
         subtitle="Powered by Synapse"
         description="Synapse portals are the front door to innovation. Vibrant research communities exchange data, tools and ideas to accelerate biomedical progress."
         featureName="our portals"
-        link="https://accounts.synapse.org/sageresources"
+        link={sageResourcesUrl.toString()}
       />
     </Box>
   )

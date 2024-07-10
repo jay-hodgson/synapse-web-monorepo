@@ -2,15 +2,17 @@ import React from 'react'
 import { Box } from '@mui/material'
 import { SynapsePlan } from './SynapsePlan'
 import { SynapsePlanContent } from './SynapsePlanContent'
+import { useOneSageURL } from 'src/utils/hooks'
 
 export const SynapsePlans: React.FunctionComponent = () => {
+  const registrationUrl = useOneSageURL('/register1')
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
       <SynapsePlan
         title="Free"
         description="Our basic plan"
         ctaText="Register Now"
-        ctaLink="https://accounts.synapse.org/register1"
+        ctaLink={registrationUrl.toString()}
         backgroundColor="#f5f9f9"
       >
         <SynapsePlanContent

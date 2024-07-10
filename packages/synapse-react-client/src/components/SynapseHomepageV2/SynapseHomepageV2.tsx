@@ -26,6 +26,7 @@ import { backgroundInlineJpeg } from '../../assets/homepage/header-splash'
 import { SynapsePartners } from './SynapsePartners'
 import { SynapsePlans } from './SynapsePlans'
 import { useInView } from 'react-intersection-observer'
+import { SynapseFooter } from '../SynapseFooter/SynapseFooter'
 
 export type SynapseHomepageV2Props = {}
 
@@ -538,6 +539,24 @@ export const SynapseHomepageV2: React.FunctionComponent<
               <SynapsePlans />
             </Box>
           </Box>
+          <Box
+            sx={{
+              paddingBottom: '190px',
+              clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0 100%)',
+              backgroundColor: '#172430',
+              zIndex: 101,
+              marginTop: '-190px',
+              position: 'relative',
+            }}
+          />
+          {/* TODO: remove footer from here (it will be added on SWC side to all pages!) */}
+          <SynapseFooter
+            gotoPlace={() => {}}
+            portalVersion="portalV1"
+            repoVersion="repo V1"
+            srcVersion="SRC v1"
+            signoutCallback={() => {}}
+          />
         </Box>
       )}
     </Box>

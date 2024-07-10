@@ -50,7 +50,7 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
     selectColumn => selectColumn.name == 'logo',
   )!
   const linkColIndex = headers?.findIndex(
-    selectColumn => selectColumn.name == 'appURL',
+    selectColumn => selectColumn.name == 'url',
   )!
   const friendlyNameColIndex = headers?.findIndex(
     selectColumn => selectColumn.name == 'friendlyName',

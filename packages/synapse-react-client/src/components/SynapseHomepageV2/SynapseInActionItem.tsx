@@ -87,7 +87,7 @@ export const SynapseInActionItem: React.FunctionComponent<
           style={{ height: '40px' }}
         />
         <Box sx={{ marginTop: '32px' }}>
-          <Link href={link}>
+          <Link href={link} target="_blank">
             View {friendlyName.endsWith('Portal') ? 'the' : ''} {friendlyName}{' '}
             <EastTwoTone sx={{ marginBottom: '-8px', marginLeft: '6px' }} />
           </Link>

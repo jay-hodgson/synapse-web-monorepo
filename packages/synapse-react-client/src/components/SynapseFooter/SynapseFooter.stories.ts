@@ -19,5 +19,8 @@ export const Demo: Story = {
     gotoPlace: (href: string) => {
       window.alert(`Footer calling back to change route to ${href}`)
     },
+    reportViolationCallback: () => {
+      window.alert('Footer invoked report violation callback')
+    },
   },
 }

@@ -15,7 +15,6 @@ import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
 import { Search } from '../../assets/themed_icons'
 import { useOneSageURL } from '../../utils/hooks'
-import { ReactComponent as SageLogo } from '../../assets/logos/sage-logo.svg'
 import { ReactComponent as Image1 } from '../../assets/homepage/image1.svg'
 import { useSynapseContext } from '../../utils'
 import { SynapseTrendingDatasets } from './SynapseTrendingDatasets'
@@ -27,6 +26,7 @@ import { SynapsePartners } from './SynapsePartners'
 import { SynapsePlans } from './SynapsePlans'
 import { useInView } from 'react-intersection-observer'
 import { SynapseFooter } from '../SynapseFooter/SynapseFooter'
+import SageFullLogo from 'src/assets/icons/SageFullLogo'
 
 export type SynapseHomepageV2Props = {}
 
@@ -262,7 +262,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
         }}
       >
         <Box sx={{ padding: isDesktopView ? '70px 0px 25px 60px' : '25px' }}>
-          <SageLogo style={{ height: '60px', marginLeft: '-100px' }} />
+          <SageFullLogo width={350} />
           <Typography
             variant="headline2"
             sx={{
@@ -402,23 +402,25 @@ export const SynapseHomepageV2: React.FunctionComponent<
           <Box
             sx={{
               backgroundColor: '#172430',
-              paddingLeft: '70px',
+              paddingLeft: '50px',
             }}
           >
-            <Typography
-              variant="headline1"
-              sx={{
-                ...defaultHomepageText,
-                fontSize: '52px',
-                lineHeight: '62px',
-                color: 'white',
-                maxWidth: '700px',
-                paddingBottom: '100px',
-              }}
-            >
-              Made for biomedical data reuse and discovery
-            </Typography>
-            <SynapseFeatures />
+            <Box sx={{ margin: 'auto', maxWidth: '1500px' }}>
+              <Typography
+                variant="headline1"
+                sx={{
+                  ...defaultHomepageText,
+                  fontSize: '52px',
+                  lineHeight: '62px',
+                  color: 'white',
+                  maxWidth: '700px',
+                  paddingBottom: '100px',
+                }}
+              >
+                Made for biomedical data reuse and discovery
+              </Typography>
+              <SynapseFeatures />
+            </Box>
           </Box>
           <Box sx={{ marginLeft: '20px' }}>
             <Typography
@@ -556,6 +558,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             repoVersion="repo V1"
             srcVersion="SRC v1"
             signoutCallback={() => {}}
+            reportViolationCallback={() => {}}
           />
         </Box>
       )}

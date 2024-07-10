@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, useEffect, useState } from 'react'
 import {
   FileHandleAssociateType,
   FileHandleAssociation,
@@ -24,13 +24,29 @@ const ImageFromSynapseTable: React.FC<ImageFromSynapseTableProps> = (
     style,
     fadeInTimeoutMs = 0,
   } = props
+  const [visible, setVisible] = useState(true)
+  const [fileHandleIdInState, setFileHandleIdInState] = useState(fileHandleId)
+  useEffect(() => {
+    // Trigger fade out
+    setVisible(false)
+
+    // Wait for the fade out duration and then change content and fade in
+    const timeoutId = setTimeout(() => {
+      setFileHandleIdInState(fileHandleId)
+      setVisible(true)
+    }, fadeInTimeoutMs)
+
+    // Cleanup timeout if the component unmounts or if fileHandleId changes again before timeout
+    return () => clearTimeout(timeoutId)
+  }, [fileHandleId])
+
   const fha: FileHandleAssociation = {
     associateObjectId: tableId,
     associateObjectType: FileHandleAssociateType.TableEntity,
-    fileHandleId: fileHandleId ?? '',
+    fileHandleId: fileHandleIdInState ?? '',
   }
   const stablePresignedUrl = useGetStablePresignedUrl(fha, true, {
-    enabled: !!fileHandleId,
+    enabled: !!fileHandleIdInState,
   })
 
   const dataUrl = stablePresignedUrl?.dataUrl
@@ -40,7 +56,7 @@ const ImageFromSynapseTable: React.FC<ImageFromSynapseTableProps> = (
     return <></>
   }
   return (
-    <Fade in={!!dataUrl} timeout={fadeInTimeoutMs}>
+    <Fade in={visible} timeout={fadeInTimeoutMs}>
       <img
         style={style}
         alt={friendlyName ? `${friendlyName}` : 'Image from table'}

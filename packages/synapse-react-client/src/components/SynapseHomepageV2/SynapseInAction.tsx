@@ -102,7 +102,8 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
                   secondaryColor={secondaryColor}
                   onInView={() => setImageFileHandleIdInView(imageFileHandleId)}
                 />
-                {isMobileView && (
+                {/* In any case, preload the image file handle ID so it is ready when the user scrolls down to view it */}
+                <Box sx={{ display: isMobileView ? 'block' : 'none' }}>
                   <ImageFromSynapseTable
                     tableId={tableId}
                     fileHandleId={imageFileHandleId}
@@ -110,22 +111,19 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
                       marginTop: '-100px',
                     }}
                   />
-                )}
+                </Box>
               </Box>
             )
           })}
         </Box>
       </Box>
       {!isMobileView && inView && (
-        <Box
-          key={imageFileHandleIdInView} //force remount for css animation
-          sx={{ position: 'fixed', top: '10%', right: 0, zIndex: 1 }}
-        >
+        <Box sx={{ position: 'fixed', top: '10%', right: 0, zIndex: 1 }}>
           {imageFileHandleIdInView && (
             <ImageFromSynapseTable
               tableId={tableId}
               fileHandleId={imageFileHandleIdInView}
-              fadeInTimeoutMs={1300}
+              fadeInTimeoutMs={600}
               style={{
                 marginTop: '-100px',
               }}

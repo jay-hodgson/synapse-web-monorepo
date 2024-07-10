@@ -13,16 +13,20 @@ export type TrendingItemProps = {
   entityIdColIndex: number
   nUniqueUsersColIndex: number
   egressSizeGbColIndex: number
+  isMobileView: boolean
 }
 
 const formatter = Intl.NumberFormat('en')
-export const gridTemplateColumns = '100px auto 170px 150px 40px'
+export const gridTemplateColumns = (isMobileView: boolean) =>
+  isMobileView ? '100px auto 40px' : '100px auto 170px 150px 40px'
+
 export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
   rank,
   rowValues,
   entityIdColIndex,
   nUniqueUsersColIndex,
   egressSizeGbColIndex,
+  isMobileView,
 }) => {
   const entityId = rowValues[entityIdColIndex]
   const egressSize = rowValues[egressSizeGbColIndex]
@@ -78,7 +82,7 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
           },
           padding: '15px 0px',
           display: 'grid',
-          gridTemplateColumns,
+          gridTemplateColumns: gridTemplateColumns(isMobileView),
           justifyItems: 'start',
           svg: { margin: '0 3px -3px 0' },
         }}
@@ -87,14 +91,18 @@ export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
           {rank}
         </Typography>
         <Typography variant="body1">{entityHeader?.name}</Typography>
-        <Typography variant="body1">
-          <EgressIcon />
-          {friendlyEgressSize}
-        </Typography>
-        <Typography variant="body1">
-          <UsersIcon />
-          {friendlyUserCount}
-        </Typography>
+        {!isMobileView && (
+          <Typography variant="body1">
+            <EgressIcon />
+            {friendlyEgressSize}
+          </Typography>
+        )}
+        {!isMobileView && (
+          <Typography variant="body1">
+            <UsersIcon />
+            {friendlyUserCount}
+          </Typography>
+        )}
         <Box>
           <NavigateNext />
         </Box>

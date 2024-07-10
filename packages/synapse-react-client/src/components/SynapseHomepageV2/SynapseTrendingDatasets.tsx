@@ -2,7 +2,7 @@ import React from 'react'
 import { useGetQueryResultBundleWithAsyncStatus } from '../../synapse-queries'
 import { BUNDLE_MASK_QUERY_RESULTS } from '../../utils/SynapseConstants'
 import { TrendingItem, gridTemplateColumns } from './TrendingItem'
-import { Box } from '@mui/material'
+import { Box, useTheme, useMediaQuery } from '@mui/material'
 import { Typography } from '@mui/material'
 
 export type SynapseTrendingDatasetsProps = {
@@ -26,6 +26,8 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
       partMask: BUNDLE_MASK_QUERY_RESULTS,
       concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',
     })
+  const theme = useTheme()
+  const isMobileView = useMediaQuery(theme.breakpoints.down('md'))
 
   const rowSet = past30DaysDownloadData?.responseBody?.queryResult?.queryResults
   const headers = rowSet?.headers
@@ -48,7 +50,7 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
         sx={{
           color: '#D7DEE4',
           display: 'grid',
-          gridTemplateColumns,
+          gridTemplateColumns: gridTemplateColumns(isMobileView),
           justifyItems: 'start',
         }}
       >
@@ -56,8 +58,10 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
           Rank
         </Typography>
         <Typography variant="body1">Project</Typography>
-        <Typography variant="body1">Data Downloaded</Typography>
-        <Typography variant="body1">Unique Users</Typography>
+        {!isMobileView && (
+          <Typography variant="body1">Data Downloaded</Typography>
+        )}
+        {!isMobileView && <Typography variant="body1">Unique Users</Typography>}
         <Box></Box>
       </Box>
       {rowSet.rows.map((row, index) => (
@@ -67,6 +71,7 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
           entityIdColIndex={entityIdColIndex}
           egressSizeGbColIndex={egressSizeColIndex}
           nUniqueUsersColIndex={nUniqueUsersColIndex}
+          isMobileView={isMobileView}
         />
       ))}
     </>

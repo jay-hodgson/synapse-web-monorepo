@@ -81,6 +81,7 @@ import SubmissionViewScopeEditorModal from './components/SubmissionViewScopeEdit
 import AvailableEvaluationQueueList from './components/ChallengeSubmission/AvailableEvaluationQueueList'
 import AccessRequirementAclEditor from './components/AccessRequirementAclEditor'
 import CreateOrUpdateAccessRequirementWizard from './components/CreateOrUpdateAccessRequirementWizard'
+import { SynapseFooter } from './components/SynapseFooter/SynapseFooter'
 import { GoogleAnalytics } from './components/GoogleAnalytics/GoogleAnalytics'
 import { CookiesNotification } from './components/CookiesNotification'
 import { getCurrentCookiePreferences } from './utils/hooks'
@@ -115,6 +116,7 @@ const SynapseComponents = {
   ProjectViewCarousel,
   SynapseHomepage,
   SynapseHomepageV2,
+  SynapseFooter,
   EntityFinder,
   ErrorPage,
   EntityBadgeIcons,

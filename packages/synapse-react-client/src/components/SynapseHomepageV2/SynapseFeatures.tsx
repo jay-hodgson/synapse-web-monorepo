@@ -7,7 +7,7 @@ import { ReactComponent as PrecisionGovernance } from '../../assets/homepage/pre
 import { ReactComponent as PoweredBySynapse } from '../../assets/homepage/powered-by-synapse-feature.svg'
 import { ReactComponent as Python } from '../../assets/homepage/python.svg'
 import { ReactComponent as R } from '../../assets/homepage/r.svg'
-import { ReactComponent as Fedramp } from '../../assets/homepage/fedramp.svg'
+import { ReactComponent as Fisma } from '../../assets/homepage/fisma.svg'
 import { ReactComponent as Hipaa } from '../../assets/homepage/hipaa-compliant.svg'
 import { useOneSageURL } from 'src/utils/hooks'
 
@@ -41,8 +41,7 @@ export const SynapseFeatures: React.FunctionComponent<
         image={<PrecisionGovernance />}
         subtitle="Precision Governance"
         description="Ethical openness is our top priority. Your sensitive data is protected through a comprehensive system of access controls, regular audits, and privacy-enhancing technologies. Protect the data, protect the patient."
-        //TODO: replace fedramp with fisma
-        icons={[<Fedramp />, <Hipaa />]}
+        icons={[<Fisma />, <Hipaa />]}
         featureName="governance"
         link="https://help.synapse.org/docs/Synapse-Governance.2004255211.html"
       />

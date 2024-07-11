@@ -45,7 +45,7 @@ const ImageFromSynapseTable: React.FC<ImageFromSynapseTableProps> = (
     associateObjectType: FileHandleAssociateType.TableEntity,
     fileHandleId: fileHandleIdInState ?? '',
   }
-  const stablePresignedUrl = useGetStablePresignedUrl(fha, true, {
+  const stablePresignedUrl = useGetStablePresignedUrl(fha, false, {
     enabled: !!fileHandleIdInState,
   })
 

@@ -33,6 +33,7 @@ import { useInView } from 'react-intersection-observer'
 import { SynapseFooter } from '../SynapseFooter/SynapseFooter'
 import SageFullLogo from 'src/assets/icons/SageFullLogo'
 import { LoginTwoTone, MenuTwoTone } from '@mui/icons-material'
+import { SynapseFeaturedDatasets } from './SynapseFeaturedDatasets'
 
 export type SynapseHomepageV2Props = {}
 
@@ -42,6 +43,7 @@ const onSearch = (value: string) => {
 const synapseInActionTable = 'syn61670075'
 const past30DaysDownloadMetricsTable = 'syn61597084'
 const generalStatsMetricsTable = 'syn61588163'
+const featuredDatasetsTable = 'syn61609402'
 
 const popularSearches = [
   "Alzheimer's Disease",
@@ -544,6 +546,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
               Featured datasets
             </Typography>
             {/* TODO: Add Featured datasets based on a collection (and maybe MV) */}
+            <SynapseFeaturedDatasets sourceTable={featuredDatasetsTable} />
           </Box>
           <Box
             sx={{

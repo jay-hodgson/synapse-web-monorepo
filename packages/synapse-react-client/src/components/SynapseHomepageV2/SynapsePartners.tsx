@@ -8,10 +8,10 @@ import { ReactComponent as Ctf } from '../../assets/homepage/ctf.svg'
 import { ReactComponent as Ntap } from '../../assets/homepage/ntap.svg'
 import { ReactComponent as Gff } from '../../assets/homepage/gff.svg'
 import { ReactComponent as Nci } from '../../assets/homepage/nci.svg'
-import { ReactComponent as NihCommonFund } from '../../assets/homepage/nih-common-fund.svg'
 import { ReactComponent as Cri } from '../../assets/homepage/cri.svg'
 import { ReactComponent as MlCommons } from '../../assets/homepage/ml-commons.svg'
 import { ReactComponent as Gray } from '../../assets/homepage/gray.svg'
+import { ReactComponent as Aacr } from '../../assets/homepage/aacr.svg'
 
 export const SynapsePartners: React.FunctionComponent = () => {
   return (
@@ -49,8 +49,8 @@ export const SynapsePartners: React.FunctionComponent = () => {
         <a href="https://www.cancer.gov/" target="_blank">
           <Nci />
         </a>
-        <a href="https://commonfund.nih.gov/" target="_blank">
-          <NihCommonFund />
+        <a href="https://www.aacr.org/" target="_blank">
+          <Aacr />
         </a>
         <a href="https://www.cancerresearch.org/" target="_blank">
           <Cri />

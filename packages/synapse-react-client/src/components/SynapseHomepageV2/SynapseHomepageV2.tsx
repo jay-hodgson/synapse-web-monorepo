@@ -392,9 +392,9 @@ export const SynapseHomepageV2: React.FunctionComponent<
               marginBottom: '35px',
             }}
           >
-            Created by <strong>Sage Bionetworks</strong>, Synapse is your
-            ecosystem for responsible data sharing, innovative data reuse, and
-            collaboration.
+            Created by <strong>Sage Bionetworks</strong>, Synapse empowers
+            biomedical researchers with tools for open science and
+            collaboration, forging a path to optimal human health.
           </Typography>
           <Button
             size="large"
@@ -402,6 +402,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
             color="secondary"
             href="https://www.sagebionetworks.org"
             target="_blank"
+            sx={{ padding: '5px 25px' }}
           >
             About Sage Bionetworks
           </Button>
@@ -653,7 +654,6 @@ export const SynapseHomepageV2: React.FunctionComponent<
             portalVersion="portalV1"
             repoVersion="repo V1"
             srcVersion="SRC v1"
-            signoutCallback={() => {}}
             reportViolationCallback={() => {}}
           />
         </Box>

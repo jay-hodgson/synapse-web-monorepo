@@ -1,5 +1,4 @@
 import React from 'react'
-import SynapseClient from '../../synapse-client'
 import { useSynapseContext } from '../../utils'
 import { useOneSageURL } from '../../utils/hooks/useOneSageURL'
 import { Box, Button, Typography } from '@mui/material'
@@ -18,7 +17,6 @@ export type SynapseFooterProps = {
   portalVersion: string
   srcVersion: string
   repoVersion: string
-  signoutCallback?: () => void
   gotoPlace: (href: string) => void
   reportViolationCallback: () => void
 }
@@ -28,7 +26,6 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
   portalVersion,
   srcVersion,
   repoVersion,
-  signoutCallback,
   gotoPlace,
   reportViolationCallback,
 }) => {
@@ -38,14 +35,14 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
 
   const isLoggedIn = !!accessToken
 
-  const signOut = async () => {
-    if (signoutCallback) {
-      signoutCallback()
-    } else {
-      await SynapseClient.signOut()
-      window.location.reload()
-    }
-  }
+  // const signOut = async () => {
+  //   if (signoutCallback) {
+  //     signoutCallback()
+  //   } else {
+  //     await SynapseClient.signOut()
+  //     window.location.reload()
+  //   }
+  // }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -110,6 +107,7 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
                 </Button>
               </Box>
             )}
+            {/* Per Adam, this functionality is unnecessary 
             {isLoggedIn && (
               <Box sx={{ display: 'flex', columnGap: '20px' }}>
                 <Button
@@ -134,7 +132,7 @@ export const SynapseFooter: React.FunctionComponent<SynapseFooterProps> = ({
                   View My Dashboard
                 </Button>
               </Box>
-            )}
+            )} */}
           </Box>
           <Box>
             <Box

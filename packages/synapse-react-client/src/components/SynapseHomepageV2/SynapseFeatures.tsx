@@ -40,7 +40,8 @@ export const SynapseFeatures: React.FunctionComponent<
         title="Safeguard your data"
         image={<PrecisionGovernance />}
         subtitle="Precision Governance"
-        description="Ethical openness is our top priority. Your sensitive data is safeguarded by a complete process of access controls, audits and privacy-enhancing technologies. Protect the data, protect the patient."
+        description="Ethical openness is our top priority. Your sensitive data is protected through a comprehensive system of access controls, regular audits, and privacy-enhancing technologies. Protect the data, protect the patient."
+        //TODO: replace fedramp with fisma
         icons={[<Fedramp />, <Hipaa />]}
         featureName="governance"
         link="https://help.synapse.org/docs/Synapse-Governance.2004255211.html"

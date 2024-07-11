@@ -1,7 +1,10 @@
 import React from 'react'
 import { useGetQueryResultBundleWithAsyncStatus } from '../../synapse-queries'
 import { BUNDLE_MASK_QUERY_RESULTS } from '../../utils/SynapseConstants'
-import { TrendingItem, gridTemplateColumns } from './TrendingItem'
+import {
+  SynapseTrendingDatasetItem,
+  gridTemplateColumns,
+} from './SynapseTrendingDatasetItem'
 import { Box, useTheme, useMediaQuery } from '@mui/material'
 import { Typography } from '@mui/material'
 
@@ -65,7 +68,7 @@ export const SynapseTrendingDatasets: React.FunctionComponent<
         <Box></Box>
       </Box>
       {rowSet.rows.map((row, index) => (
-        <TrendingItem
+        <SynapseTrendingDatasetItem
           key={row.rowId}
           rank={index + 1}
           rowValues={row.values}

@@ -20,7 +20,9 @@ const formatter = Intl.NumberFormat('en')
 export const gridTemplateColumns = (isMobileView: boolean) =>
   isMobileView ? '100px auto 40px' : '100px auto 170px 150px 40px'
 
-export const TrendingItem: React.FunctionComponent<TrendingItemProps> = ({
+export const SynapseTrendingDatasetItem: React.FunctionComponent<
+  TrendingItemProps
+> = ({
   rank,
   rowValues,
   entityIdColIndex,

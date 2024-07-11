@@ -10,6 +10,11 @@ import {
   Chip,
   useTheme,
   useMediaQuery,
+  Menu,
+  MenuItem,
+  Divider,
+  ListItemIcon,
+  IconButton,
 } from '@mui/material'
 import SynapseFullLogo from '../../assets/icons/SynapseFullLogo'
 import { TypeAnimation } from 'react-type-animation'
@@ -27,6 +32,7 @@ import { SynapsePlans } from './SynapsePlans'
 import { useInView } from 'react-intersection-observer'
 import { SynapseFooter } from '../SynapseFooter/SynapseFooter'
 import SageFullLogo from 'src/assets/icons/SageFullLogo'
+import { LoginTwoTone, MenuTwoTone } from '@mui/icons-material'
 
 export type SynapseHomepageV2Props = {}
 
@@ -58,7 +64,18 @@ export const SynapseHomepageV2: React.FunctionComponent<
   const resourcesLink = useOneSageURL('/sageresources')
   const theme = useTheme()
   const isDesktopView = useMediaQuery(theme.breakpoints.up('lg'))
+  const isMobileView = useMediaQuery(theme.breakpoints.down('md'))
   const [searchValue, setSearchValue] = useState('')
+
+  // mobile view nav bar menu
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   //optimization - prioritize loading above-the-fold content (delay loading below the fold)
   const { ref, inView } = useInView({ triggerOnce: true })
@@ -93,59 +110,140 @@ export const SynapseHomepageV2: React.FunctionComponent<
         <SynapseFullLogo textColor="#0B1218" />
         {/* Menu Items */}
         {/* TODO: Add Hamburger mobile version of nav bar options */}
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            gap: '20px',
-          }}
-        >
-          <Button
-            sx={navButtonSx}
-            href={resourcesLink.toString()}
-            target="_blank"
+        {!isMobileView && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              gap: '20px',
+            }}
           >
-            Portals
-          </Button>
-          <Button
-            sx={{ ...navButtonSx, marginRight: '15px' }}
-            href="https://sagebionetworks.org/"
-            target="_blank"
+            <Button
+              sx={navButtonSx}
+              href={resourcesLink.toString()}
+              target="_blank"
+            >
+              Portals
+            </Button>
+            <Button
+              sx={{ ...navButtonSx, marginRight: '15px' }}
+              href="https://sagebionetworks.org/"
+              target="_blank"
+            >
+              Sage Bionetworks
+            </Button>
+            {isSignedIn && (
+              <Button
+                size="large"
+                variant="contained"
+                color="secondary"
+                href={MY_DASHBOARD_LINK}
+              >
+                View My Dashboard
+              </Button>
+            )}
+            {!isSignedIn && (
+              <Button
+                size="large"
+                variant="outlined"
+                color="secondary"
+                href={LOGIN_LINK}
+              >
+                Login
+              </Button>
+            )}
+            {!isSignedIn && (
+              <Button
+                size="large"
+                variant="contained"
+                color="secondary"
+                href={registrationLink.toString()}
+              >
+                Register Now
+              </Button>
+            )}
+          </Box>
+        )}
+        {isMobileView && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
           >
-            Sage Bionetworks
-          </Button>
-          {isSignedIn && (
-            <Button
-              size="large"
-              variant="contained"
-              color="secondary"
-              href={MY_DASHBOARD_LINK}
+            <IconButton size="large" onClick={handleClick}>
+              <MenuTwoTone />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
             >
-              View My Dashboard
-            </Button>
-          )}
-          {!isSignedIn && (
-            <Button
-              size="large"
-              variant="outlined"
-              color="secondary"
-              href={LOGIN_LINK}
-            >
-              Login
-            </Button>
-          )}
-          {!isSignedIn && (
-            <Button
-              size="large"
-              variant="contained"
-              color="secondary"
-              href={registrationLink.toString()}
-            >
-              Register Now
-            </Button>
-          )}
-        </Box>
+              {!isSignedIn && (
+                <MenuItem
+                  onClick={() => {
+                    window.open(registrationLink.toString(), '_blank')
+                    handleClose()
+                  }}
+                >
+                  <Button variant="contained" color="secondary">
+                    Register Now
+                  </Button>
+                </MenuItem>
+              )}
+              {!isSignedIn && (
+                <MenuItem
+                  onClick={() => {
+                    window.open(LOGIN_LINK, '_blank')
+                    handleClose()
+                  }}
+                >
+                  <ListItemIcon>
+                    <LoginTwoTone fontSize="small" />
+                  </ListItemIcon>
+                  Login
+                </MenuItem>
+              )}
+              {isSignedIn && (
+                <MenuItem
+                  onClick={() => {
+                    window.open(MY_DASHBOARD_LINK, '_blank')
+                    handleClose()
+                  }}
+                >
+                  View My Dashboard
+                </MenuItem>
+              )}
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  window.open(resourcesLink.toString(), '_blank')
+                  handleClose()
+                }}
+              >
+                Portals
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  window.open('https://sagebionetworks.org/', '_blank')
+                  handleClose()
+                }}
+              >
+                Sage Bionetworks
+              </MenuItem>
+            </Menu>
+          </Box>
+        )}
       </Box>
       <Box sx={{ position: 'relative', paddingBottom: '80px' }}>
         <Box
@@ -172,6 +270,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
         sx={{
           textAlign: 'center',
           padding: isDesktopView ? '80px 0px 0px 0px' : '20px',
+          minHeight: isMobileView ? '550px' : undefined,
         }}
       >
         <Typography variant="headline1" sx={titleSx}>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import { ReactComponent as PlanItemIcon } from '../../assets/homepage/plan-item.svg'
+import { darkTextColor } from './SynapseHomepageV2'
 
 export type SynapsePlanContentProps = {
   category: string
@@ -19,7 +20,7 @@ export const SynapsePlanContent: React.FunctionComponent<
           fontSize: '18px',
           lineHeight: '20px',
           marginTop: '30px',
-          color: 'black',
+          color: darkTextColor,
         }}
       >
         {category}
@@ -41,7 +42,7 @@ export const SynapsePlanContent: React.FunctionComponent<
               fontWeight: 400,
               fontSize: '18px',
               lineHeight: '24px',
-              color: 'black',
+              color: darkTextColor,
             }}
           >
             {item}

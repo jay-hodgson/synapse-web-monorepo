@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/material'
+import { darkTextColor, homepageBodyText } from './SynapseHomepageV2'
 
 export type SynapsePlanProps = {
   title: string
@@ -38,7 +39,7 @@ export const SynapsePlan: React.FunctionComponent<
               fontSize: '32px',
               lineHeight: '40px',
               textAlign: 'center',
-              color: 'black',
+              color: darkTextColor,
             }}
           >
             {title}
@@ -46,11 +47,8 @@ export const SynapsePlan: React.FunctionComponent<
           <Typography
             variant="body1"
             sx={{
-              fontWeight: 400,
-              fontSize: '24px',
+              ...homepageBodyText,
               textAlign: 'center',
-              color: 'black',
-              lineHeight: '34px',
             }}
           >
             {description}

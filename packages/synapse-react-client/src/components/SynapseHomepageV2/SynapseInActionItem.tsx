@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import ImageFromSynapseTable from '../ImageFromSynapseTable'
 import { EastTwoTone } from '@mui/icons-material'
 import { useInView } from 'react-intersection-observer'
+import { darkTextColor, homepageBodyText } from './SynapseHomepageV2'
 
 export type SynapseInActionItemProps = {
   tableId: string
@@ -60,10 +61,11 @@ export const SynapseInActionItem: React.FunctionComponent<
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
-            fontSize: '32px',
-            lineHeight: '40px',
+            fontWeight: 400,
+            fontSize: '36px',
+            lineHeight: '46px',
             marginTop: '32px',
+            color: darkTextColor,
           }}
         >
           {title}
@@ -71,9 +73,7 @@ export const SynapseInActionItem: React.FunctionComponent<
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '24px',
+            ...homepageBodyText,
             marginTop: '32px',
             marginBottom: '32px',
           }}

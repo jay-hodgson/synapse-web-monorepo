@@ -70,7 +70,7 @@ export const SynapseInAction: React.FunctionComponent<SynapseInActionProps> = ({
       <Box sx={{ width: isMobileView ? '100%' : '45%' }}>
         <Box
           sx={{
-            maxWidth: '400px',
+            maxWidth: '450px',
             margin: 'auto',
             zIndex: 100,
             position: 'relative',

@@ -55,6 +55,14 @@ const popularSearches = [
 const LOGIN_LINK = '/LoginPlace:0'
 const MY_DASHBOARD_LINK = '/Profile:v'
 
+export const darkTextColor = '#22252A'
+export const homepageBodyText: SxProps = {
+  fontSize: '24px',
+  fontWeight: 400,
+  lineHeight: '34px',
+  color: darkTextColor,
+}
+
 export const SynapseHomepageV2: React.FunctionComponent<
   SynapseHomepageV2Props
 > = ({}) => {
@@ -69,7 +77,6 @@ export const SynapseHomepageV2: React.FunctionComponent<
 
   // mobile view nav bar menu
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -84,8 +91,15 @@ export const SynapseHomepageV2: React.FunctionComponent<
     lineHeight: '24px',
     fontWeight: 400,
   }
+  const h2Sx: SxProps = {
+    fontSize: '52px',
+    fontWeight: 600,
+    lineHeight: '62px',
+    color: darkTextColor,
+  }
+
   const defaultHomepageText: SxProps = {
-    color: '#172430',
+    color: darkTextColor,
     fontWeight: 600,
   }
   const titleSx: SxProps = {
@@ -109,7 +123,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
         {/* Logo */}
         <SynapseFullLogo textColor="#0B1218" />
         {/* Menu Items */}
-        {/* TODO: Add Hamburger mobile version of nav bar options */}
+        {/* Desktop nav bar, and a mobile hamburger dropdown menu nav bar that contain the same options */}
         {!isMobileView && (
           <Box
             sx={{
@@ -419,12 +433,9 @@ export const SynapseHomepageV2: React.FunctionComponent<
               <Typography
                 variant="headline1"
                 sx={{
-                  ...defaultHomepageText,
+                  ...homepageBodyText,
                   textAlign: 'center',
-                  fontSize: '24px',
-                  fontWeight: 400,
                   marginBottom: '60px',
-                  lineHeight: '34px',
                 }}
               >
                 Synapse is your ecosystem for responsible data sharing,
@@ -453,11 +464,9 @@ export const SynapseHomepageV2: React.FunctionComponent<
               <Typography
                 variant="headline1"
                 sx={{
-                  ...defaultHomepageText,
+                  ...h2Sx,
                   textAlign: 'center',
                   marginTop: '100px',
-                  fontSize: '52px',
-                  lineHeight: '62px',
                   marginBottom: '60px',
                   color: 'white',
                 }}
@@ -510,9 +519,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
               <Typography
                 variant="headline1"
                 sx={{
-                  ...defaultHomepageText,
-                  fontSize: '52px',
-                  lineHeight: '62px',
+                  ...h2Sx,
                   color: 'white',
                   maxWidth: '700px',
                   paddingBottom: '100px',
@@ -527,12 +534,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
             <Typography
               variant="headline1"
               sx={{
-                ...defaultHomepageText,
+                ...h2Sx,
                 textAlign: 'center',
                 paddingTop: '75px',
                 paddingBottom: '75px',
-                fontSize: '40px',
-                lineHeight: '48px',
               }}
             >
               Featured datasets
@@ -558,12 +563,9 @@ export const SynapseHomepageV2: React.FunctionComponent<
             <Typography
               variant="headline1"
               sx={{
-                ...defaultHomepageText,
+                ...h2Sx,
                 textAlign: 'center',
                 paddingTop: '75px',
-                fontSize: '56px',
-                lineHeight: '56px',
-                letterSpacing: '-0.56px',
                 position: 'relative',
                 zIndex: 100,
                 backgroundColor: 'rgba(245, 249, 249, .8)',
@@ -576,13 +578,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
               <Typography
                 variant="headline1"
                 sx={{
-                  ...defaultHomepageText,
+                  ...homepageBodyText,
                   textAlign: 'center',
                   marginTop: '50px',
-                  fontSize: '24px',
-                  lineHeight: '34px',
                   marginBottom: '100px',
-                  fontWeight: 400,
                   position: 'relative',
                   zIndex: 100,
                   backgroundColor: 'rgba(245, 249, 249, .8)',
@@ -615,9 +614,7 @@ export const SynapseHomepageV2: React.FunctionComponent<
               <Typography
                 variant="headline1"
                 sx={{
-                  ...defaultHomepageText,
-                  fontSize: '52px',
-                  lineHeight: '62px',
+                  ...h2Sx,
                   color: 'white',
                   paddingTop: '75px',
                 }}
@@ -627,10 +624,8 @@ export const SynapseHomepageV2: React.FunctionComponent<
               <Typography
                 variant="body1"
                 sx={{
-                  fontSize: '24px',
-                  lineHeight: '34px',
+                  ...homepageBodyText,
                   color: 'white',
-                  fontWeight: 400,
                   paddingTop: '20px',
                   paddingBottom: '80px',
                 }}

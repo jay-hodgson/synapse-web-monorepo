@@ -11,22 +11,22 @@ export type SynapseFeaturedDatasetsProps = {
 export const SynapseFeaturedDatasets: React.FunctionComponent<
   SynapseFeaturedDatasetsProps
 > = ({ sourceTable }) => {
-  const { data: past30DaysDownloadData } =
-    useGetQueryResultBundleWithAsyncStatus({
-      entityId: sourceTable,
-      query: {
-        sql: `SELECT * FROM ${sourceTable} where name is not null`,
-        limit: 10,
-        sort: [
-          //TODO: sort?
-          // { column: 'last_updated', direction: 'DESC' },
-        ],
-      },
-      partMask: BUNDLE_MASK_QUERY_RESULTS,
-      concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',
-    })
+  // TODO: Figure out how we should present the featured datasets.  Random selection?  Paginated with page nav?
+  const { data } = useGetQueryResultBundleWithAsyncStatus({
+    entityId: sourceTable,
+    query: {
+      sql: `SELECT * FROM ${sourceTable} where name is not null`,
+      limit: 6,
+      sort: [
+        //TODO: sort?
+        // { column: 'last_updated', direction: 'DESC' },
+      ],
+    },
+    partMask: BUNDLE_MASK_QUERY_RESULTS,
+    concreteType: 'org.sagebionetworks.repo.model.table.QueryBundleRequest',
+  })
 
-  const rowSet = past30DaysDownloadData?.responseBody?.queryResult?.queryResults
+  const rowSet = data?.responseBody?.queryResult?.queryResults
   const headers = rowSet?.headers
   const entityIdColIndex = headers?.findIndex(
     selectColumn => selectColumn.name == 'id',

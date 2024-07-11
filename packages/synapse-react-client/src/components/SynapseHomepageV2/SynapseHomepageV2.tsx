@@ -545,7 +545,6 @@ export const SynapseHomepageV2: React.FunctionComponent<
             >
               Featured datasets
             </Typography>
-            {/* TODO: Add Featured datasets based on a collection (and maybe MV) */}
             <SynapseFeaturedDatasets sourceTable={featuredDatasetsTable} />
           </Box>
           <Box

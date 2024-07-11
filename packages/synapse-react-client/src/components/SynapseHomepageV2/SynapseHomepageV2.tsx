@@ -261,7 +261,10 @@ export const SynapseHomepageV2: React.FunctionComponent<
           height: isDesktopView ? '608px' : undefined, //force container to the same height as the image
         }}
       >
-        <Box sx={{ padding: isDesktopView ? '70px 0px 25px 60px' : '25px' }}>
+        <Box
+          sx={{ padding: isDesktopView ? '70px 0px 25px 60px' : '25px' }}
+          ref={ref} // use this UI to trigger loading the rest of the page content
+        >
           <SageFullLogo width={350} />
           <Typography
             variant="headline2"
@@ -286,7 +289,6 @@ export const SynapseHomepageV2: React.FunctionComponent<
             color="secondary"
             href="https://www.sagebionetworks.org"
             target="_blank"
-            ref={ref} // use this UI to trigger loading the rest of the page content
           >
             About Sage Bionetworks
           </Button>

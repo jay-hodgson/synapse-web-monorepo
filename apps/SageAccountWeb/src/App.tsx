@@ -28,6 +28,7 @@ import { OAuthClientManagementPage } from './components/OAuthClientManagementPag
 import { ResetTwoFactorAuth } from './components/TwoFactorAuth/ResetTwoFactorAuth'
 import { RESET_2FA_ROUTE } from './Constants'
 import { ChangePasswordPage } from './components/ChangePasswordPage'
+import { GovernanceMarkdownPage } from './components/GovernanceMarkdownPage'
 
 function App() {
   return (
@@ -78,6 +79,13 @@ function App() {
         <Route exact path="/jointeam" component={JoinTeamPage} />
         <Route exact path="/changePassword" component={ChangePasswordPage} />
         <Route exact path="/sageresources" component={SageResourcesPage} />
+        <Route path="/trustcenter/privacypolicy">
+          <GovernanceMarkdownPage
+            url={
+              'https://raw.githubusercontent.com/Sage-Bionetworks/synapse-web-monorepo/main/README.md'
+            }
+          />
+        </Route>
         <Route exact path="/resetPassword">
           <ResetPassword returnToUrl="/authenticated/myaccount" />
         </Route>

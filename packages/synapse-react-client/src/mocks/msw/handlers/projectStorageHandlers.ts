@@ -4,8 +4,10 @@ import { BackendDestinationEnum, getEndpoint } from '../../../utils/functions'
 import {
   mockProjectStorageUsageOverLimit,
   mockProjectStorageUsageUnderLimit,
+  mockProjectStorageUsageZero,
   OVER_LIMIT_PROJECT_ID,
   UNDER_LIMIT_PROJECT_ID,
+  ZERO_USAGE_PROJECT_ID,
 } from '../../../mocks/projectStorage/mockProjectStorageLimits'
 
 export const getProjectStorageHandlers = (
@@ -21,6 +23,12 @@ export const getProjectStorageHandlers = (
     `${backendOrigin}${PROJECT_STORAGE_USAGE(UNDER_LIMIT_PROJECT_ID)}`,
     async (req, res, ctx) => {
       return res(ctx.status(201), ctx.json(mockProjectStorageUsageUnderLimit))
+    },
+  ),
+  rest.get(
+    `${backendOrigin}${PROJECT_STORAGE_USAGE(ZERO_USAGE_PROJECT_ID)}`,
+    async (req, res, ctx) => {
+      return res(ctx.status(201), ctx.json(mockProjectStorageUsageZero))
     },
   ),
 ]

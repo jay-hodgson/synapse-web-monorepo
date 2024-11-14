@@ -3,6 +3,7 @@ import { SYNAPSE_STORAGE_LOCATION_ID } from '../../synapse-client'
 
 export const OVER_LIMIT_PROJECT_ID = 'syn54321'
 export const UNDER_LIMIT_PROJECT_ID = 'syn12345'
+export const ZERO_USAGE_PROJECT_ID = 'syn123456'
 
 export const mockProjectStorageUsageOverLimit: ProjectStorageUsage = {
   projectId: OVER_LIMIT_PROJECT_ID,
@@ -34,6 +35,24 @@ export const mockProjectStorageUsageUnderLimit: ProjectStorageUsage = {
     {
       storageLocationId: 'location-2',
       sumFileBytes: 1000,
+      maxAllowedFileBytes: 1073741824,
+      isOverLimit: false,
+    },
+  ],
+}
+
+export const mockProjectStorageUsageZero: ProjectStorageUsage = {
+  projectId: ZERO_USAGE_PROJECT_ID,
+  locations: [
+    {
+      storageLocationId: `${SYNAPSE_STORAGE_LOCATION_ID}`,
+      sumFileBytes: '0',
+      maxAllowedFileBytes: 107374182400,
+      isOverLimit: false,
+    },
+    {
+      storageLocationId: 'location-2',
+      sumFileBytes: 100000000,
       maxAllowedFileBytes: 1073741824,
       isOverLimit: false,
     },

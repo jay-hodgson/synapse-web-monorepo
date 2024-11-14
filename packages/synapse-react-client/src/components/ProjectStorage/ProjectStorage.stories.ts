@@ -7,6 +7,7 @@ import { getProjectStorageHandlers } from 'src/mocks/msw/handlers/projectStorage
 import {
   OVER_LIMIT_PROJECT_ID,
   UNDER_LIMIT_PROJECT_ID,
+  ZERO_USAGE_PROJECT_ID,
 } from 'src/mocks/projectStorage/mockProjectStorageLimits'
 
 const meta = {
@@ -44,6 +45,24 @@ export const ProjectDataUnderLimit: Story = {
 export const ProjectDataOverLimit: Story = {
   args: {
     projectId: OVER_LIMIT_PROJECT_ID,
+    sx: { backgroundColor: '#375574' },
+  },
+
+  parameters: {
+    stack: 'mock',
+    msw: {
+      handlers: [
+        ...getUserProfileHandlers(MOCK_REPO_ORIGIN),
+        ...getEntityHandlers(MOCK_REPO_ORIGIN),
+        ...getProjectStorageHandlers(MOCK_REPO_ORIGIN),
+      ],
+    },
+  },
+}
+
+export const ProjectDataZeroUsage: Story = {
+  args: {
+    projectId: ZERO_USAGE_PROJECT_ID,
     sx: { backgroundColor: '#375574' },
   },
 

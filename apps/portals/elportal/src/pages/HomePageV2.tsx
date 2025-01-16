@@ -11,11 +11,14 @@ import {
   topPublicationsSql,
   whatWeDoSql,
   featuredResearchSql,
+  upsetPlotSql,
 } from '../config/resources'
 import { Link, Typography } from '@mui/material'
 import analyzetheclouds from '../assets/analyzetheclouds.png'
 import computationaltools from '../assets/computationaltools.png'
 import { Box } from '@mui/material'
+import { UpsetPlot } from 'synapse-react-client'
+import { handleUpsetPlotClick } from 'src/config/synapseConfigs/handleUpsetPlotClick'
 
 export default function HomePage() {
   const styledPortalFeatureHighlightsSummaryText = (
@@ -51,26 +54,6 @@ export default function HomePage() {
         summaryText="We provide multi-omic datasets, software tools, and publications that empower researchers to discover the latest health-promoting therapeutics."
       />
       <FeaturedResearch sql={featuredResearchSql} />
-      {/* Commented out for release (see EC-485) */}
-      {/*<div className={'home-bg-dark'}>*/}
-      {/*<SectionLayout*/}
-      {/*  title="Exploring the Data"*/}
-      {/*  centerTitle*/}
-      {/*  ContainerProps={{ className: 'home-spacer' }}*/}
-      {/*>*/}
-      {/* Commented out for release (see EC-485) */}
-      {/*  <UpsetPlot*/}
-      {/*    sql={upsetPlotSql}*/}
-      {/*    rgbIndex={0}*/}
-      {/*    maxBarCount={20}*/}
-      {/*    setName="# Files per assay"*/}
-      {/*    combinationName="# individuals"*/}
-      {/*    onClick={handleUpsetPlotClick}*/}
-      {/*    // summaryLinkText='Explore All Data'*/}
-      {/*    // summaryLink='/Explore/Data'*/}
-      {/*  />*/}
-      {/*</SectionLayout>*/}
-      {/*</div>*/}
       <Box sx={{ backgroundColor: 'grey.100' }}>
         <RecentPublicationsGrid
           sql={topPublicationsSql}
@@ -86,6 +69,24 @@ export default function HomePage() {
         }}
       >
         <ELGettingStarted />
+        <div className={'home-bg-dark'}>
+          <SectionLayout
+            title="Exploring the Data"
+            centerTitle
+            ContainerProps={{ className: 'home-spacer' }}
+          >
+            <UpsetPlot
+              sql={upsetPlotSql}
+              rgbIndex={0}
+              maxBarCount={20}
+              setName="# Files per assay"
+              combinationName="# individuals"
+              onClick={handleUpsetPlotClick}
+              // summaryLinkText='Explore All Data'
+              // summaryLink='/Explore/Data'
+            />
+          </SectionLayout>
+        </div>
         <ELContributeYourData />
         <PortalFeatureHighlights
           image={analyzetheclouds}

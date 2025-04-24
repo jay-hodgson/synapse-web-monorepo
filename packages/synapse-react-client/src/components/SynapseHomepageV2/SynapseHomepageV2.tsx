@@ -24,6 +24,7 @@ import { SynapsePartners } from './SynapsePartners'
 import { SynapsePlans } from './SynapsePlans'
 import { SynapseSearchChips } from './SynapseSearchChips'
 import { SynapseTrendingProjects } from './SynapseTrendingProjects'
+import SynapseHotdropsBackground from './SynapseHotDropsBackground'
 
 export const synapseInActionTable = 'syn61670075'
 export const past30DaysDownloadMetricsTable = 'syn61597084'
@@ -89,6 +90,7 @@ export function SynapseHomepageV2({ gotoPlace }: SynapseHomepageV2Props) {
   const { ref, inView } = useInView({ triggerOnce: true })
   return (
     <Box sx={{ overflow: 'hidden' }}>
+      <SynapseHotdropsBackground />
       <SynapseHomepageNavBar gotoPlace={gotoPlace} />
       <Box
         sx={{

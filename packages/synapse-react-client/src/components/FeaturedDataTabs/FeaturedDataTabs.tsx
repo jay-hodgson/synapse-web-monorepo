@@ -74,7 +74,6 @@ function FeaturedDataTabs(props: FeaturedDataTabsProps) {
                     color="secondary"
                     href={selectedTabProps.explorePagePath}
                     sx={theme => ({
-                      mb: '40px',
                       [theme.breakpoints.down('sm')]: {
                         width: '100%',
                       },

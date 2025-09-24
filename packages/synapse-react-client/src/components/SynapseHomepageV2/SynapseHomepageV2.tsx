@@ -43,7 +43,7 @@ export type SynapseHomepageV2Props = {
 
 export function SynapseHomepageV2({ gotoPlace }: SynapseHomepageV2Props) {
   const theme = useTheme()
-  console.log('testing signing', theme)
+  console.log('testing signing again', theme)
   const tinyView = useMediaQuery('(max-width:385px)')
   const isDesktopView = useMediaQuery(theme.breakpoints.up('lg'))
   //optimization - prioritize loading above-the-fold content (delay loading below the fold)

@@ -24,6 +24,10 @@ const routes: RouteObject[] = [
         convertModuleToRouteObject,
       ),
   },
+  {
+    path: 'Wiki',
+    lazy: () => import('@/pages/WikiPage').then(convertModuleToRouteObject),
+  },
 ]
 
 export default routes

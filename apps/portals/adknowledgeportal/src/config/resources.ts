@@ -26,6 +26,10 @@ export const targetEnablingResourcesExploreSql =
   'select * from syn26146692 WHERE `isPublic` = true'
 export const targetEnablingResourcesDetailsPageSql =
   'select * from syn26146692 WHERE `isPublic` = true'
+
+export const cohortBuilderSql = 'SELECT * FROM syn72123781'
+export const cohortBuilderFilesSql = 'SELECT * FROM syn72123859'
+
 export const cavaticaConnectAccountURL =
   'https://help.adknowledgeportal.org/apd/CAVATICA.4271145000.html'
 

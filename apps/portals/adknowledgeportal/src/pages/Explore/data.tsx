@@ -1,8 +1,8 @@
-import { dataQueryWrapperPlotNavProps } from '@/config/synapseConfigs/data'
+import { filesViewQueryWrapperPlotNavProps } from '@/config/synapseConfigs/cohortbuilder'
 import QueryWrapperPlotNav from 'synapse-react-client/components/QueryWrapperPlotNav/QueryWrapperPlotNav'
 
 function ExploreData() {
-  return <QueryWrapperPlotNav {...dataQueryWrapperPlotNavProps} />
+  return <QueryWrapperPlotNav {...filesViewQueryWrapperPlotNavProps} />
 }
 
 export default ExploreData

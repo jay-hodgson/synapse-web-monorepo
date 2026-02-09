@@ -334,6 +334,11 @@ const routes: RouteObject[] = [
         path: 'Explore/Hackathon Projects',
         element: <RedirectWithQuery to="/Explore/Hackathon" />,
       },
+      {
+        path: 'vitessce-viewer',
+        lazy: () =>
+          import('@/pages/VitessceViewerPage').then(convertModuleToRouteObject),
+      },
     ],
   },
 ]

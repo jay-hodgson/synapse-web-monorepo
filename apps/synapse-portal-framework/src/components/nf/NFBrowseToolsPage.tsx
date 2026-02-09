@@ -249,6 +249,25 @@ const NFBrowseToolsPage = (props: NFBrowseToolsPageProps): React.ReactNode => {
           </WideButton>
         </div>
       </Layout>
+      <Layout outsideContainerClassName="home-spacer">
+        <Typography variant="sectionTitle" className="sectionTitle">
+          Spatial Data Visualization
+        </Typography>
+        <Typography variant="body1" className="sectionSubtitle">
+          View interactive spatial genomics data with Vitessce
+        </Typography>
+        <div className="center-content">
+          <WideButton
+            sx={wideButtonSx}
+            variant="contained"
+            onClick={() =>
+              window.open('/vitessce-viewer', '_blank', 'width=1200,height=800')
+            }
+          >
+            Open Vitessce Viewer
+          </WideButton>
+        </div>
+      </Layout>
       <Layout outsideContainerClassName="home-container-description  home-bg-dark home-spacer">
         <Typography variant="sectionTitle" className="sectionTitle">
           Announcements

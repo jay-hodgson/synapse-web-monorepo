@@ -1,7 +1,14 @@
 import { SynapseErrorBoundary } from '@/components/error/ErrorBanner'
 import { KeyFactory } from '@/synapse-queries/KeyFactory'
 import { SynapseClient } from '@sage-bionetworks/synapse-client/SynapseClient'
-import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { BackendDestinationEnum, getEndpoint } from '../functions/getEndpoint'
 
 export type SynapseContextType = {
@@ -25,6 +32,8 @@ export type SynapseContextType = {
   appId?: string
   /* API client objects for Synapse. Generated automatically. */
   synapseClient: SynapseClient
+  /** JWT id token obtained from the OpenID Connect userinfo endpoint. Undefined if the user is not authenticated. */
+  idToken: string | undefined
 }
 
 const defaultContext = {
@@ -38,6 +47,7 @@ const defaultContext = {
   peopleSearchPageUrl: '/PeopleSearch:',
   appId: undefined,
   synapseClient: new SynapseClient(),
+  idToken: undefined,
 } satisfies SynapseContextType
 
 /**
@@ -75,6 +85,44 @@ export function SynapseContextProvider(props: SynapseContextProviderProps) {
     return new SynapseClient(configurationParameters)
   }, [providedContext?.synapseClient, providedContext?.accessToken, basePath])
 
+  const [idToken, setIdToken] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    let cancelled = false
+
+    if (!providedContext?.accessToken) {
+      setIdToken(undefined)
+      return
+    }
+
+    synapseApiClient.openIDConnectServicesClient
+      .getAuthV1Oauth2UserinfoRaw(
+        { synapseAuthorization: `Bearer ${providedContext.accessToken}` },
+        requestContext =>
+          Promise.resolve({
+            headers: {
+              ...requestContext.init.headers,
+              Accept: 'application/jwt',
+            },
+          }),
+      )
+      .then(async apiResponse => {
+        const jwt = await apiResponse.raw.text()
+        if (!cancelled) {
+          setIdToken(jwt)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setIdToken(undefined)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [providedContext?.accessToken, synapseApiClient])
+
   const synapseContext: SynapseContextType = useMemo(
     () => ({
       accessToken: providedContext?.accessToken,
@@ -89,6 +137,7 @@ export function SynapseContextProvider(props: SynapseContextProviderProps) {
       keyFactory: providedContext?.keyFactory ?? queryKeyFactory,
       appId: providedContext?.appId,
       synapseClient: synapseApiClient,
+      idToken,
     }),
     [
       providedContext?.accessToken,
@@ -99,8 +148,10 @@ export function SynapseContextProvider(props: SynapseContextProviderProps) {
       providedContext?.utcTime,
       providedContext?.withErrorBoundary,
       providedContext?.appId,
+      providedContext?.peopleSearchPageUrl,
       queryKeyFactory,
       synapseApiClient,
+      idToken,
     ],
   )
 

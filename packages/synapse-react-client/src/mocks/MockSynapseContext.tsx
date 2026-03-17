@@ -18,6 +18,7 @@ export const MOCK_CONTEXT_VALUE: SynapseContextType = {
   synapseClient: new SynapseClient({
     accessToken: MOCK_ACCESS_TOKEN,
   }),
+  idToken: undefined,
 }
 
 export const MOCK_CONTEXT = createContext(MOCK_CONTEXT_VALUE)

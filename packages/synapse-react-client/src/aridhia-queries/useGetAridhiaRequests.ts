@@ -13,7 +13,7 @@ export const ARIDHIA_REQUESTS_QUERY_KEY = ['aridhia', 'requests'] as const
 
 /**
  * Hook to fetch data access requests from Aridhia FAIR API
- * Exchanges the Synapse access token for an Aridhia token on each request
+ * Exchanges the Synapse ID token for an Aridhia token on each request
  */
 export function useGetAridhiaRequests(
   options?: Partial<
@@ -25,19 +25,19 @@ export function useGetAridhiaRequests(
   >,
 ): UseQueryResult<FairRequestsGet200Response, Error> {
   const aridhiaContext = useAridhiaContextOptional()
-  const { accessToken: synapseAccessToken } = useSynapseContext()
+  const { idToken: synapseIdToken } = useSynapseContext()
 
   return useQuery<
     FairRequestsGet200Response,
     Error,
     FairRequestsGet200Response
   >({
-    enabled: !!synapseAccessToken && !!aridhiaContext,
+    enabled: !!synapseIdToken && !!aridhiaContext,
     ...options,
     queryKey: ARIDHIA_REQUESTS_QUERY_KEY,
     queryFn: async (): Promise<FairRequestsGet200Response> => {
-      if (!synapseAccessToken) {
-        throw new Error('Synapse access token is not available')
+      if (!synapseIdToken) {
+        throw new Error('Synapse ID token is not available')
       }
 
       if (!aridhiaContext) {
@@ -46,10 +46,10 @@ export function useGetAridhiaRequests(
         )
       }
 
-      // Exchange Synapse token for Aridhia token and create API configuration
+      // Exchange Synapse ID token for Aridhia token and create API configuration
       // All FAIR API calls go through the gateway with /fair prefix
       const configuration = await createAridhiaApiConfiguration(
-        synapseAccessToken,
+        synapseIdToken,
         aridhiaContext.apiBasePath,
         aridhiaContext.authenticationRequest,
       )

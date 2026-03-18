@@ -96,15 +96,14 @@ export function SynapseContextProvider(props: SynapseContextProviderProps) {
     }
 
     synapseApiClient.openIDConnectServicesClient
-      .getAuthV1Oauth2UserinfoRaw(
-        { synapseAuthorization: `Bearer ${providedContext.accessToken}` },
-        requestContext =>
-          Promise.resolve({
-            headers: {
-              ...requestContext.init.headers,
-              Accept: 'application/jwt',
-            },
-          }),
+      .getAuthV1Oauth2UserinfoRaw({}, requestContext =>
+        Promise.resolve({
+          headers: {
+            ...requestContext.init.headers,
+            Authorization: `Bearer ${providedContext.accessToken}`,
+            Accept: 'application/jwt',
+          },
+        }),
       )
       .then(async apiResponse => {
         const jwt = await apiResponse.raw.text()

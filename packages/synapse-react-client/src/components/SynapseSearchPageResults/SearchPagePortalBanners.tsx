@@ -74,7 +74,12 @@ export default function SearchPagePortalBanners({
   )
   const hasSourceAppConfigs = !!sourceAppConfigs && sourceAppConfigs.length > 0
 
-  if (!hasPortalBanners || !hasSourceAppConfigs) {
+  if (
+    !appIds ||
+    appIds.length === 0 ||
+    !hasPortalBanners ||
+    !hasSourceAppConfigs
+  ) {
     return null
   }
 

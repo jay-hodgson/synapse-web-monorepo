@@ -111,7 +111,15 @@ export default function StyledTanStackTable<
     headers.forEach((header, i) => {
       const th = ths[i] as HTMLElement | undefined
       if (th) {
-        newSizes[header.column.id] = Math.ceil(th.getBoundingClientRect().width)
+        const minWidthByColumnId: Record<string, number> = {
+          name: 300,
+          id: 160,
+        }
+        const minWidth = minWidthByColumnId[header.column.id] ?? 60
+        newSizes[header.column.id] = Math.max(
+          minWidth,
+          Math.ceil(th.getBoundingClientRect().width),
+        )
       }
     })
     if (Object.keys(newSizes).length > 0) {

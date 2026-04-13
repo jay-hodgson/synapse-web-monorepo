@@ -21,7 +21,7 @@ import {
   AgentSession,
   TraceEvent,
 } from '@sage-bionetworks/synapse-types'
-import { KeyboardEventHandler, useEffect, useState } from 'react'
+import { KeyboardEventHandler, useEffect, useRef, useState } from 'react'
 import { SkeletonParagraph } from '../Skeleton'
 import { displayToast } from '../ToastMessage'
 import AccessLevelMenu from './AccessLevelMenu'
@@ -110,6 +110,26 @@ export function SynapseChat({
   // Keep track of the text that the user is currently typing into the textfield
   const [userChatTextfieldValue, setUserChatTextfieldValue] = useState('')
   const [initialMessageProcessed, setInitialMessageProcessed] = useState(false)
+  const scrollAnchorRef = useRef<HTMLDivElement>(null)
+  const chatBoxRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Walk up the DOM starting from the outer Box ref to find the first ancestor
+    // that is actually overflowing. Using a ref on the outer Box (rather than
+    // anchor.parentElement) is more reliable. Using instant scrollTop avoids
+    // smooth-scroll racing against async content loading in SynapseChatMessage.
+    // Triggered on both chatJobIds (response received) and pendingMessage (message sent)
+    // so the new item is always brought into view.
+    let el: Element | null = chatBoxRef.current
+    while (el && el !== document.body) {
+      if (el.scrollHeight > el.clientHeight) {
+        el.scrollTop = el.scrollHeight
+        return
+      }
+      el = el.parentElement
+    }
+    scrollAnchorRef.current?.scrollIntoView()
+  }, [chatJobIds, pendingMessage])
 
   // Restore chat session history, if exists.
   // TODO: currently only a single page is restored.  Add support for multiple pages (and detect the user scrolling up to restore the next page of results older)
@@ -190,6 +210,7 @@ export function SynapseChat({
 
   return (
     <Box
+      ref={chatBoxRef}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -197,6 +218,7 @@ export function SynapseChat({
         maxWidth: '1100px',
         mx: 'auto',
         height: '100%',
+        overflowY: 'auto',
       }}
     >
       {!hideTitle && (
@@ -229,11 +251,10 @@ export function SynapseChat({
       )}
       {!agentSession && <SkeletonParagraph numRows={10} />}
       {agentSession && (
-        <Box sx={{ flexGrow: 1, overflowY: 'auto', mb: 2 }}>
+        <Box sx={{ flexGrow: 1 }}>
           <List
             sx={{
               flex: 1,
-              overflowY: 'auto',
               pt: '20px',
               display: 'flex',
               flexDirection: 'column',
@@ -263,7 +284,6 @@ export function SynapseChat({
                 userMessage={pendingMessage}
                 chatResponseText={''}
                 chatErrorReason={''}
-                scrollIntoView
                 onSendChat={sendChat}
               />
             )}
@@ -325,6 +345,7 @@ export function SynapseChat({
           </Typography>
         </Box>
       </Box>
+      <div className="scroll-anchor" ref={scrollAnchorRef} />
     </Box>
   )
 }

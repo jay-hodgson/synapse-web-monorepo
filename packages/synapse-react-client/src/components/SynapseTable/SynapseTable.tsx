@@ -314,10 +314,14 @@ export function SynapseTable(props: SynapseTableProps) {
             className: 'SynapseTable',
             ['data-testid']: 'SynapseTable',
             density: 'default',
+            // A bounded height is required for the sticky header: position: sticky has no effect
+            // unless its scrolling ancestor actually scrolls internally.
+            sx: { maxHeight: '80vh' },
           }}
           table={table}
           fullWidth={false}
           autoColumnSizing={true}
+          stickyHeader={true}
         />
       </div>
     </SynapseTableContext.Provider>

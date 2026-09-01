@@ -28,6 +28,13 @@ export type StyledTanStackTableProps<TData = unknown, TRowType = Row<TData>> = {
    * Defaults to false (fixed layout).
    */
   autoColumnSizing?: boolean
+  /**
+   * When true, the header row stays pinned to the top of the table's scroll container while the body scrolls.
+   * Requires `styledTableContainerProps` to constrain the container to a bounded height (e.g. `sx={{ maxHeight }}`) —
+   * `position: sticky` has no visible effect unless its scrolling ancestor actually scrolls internally.
+   * @default false
+   */
+  stickyHeader?: boolean
   slots?: StyledTanStackTableSlots<TData, TRowType>
   slotProps?: StyledTanStackTableSlotProps<TData, TRowType>
 } & Pick<TableBodyProps<TData, TRowType>, 'rows' | 'rowTransform'>
@@ -45,6 +52,7 @@ export default function StyledTanStackTable<
     styledTableContainerProps,
     fullWidth = true,
     autoColumnSizing = false,
+    stickyHeader = false,
     slots = {},
     slotProps = {},
   } = props
@@ -195,6 +203,12 @@ export default function StyledTanStackTable<
                         width: `calc(var(${getHeaderSizeCssVariable(
                           header.id,
                         )}) * 1px)`,
+                      }),
+                      ...(stickyHeader && {
+                        position: 'sticky',
+                        top: 0,
+                        // Pinned header cells must stay above both the sticky header row and pinned body cells (zIndex: 1).
+                        zIndex: header.column.getIsPinned() ? 3 : 2,
                       }),
                       ...getCommonPinningStyles(header.column),
                       ...thSlotProps['style'],
